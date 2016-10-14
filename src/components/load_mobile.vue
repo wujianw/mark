@@ -1,0 +1,88 @@
+<template>
+    <div class="load-view">
+        <ul class="load-mobile-view">
+            <li class="flex-space">
+                <div class="mobile-text flex-space">
+                    <i></i>
+                    <input class="input" type="text" placeholder="请输入您的手机号码">
+                    <i></i>
+                </div>
+                <div class="mobile-btn"><p>获取验证码</p></div>
+            </li>
+            <li class="flex-space">
+                <div class="mobile-text flex-space">
+                    <i></i>
+                    <input class="input" type="text" placeholder="请输入您收到的短信验证码">
+                    <i></i>
+                </div>
+            </li>
+        </ul>
+        <div>
+            <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意<a href="">《积分宝消费养老用户服务协议》</a></p>
+        </div>
+        <div class="load-btn" @click="">
+            <span>登录</span>
+        </div>
+        <div class="hint-voice">
+            <p>收不到短信？ 使用<span>语音验证码</span></p>
+        </div>
+    </div>
+</template>
+<style>
+    html{height:100%;}
+    body{height:100%;background: #f2f2f2;}
+    .load-view{ padding: 20px 24px 0;}
+    .load-view li{padding-top:24px;}
+    .mobile-text{
+        flex-grow: 3;
+        height: 74px;
+        border-radius:10px;
+        background:#fff;
+
+    }
+    .mobile-text i{
+        width:60px;
+        text-align:center;
+        font-size:44px;
+    }
+    .mobile-text .input{flex-grow:1;font:26px/74px "Microsoft Yahei";border:none;}
+    .mobile-btn{
+        flex-grow: 1;
+        margin-left:10px;
+        background:#e85350;
+        border-radius:10px;
+        text-align: center;
+        font:26px/74px "Microsoft Yahei";
+        color:#fff;
+    }
+    .hint{padding:24px 0 42px;line-height:1.2;font-size:20px;}
+    a{color:#e85352}
+    .load-btn{
+        margin:58px auto 55px;
+        text-align: center;
+        background:#e85352;
+        border-radius:10px;
+        line-height:80px;
+        font-size:30px;
+        color:#fff;
+    }
+    .hint-voice{
+        text-align: center;
+        color:#afafaf;
+        font-size:24px;
+    }
+    .hint-voice span{color:#e85352;}
+    .no-password{color:#e85352;font-size:26px;}
+</style>
+<script>
+    export default{
+        data(){
+            return {
+                msg: 'hello vue'
+            }
+        },
+        methods:{
+
+        }
+    }
+</script>
