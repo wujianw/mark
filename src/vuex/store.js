@@ -4,26 +4,7 @@ Vue.use(Vuex)
 
 // 创建一个对象来保存应用启动时的初始状态
 const state = {
-  shopList:[],
-  takeNameList:["","线上发放","快递配送","到店领取"],
-  takeTypeId:1,
-  takeName:"线上发放",
-  shopDetails :{},
-  goodsShow : false,
-  typeName :{"intDet":["积分来源","积分","时间"],"exchange":["礼品","积分","时间"]},
-  type : "",
-  sign:0,
-  myPointInfo:{"credit":"","sign":"","share":"","binding":""},
-  myPoint : 0,
-  exchangeList :[],//兑换记录
-  hots:false,//热门商品
-  hotsList:[],
-  token:"",
-  addressShow:false,
-  address:"",
-  mobile:"",
-  consigneeName:"",
-  addressId:""
+
 }
 
 
