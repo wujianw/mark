@@ -32,18 +32,10 @@
     </transition>
 </template>
 <style>
-    html {
-        height: 100%;
-    }
-
-    body {
-        position:relative;
-        height: 100%;
-        background: #f2f2f2;
-    }
-
     .load-view {
         position:absolute;
+        top:0;
+        bottom:0;
         width:calc(100% - 48px);
         padding: 20px 24px 0;
     }
