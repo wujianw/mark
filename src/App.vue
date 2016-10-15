@@ -12,3 +12,17 @@
         }
     }
 </script>
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        position:relative;
+        height: 100%;
+        background: #f2f2f2;
+    }
+    #app{
+        height:100%;
+    }
+</style>

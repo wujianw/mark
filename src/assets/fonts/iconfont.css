@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1476455500'); /* IE9*/
-  src: url('iconfont.eot?t=1476455500#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1476455500') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1476455500') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1476455500#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('./iconfont.eot?t=1476455500'); /* IE9*/
+  src: url('./iconfont.eot?t=1476455500#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./iconfont.woff?t=1476455500') format('woff'), /* chrome, firefox */
+  url('./iconfont.ttf?t=1476455500') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('./iconfont.svg?t=1476455500#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .icon {
@@ -31,9 +31,9 @@
 .icon-shops:before { content: "\e60d"; }
 .icon-user:before { content: "\e60e"; }
 .icon-tradeList:before { content: "\e60f"; }
-.icon-oders:before { content: "\e610"; }
+.icon-orders:before { content: "\e610"; }
 .icon-setting:before { content: "\e611"; }
-.icon-shouhou:before { content: "\e612"; }
+.icon-aftermarket:before { content: "\e612"; }
 .icon-temai:before { content: "\e613"; }
 .icon-wallet:before { content: "\e614"; }
 .icon-enshrine:before { content: "\e615"; }
