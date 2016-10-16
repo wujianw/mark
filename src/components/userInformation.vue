@@ -1,7 +1,7 @@
 <template>
     <div class="user-information-bg">
         <div class="user-information-wrap">
-            <link-list v-for="item in lists" :title="item.title" :icon="item.icon" :routerName="item.routerName" :details="item.details"></link-list>
+            <link-list v-for="item in lists" :title="item.title" :icon="item.icon" :to="item.to" :details="item.details"></link-list>
         </div>
     </div>
 </template>
@@ -37,7 +37,7 @@
                         icon:{
                             iconClass:'icon-nickname'
                         },
-                        routerName:'loadMobile',
+                        to: {name: 'loadMobile' },
                         details:'去认证'
                     }
                     ,block:{
@@ -45,7 +45,7 @@
                         icon:{
                             iconClass:'icon-block'
                         },
-                        routerName:'loadMobile',
+                        to: {name: 'bound' },
                         details:"去绑定"
                     }
                     ,address:{
@@ -53,7 +53,7 @@
                         icon:{
                             iconClass:'icon-address'
                         },
-                        routerName:'loadMobile',
+                        to: {name: 'loadMobile' },
                         details:"添加/修改"
                     }
                     ,bound:{
@@ -61,7 +61,7 @@
                         icon:{
                             iconClass:'icon-bound'
                         },
-                        routerName:'loadMobile',
+                        to: {name: 'loadMobile' },
                         details:"添加/修改"
                     }
                     ,password:{
@@ -69,7 +69,7 @@
                         icon:{
                             iconClass:'icon-password'
                         },
-                        routerName:'loadMobile',
+                        to: {name: 'loadMobile' },
                         details:"修改/找回"
                     }
                     ,agreement:{
@@ -77,7 +77,7 @@
                         icon:{
                             iconClass:'icon-address'
                         },
-                        routerName:'loadMobile'
+                        to: {name: 'loadMobile' }
                     }
                 }
             }

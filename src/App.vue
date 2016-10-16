@@ -4,8 +4,7 @@
     </div>
 </template>
 <script>
-    import userLoad from './components/Loads'
-
+    import userLoad from './components/loads'
     export default {
         components: {
             userLoad
@@ -16,7 +15,6 @@
     html {
         height: 100%;
     }
-
     body {
         position:relative;
         height: 100%;
