@@ -23,7 +23,7 @@
 .icon-address:before { content: "\e605"; }
 .icon-bound:before { content: "\e606"; }
 .icon-agreement:before { content: "\e607"; }
-.icon-verification:before { content: "\e608"; }
+.icon-authCode:before { content: "\e608"; }
 .icon-chit:before { content: "\e609"; }
 .icon-waitAppraise:before { content: "\e60a"; }
 .icon-waitConsume:before { content: "\e60b"; }
@@ -38,7 +38,7 @@
 .icon-wallet:before { content: "\e614"; }
 .icon-enshrine:before { content: "\e615"; }
 .icon-annuity:before { content: "\e616"; }
-.icon-massage:before { content: "\e617"; }
+.icon-message:before { content: "\e617"; }
 .icon-coupon:before { content: "\e618"; }
 .icon-aftermarket:before { content: "\e619"; }
 .icon-special:before { content: "\e61a"; }

@@ -5,7 +5,7 @@
                 <div class="hd-pic"><img src="../../static/img/hd-pic.png" alt=""/></div>
                 <div class="nickname-wrap">
                     <div class="nickname">微信昵称/会员名称</div>
-                    <div>养老金：&nbsp<span class="annuity">{{annuity}}</span></div>
+                    <div>养老金：&nbsp<span class="annuity">{{annuity | gold}}</span></div>
                 </div>
             </div>
             <div>
@@ -15,22 +15,10 @@
             </div>
         </div>
         <div class="flex-space-around consumption">
-            <div class="consumption-status flex-center" data-text="待支付">
-                <i class="icon icon-waitPay"></i>
-            </div>
-            <div class="consumption-status flex-center" data-text="待消费">
-                <i class="icon icon-waitConsume"></i>
-            </div>
-            <div class="consumption-status flex-center" data-text="待评价">
-                <i class="icon icon-waitAppraise"></i>
-            </div>
-            <div class="consumption-status flex-center" data-text="退款/售后">
-                <i class="icon icon-aftermarket"></i>
-            </div>
+            <block-btn v-for="item in shopTrade" :icon="item.icon" :name="item.name"></block-btn>
         </div>
-        <div class="list-link-wrap">
-            <link-list :title="order.title" :icon="order.icon" :routerName="order.routerName"></link-list>
-            <link-list :title="order.title" :icon="order.icon" :routerName="order.routerName"></link-list>
+        <div class="list-link-wrap" v-for="items in linkList">
+            <link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to"></link-list>
         </div>
     </div>
 </template>
@@ -93,39 +81,137 @@
     .consumption{
         background:#fff;
         height:135px;
-        .consumption-status{
-            flex-direction:column;
-            flex-grow:1;
-            font-size:$statusFontSize;
-            i{font-size:38px;line-height:48px;color:$waitColor;}
-            &:after{content:attr(data-text);line-height:($statusFontSize + 16);}
-        }
     }
 
     /* 会员中心li--- link to details */
     .list-link-wrap{
         border-top:18px solid #f2f2f2;
+        &:last-of-type{padding-bottom:102px;}
     }
 
 </style>
 <script>
     import linkList from "./linkList.vue"
+    import blockBtn from "./blockBtn.vue"
     export default{
         data(){
             return{
-                annuity : 0.00,
-                order:{
-                    title:"全部订单",
-                    icon:{
-                        iconClass:'icon-orders',
-                        color:'#fe7c5c'
-                    },
-                    routerName:'loadMobile'
+                annuity : 0.00
+                ,linkList: {
+                    trade: {
+                        order:{
+                            title:"全部订单",
+                            icon:{
+                                iconClass:'icon-orders',
+                                color:'#fe7c5c'
+                            },
+                            to: {
+                                name:'orders',
+                                params: {
+                                    type : 1
+                                }
+                            }
+                        }
+                        ,tradeList: {
+                            title:"交易记录",
+                            icon:{
+                                iconClass:'icon-tradeList',
+                                color:'#d55b97'
+                            },
+                            to: { name:'loadMobile' }
+                        }
+                    }
+                    ,gold: {
+                        wallet: {
+                            title:"我的钱包",
+                            icon:{
+                                iconClass:'icon-wallet',
+                                color:'#fe7d5b'
+                            },
+                            to: { name:'loadMobile' }
+                        },
+                        annuity: {
+                            title:"我的养老金",
+                            icon:{
+                                iconClass:'icon-annuity',
+                                color:'#ffb100'
+                            },
+                            to: { name: 'loadMobile' }
+                        }
+                    }
+                    ,ticket: {
+                        chit: {
+                            title:"代金券",
+                            icon:{
+                                iconClass:'icon-chit',
+                                color:'#e6696a'
+                            },
+                            to: { name: 'loadMobile' }
+                        },
+                        coupon: {
+                            title:"优惠券",
+                            icon:{
+                                iconClass:'icon-coupon',
+                                color:'#5a9add'
+                            },
+                            to: { name: 'loadMobile' }
+                        },
+                        enshrine: {
+                            title:"我的收藏",
+                            icon:{
+                                iconClass:'icon-enshrine',
+                                color:'#d95693'
+                            },
+                            to:{ name: 'loadMobile' }
+                        }
+                    }
+                    ,setting: {
+                        setting: {
+                            title: "设置",
+                            icon:{
+                                iconClass:'icon-setting',
+                                color:'#41cf9a'
+                            },
+                            to: { name: 'loadMobile' }
+                        }
+                    }
+                }
+                ,shopTrade: {
+                    waitPay:{
+                        icon:{
+                            iconClass:'icon-waitPay'
+                        },
+                        name:"待支付"
+                    }
+                    ,waitConsume:{
+                        icon:{
+                            iconClass:'icon-waitConsume'
+                        },
+                        name:"待评价"
+                    }
+                    ,waitAppraise:{
+                        icon:{
+                            iconClass:'icon-waitAppraise'
+                        },
+                        name:"待评价"
+                    }
+                    ,aftermarket:{
+                        icon:{
+                            iconClass:'icon-aftermarket'
+                        },
+                        name:"退款/售后"
+                    }
                 }
             }
         }
+        ,filters:{
+            gold(value) {
+                return value.toFixed(2)
+            }
+        }
         ,components:{
-            linkList
+            linkList,
+            blockBtn
         }
     }
 </script>

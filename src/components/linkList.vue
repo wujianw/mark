@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name:routerName,params:{token:1}}" tag="div" class="flex-space link-li">
+    <router-link :to="to" tag="div" class="flex-space link-li">
         <div class="title-name flex-space" :data-text="title">
             <i class="icon" :class="icon.iconClass" :style="styleObj"></i>
         </div>
@@ -32,7 +32,7 @@
 </style>
 <script type="text/babel">
     /*
-     *@params {title:"标题",icon:"小图标",routerName:"url",details:"状态说明"}
+     *@params {title:"标题",icon:"小图标",to:"url",details:"状态说明"}
      */
     export default {
         data() {
@@ -49,16 +49,18 @@
             },
             icon:{
                 type:Object,
-                default: function () {
+                default: function() {
                     return {
                         iconClass:'',
                         color:'#505050'
                     }
                 }
             },
-            routerName:{
-                type:String,
-                default:''
+            to:{
+                type:Object,
+                default:function() {
+                    return {}
+                }
             },
             details:{
                 type:String,

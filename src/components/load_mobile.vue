@@ -34,7 +34,7 @@
 <style>
     .load-view {
         position:absolute;
-        top:0;
+        top:81px;
         bottom:0;
         width:calc(100% - 48px);
         padding: 20px 24px 0;
