@@ -47,7 +47,6 @@
                 }
             }
         }
-
     }
 </style>
 <script type="text/babel">
