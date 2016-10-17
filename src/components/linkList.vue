@@ -1,7 +1,7 @@
 <template>
     <router-link :to="to" tag="div" class="flex-space link-li">
         <div class="title-name flex-space" :data-text="title">
-            <i class="icon" :class="icon.iconClass" :style="styleObj"></i>
+            <i v-if="icon.iconClass" class="icon" :class="icon.iconClass" :style="styleObj"></i>
         </div>
         <div class="link-details" :data-text="details">
             <i class="icon icon-arrowRight"></i>
@@ -12,7 +12,7 @@
     .link-li{
         height:72px;
         padding:0 20px;
-        border-top:1px solid #f2f2f2;
+        border-bottom:1px solid #f2f2f2;
         background:#fff;
         cursor:pointer;
         font-family:"Microsoft Yahei";
