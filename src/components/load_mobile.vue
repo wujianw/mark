@@ -13,7 +13,7 @@
                 </li>
                 <li class="flex-space">
                     <div class="mobile-text flex-space">
-                        <i class="icon icon-verification"></i>
+                        <i class="icon icon-authCode"></i>
                         <input class="input" type="number" v-model.number="verification" placeholder="请输入您收到的短信验证码">
                         <i class="icon icon-off"></i>
                     </div>

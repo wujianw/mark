@@ -17,6 +17,9 @@ const orders = resolve => require(['./components/orders'], resolve)
 //订单详情 {query:{orderName},params:{type}}
 const orderDetails = resolve => require(['./components/orderDetails'], resolve)
 
+//退款详情
+const applyRefund = resolve => require(['./components/applyRefund'], resolve)
+
 export const routes = [
     {
         path: '/login/mobile',
@@ -52,5 +55,10 @@ export const routes = [
         path: '/user/orders/:type/details',
         name: 'orderDetails',
         component: orderDetails
+    }
+    ,{
+        path: '/user/orders/applyRefund',
+        name: 'applyRefund',
+        component: applyRefund
     }
 ]
