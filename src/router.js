@@ -11,8 +11,11 @@ const userInformation = resolve => require(['./components/userInformation'], res
 //绑定
 const bound = resolve => require(['./components/bound'], resolve)
 
-
+//订单列表 {query:{token,goodId},params:{type}}
 const orders = resolve => require(['./components/orders'], resolve)
+
+//订单详情 {query:{orderName},params:{type}}
+const orderDetails = resolve => require(['./components/orderDetails'], resolve)
 
 export const routes = [
     {
@@ -44,5 +47,10 @@ export const routes = [
         path: '/user/orders/:type',
         name: 'orders',
         component: orders
+    }
+    ,{
+        path: '/user/orders/:type/details',
+        name: 'orderDetails',
+        component: orderDetails
     }
 ]
