@@ -146,7 +146,7 @@
                                 iconClass:'icon-chit',
                                 color:'#e6696a'
                             },
-                            to: { name: 'loadMobile' }
+                            to: { name: 'chitList',query:{token:1}}
                         },
                         coupon: {
                             title:"优惠券",
@@ -154,7 +154,7 @@
                                 iconClass:'icon-coupon',
                                 color:'#5a9add'
                             },
-                            to: { name: 'loadMobile' }
+                            to: { name: 'couponList',query:{token:1}}
                         },
                         enshrine: {
                             title:"我的收藏",

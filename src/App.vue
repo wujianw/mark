@@ -23,4 +23,8 @@
     #app{
         height:100%;
     }
+    .flex-center{display: flex;align-items: center;justify-content: center;}
+    .flex-start{display: flex;align-items: center;justify-content: flex-start;}
+    .flex-space{display: flex;align-items: center;justify-content: space-between;}
+    .flex-space-around{display: flex;align-items: center;justify-content: space-between;}
 </style>
