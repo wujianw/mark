@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        擦
     </div>
 </template>
 <style lang="scss">
