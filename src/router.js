@@ -20,6 +20,15 @@ const orderDetails = resolve => require(['./components/orderDetails'], resolve)
 //退款详情
 const applyRefund = resolve => require(['./components/applyRefund'], resolve)
 
+//代金券列表
+const chitList = resolve => require(['./components/chit/chitList'], resolve)
+const chitDetails = resolve => require(['./components/chit/chitDetails'], resolve)
+
+//优惠券列表
+const couponList = resolve => require(['./components/coupon/couponList'], resolve)
+const couponDetails = resolve => require(['./components/coupon/couponDetails'], resolve)
+
+
 export const routes = [
     {
         path: '/login/mobile',
@@ -61,4 +70,25 @@ export const routes = [
         name: 'applyRefund',
         component: applyRefund
     }
+    ,{
+        path: '/user/chitList',
+        name: 'chitList',
+        component: chitList
+    }
+    ,{
+        path: '/user/chitDetails',
+        name: 'chitDetails',
+        component: chitDetails
+    }
+    ,{
+        path: '/user/couponList',
+        name: 'couponList',
+        component: couponList
+    }
+    ,{
+        path: '/user/chitDetails',
+        name: 'chitDetails',
+        component: chitDetails
+    }
+
 ]
