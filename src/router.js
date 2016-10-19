@@ -36,6 +36,7 @@ const agreementDetails = resolve => require(['./components/agreementDetails'], r
 
 //我的钱包
 const mineWallet = resolve => require(['./components/mineWallet'], resolve)
+
 export const routes = [
     {
         path: '/login/mobile',
