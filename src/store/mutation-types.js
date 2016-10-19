@@ -1,2 +1,4 @@
+//登录成功
 export const LOGIN_MOBILE_SUCCESS = 'LOGIN_MOBILE_SUCCESS'
+//登录失败
 export const LOGIN_MOBILE_FAILURE = 'LOGIN_MOBILE_FAILURE'
