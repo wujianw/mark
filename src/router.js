@@ -25,9 +25,17 @@ const chitList = resolve => require(['./components/chit/chitList'], resolve)
 const chitDetails = resolve => require(['./components/chit/chitDetails'], resolve)
 
 //优惠券列表
+const coupon = resolve => require(['./components/coupon/coupon'], resolve)
 const couponList = resolve => require(['./components/coupon/couponList'], resolve)
-const couponDetails = resolve => require(['./components/coupon/couponDetails'], resolve)
 
+//协议列表
+const agreement = resolve => require(['./components/agreement'], resolve)
+
+//协议详情
+const agreementDetails = resolve => require(['./components/agreementDetails'], resolve)
+
+//我的钱包
+const mineWallet = resolve => require(['./components/mineWallet'], resolve)
 
 export const routes = [
     {
@@ -81,14 +89,23 @@ export const routes = [
         component: chitDetails
     }
     ,{
-        path: '/user/couponList',
-        name: 'couponList',
-        component: couponList
-    }
-    ,{
-        path: '/user/chitDetails',
-        name: 'chitDetails',
-        component: chitDetails
+        path: '/user/coupon', name: 'coupon', component: coupon,
+        children:[{path: '/list/:type',name: 'couponList',component: couponList}]
     }
 
+    ,{
+        path: '/agreement',
+        name: 'agreement',
+        component: agreement
+    }
+    ,{
+        path: '/agreementDetails',
+        name: 'agreementDetails',
+        component: agreementDetails
+    }
+    , {
+        path: '/mineWallet' ,
+        name: 'mineWallet' ,
+        component: mineWallet
+    }
 ]
