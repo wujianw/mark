@@ -7,7 +7,11 @@ import Vue from 'vue'
 import App from './App'
 import { routes } from './router'
 //开启debug模式
-Vue.config.debug = true;
+Vue.config.debug = true
+
+Vue.filter('gold', function (value) {
+    return value.toFixed(2)
+})
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
