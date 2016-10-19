@@ -128,7 +128,7 @@
                                 iconClass:'icon-wallet',
                                 color:'#fe7d5b'
                             },
-                            to: { name:'loadMobile' }
+                            to: { name:'mineWallet' }
                         },
                         annuity: {
                             title:"我的养老金",
