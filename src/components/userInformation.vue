@@ -77,7 +77,7 @@
                         icon:{
                             iconClass:'icon-address'
                         },
-                        to: {name: 'loadMobile' }
+                        to: {name: 'agreement' }
                     }
                 }
             }
