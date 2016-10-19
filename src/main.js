@@ -30,7 +30,7 @@ Vue.http.options.root = website_url;
 Vue.http.options.emulateJSON = true;
 const app = new Vue({
     router:router,
-    store:router,
+    store:store,
     render: h => h(App)
 }).$mount('#app')
 
