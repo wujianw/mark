@@ -128,7 +128,7 @@
                                 iconClass:'icon-wallet',
                                 color:'#fe7d5b'
                             },
-                            to: { name:'loadMobile' }
+                            to: { name:'mineWallet' }
                         },
                         annuity: {
                             title:"我的养老金",
@@ -154,7 +154,7 @@
                                 iconClass:'icon-coupon',
                                 color:'#5a9add'
                             },
-                            to: { name: 'couponList',query:{token:1}}
+                            to: { name: 'couponList',params:{type:"all"}}
                         },
                         enshrine: {
                             title:"我的收藏",
@@ -202,11 +202,6 @@
                         name:"退款/售后"
                     }
                 }
-            }
-        }
-        ,filters:{
-            gold(value) {
-                return value.toFixed(2)
             }
         }
         ,components:{
