@@ -27,10 +27,85 @@
             </div>
             <div class="hint-voice">
                 <p>收不到短信？ 使用<span>语音验证码</span></p>
+                <p>{{getToken}}</p>
             </div>
         </div>
     </transition>
 </template>
+<script type="text/babel">
+    import { mapGetters } from 'vuex'
+    export default{
+        data(){
+            return {
+                mobile: '',
+                vcode: '',
+                refCaptchaText:"获取验证码",
+                refCaptchaBtn : true,
+                fn:null
+            }
+        },
+        computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            }),
+            disabled() {
+//                console.log(this.mobile)
+//                return true;
+                return (this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/));
+            },
+
+        },
+        methods: {
+            //发送成功，倒计时
+            countDown(){
+                this.$nextTick(function () {
+                    var self = this, count = 60;
+                    self.refCaptchaBtn = !this.refCaptchaBtn;
+                    self.refCaptchaText = count + "s";
+                    this.fn = setInterval(function () {
+                        count--;
+                        if (!count) {
+                            self.refCaptchaText = "重新发送";
+                            self.refCaptchaBtn = true;
+                            clearInterval(self.fn);
+                        }else{
+                            self.refCaptchaText = count + "s";
+                        }
+                    }, 1000);
+                });
+            },
+            //验证手机号码，验证发送短信
+//            type=memberLogin&mobile=%@&smsType=0
+            refCaptcha() {
+                this.$nextTick(function () {
+                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
+                        console.log(this.mobile)
+                        this.$http.get('api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
+                            .then((response) => {
+                            this.refCaptchaBtn = false;
+                            var data = JSON.parse(response.data);
+                                console.log(data)
+                            this.countDown();
+                        },(response) => {
+                            this.refCaptchaBtn = true;
+                        }).catch(res => {
+                            console.log("jia")
+                        });
+                    }
+                    return false;
+                });
+            },
+            createdUser(){
+                let params = {
+                    "userType":"member",
+                    "loginId":this.mobile,
+                    "vcode":this.vcode
+                }
+                this.$store.dispatch('loginMobile', params)
+            }
+        }
+    }
+</script>
 <style>
     .load-view {
         position:absolute;
@@ -112,67 +187,3 @@
         font-size: 26px;
     }
 </style>
-<script type="text/babel">
-    export default{
-        data(){
-            return {
-                mobile: '',
-                vcode: '',
-                refCaptchaText:"获取验证码",
-                refCaptchaBtn : true,
-                fn:null
-            }
-        },
-        computed:{
-            disabled() {
-//                console.log(this.mobile)
-//                return true;
-                return (this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/));
-            }
-        },
-        methods: {
-            //发送成功，倒计时
-            countDown(){
-                this.$nextTick(function () {
-                    var self = this, count = 60;
-                    self.refCaptchaBtn = !this.refCaptchaBtn;
-                    self.refCaptchaText = count + "s";
-                    this.fn = setInterval(function () {
-                        count--;
-                        if (!count) {
-                            self.refCaptchaText = "重新发送";
-                            self.refCaptchaBtn = true;
-                            clearInterval(self.fn);
-                        }else{
-                            self.refCaptchaText = count + "s";
-                        }
-                    }, 1000);
-                });
-            },
-            //验证手机号码，验证发送短信
-//            type=memberLogin&mobile=%@&smsType=0
-            refCaptcha() {
-                this.$nextTick(function () {
-                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
-                        console.log(this.mobile)
-                        this.$http.get('api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
-                            .then((response) => {
-                            this.refCaptchaBtn = false;
-                            var data = JSON.parse(response.data);
-                                console.log(data)
-                            this.countDown();
-                        },(response) => {
-                            this.refCaptchaBtn = true;
-                        }).catch(res => {
-                            console.log("jia")
-                        });
-                    }
-                    return false;
-                });
-            },
-            createdUser(){
-                this.$store.dispatch('loginMobile', {mobile:this.mobile,vcode:this.vcode})
-            }
-        }
-    }
-</script>
