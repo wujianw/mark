@@ -113,6 +113,7 @@
     }
 </style>
 <script type="text/babel">
+    import { mapGetters } from 'vuex'
     export default{
         data(){
             return {
