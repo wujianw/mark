@@ -4,7 +4,7 @@
             <i v-if="icon.iconClass" class="icon" :class="icon.iconClass" :style="styleObj"></i>
         </div>
         <div class="link-details" :data-text="details">
-            <i class="icon icon-arrowRight"></i>
+            <i class="icon icon-arrow-right"></i>
         </div>
     </router-link>
 </template>
