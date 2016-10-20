@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
 import member from './modules/member'
-import createLogger from './src/plugins/logger'
+import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 

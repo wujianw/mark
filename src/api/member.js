@@ -3,6 +3,7 @@
  */
 import Vue from 'vue'
 export default {
+    //{ "userType": "member", loginId, vcode }
   getLoginInformation (option,cb,errorCb) {
       return Vue.http.post(
           'api/open/member/vcodelogin.json',
@@ -12,7 +13,8 @@ export default {
           console.log(res.data)
           return cb(data)
       }).catch(res => {
-          errorCb()
+          errorCb({name :1})
+          console.log(0)
           return Promise.reject()
       })
   }
