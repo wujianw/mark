@@ -25,16 +25,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-    .load-wrap{ background: #fff; text-align: center; }
-    .load-link{ flex-grow: 1; font: 28px/76px "Microsoft Yahei"; border-bottom: 5px solid #afafaf; }
-    .load-link span{ color: #505050; }
-    .load-active{ border-bottom: 5px solid #e85350; }
-    .load-active span{ color: #e85352; }
 
-    .left-enter-active, .left-leave-active {
-        transition: opacity .5s;
-    }
-    .left-enter, .left-leave-active {
-        opacity: 0;
-    }
 </style>

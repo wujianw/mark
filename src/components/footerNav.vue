@@ -1,9 +1,12 @@
 <template>
-    <footer class="footer-nav-wrap">
-        <nav class="flex-space-around footer-nav">
-            <block-btn v-for="item in nav" :icon="item.icon" :name="item.name" :to="item.to"></block-btn>
-        </nav>
-    </footer>
+    <div>
+        <router-view></router-view>
+        <footer class="footer-nav-wrap">
+            <nav class="flex-space-around footer-nav">
+                <block-btn v-for="item in nav" :icon="item.icon" :name="item.name" :to="item.to"></block-btn>
+            </nav>
+        </footer>
+    </div>
 </template>
 <style lang="scss">
     .footer-nav-wrap{
