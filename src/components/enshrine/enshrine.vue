@@ -3,6 +3,9 @@
         <header-nav :links="links"></header-nav>
     </div>
 </template>
+<style lang="scss">
+
+</style>
 <script type="text/babel">
     import headerNav from '../headerNav'
     export default{
@@ -10,12 +13,12 @@
             return{
                 links:{
                     left:{
-                        to:{name:"loadMobile",params:{type:"all"}},
-                        name:"手机验证登录"
+                        to:{name:"enshrineList",params:{type:"shops"}},
+                        name:"收藏店铺"
                     }
                     ,right:{
-                        to:{name:"loadUser",params:{type:"olnShop"}},
-                        name:"账号密码登录"
+                        to:{name:"enshrineList",params:{type:"goods"}},
+                        name:"收藏商品"
                     }
                 }
             }
