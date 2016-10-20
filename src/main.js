@@ -9,7 +9,7 @@ import { routes } from './router'
 import store from './store'
 //开启debug模式
 Vue.config.debug = true
-var website_url = document.getElementById("p_s_f_website_url").value;
+//var website_url = document.getElementById("p_s_f_website_url").value;
 Vue.filter('gold', function (value) {
     return value.toFixed(2)
 })
@@ -24,13 +24,15 @@ const router = new VueRouter({
 })
 
 import VueResource from 'vue-resource'
-
 Vue.use(VueResource);
-Vue.http.options.root = website_url;
+Vue.http.options.xhr = { withCredentials: true }
+Vue.http.options.root = '/';
+
+
 Vue.http.options.emulateJSON = true;
 const app = new Vue({
     router:router,
-    store:router,
+    store:store,
     render: h => h(App)
 }).$mount('#app')
 
