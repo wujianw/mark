@@ -49,7 +49,7 @@
                 ,authCode: {
                     authCode:""
                     ,icon:{
-                        iconClass: 'icon-authCode'
+                        iconClass: 'icon-verification'
                     }
                 }
             }

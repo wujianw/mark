@@ -40,7 +40,7 @@
                             iconClass: 'icon-shops'
                         }
                         ,to: {
-                            name:"bound"
+                            name:"shopList"
                         }
                         ,name: "附近商家"
                     }
