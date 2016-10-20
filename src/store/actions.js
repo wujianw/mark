@@ -1,7 +1,7 @@
 import member from '../api/member'
 import * as types from './mutation-types'
 
-export const loginMobile = ({ commit },option) => {
+export const loginMobile = ({ commit,state},option) => {
     member.getLoginInformation(
         option,
         data => commit(types.LOGIN_MOBILE_SUCCESS,{data}),
