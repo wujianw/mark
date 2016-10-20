@@ -10,7 +10,7 @@
             </div>
             <div>
                 <router-link :to="{name:'userInformation',query:{token:1}}">
-                    <span class="link-details">完善信息<i class="icon icon-arrowRight"></i></span>
+                    <span class="link-details">完善信息<i class="icon icon-arrow-right"></i></span>
                 </router-link>
             </div>
         </div>
@@ -162,7 +162,7 @@
                                 iconClass:'icon-enshrine',
                                 color:'#d95693'
                             },
-                            to:{ name: 'loadMobile' }
+                            to:{ name: 'enshrineList',params:{type:"shops"}}
                         }
                     }
                     ,setting: {
@@ -187,7 +187,7 @@
                         icon:{
                             iconClass:'icon-waitConsume'
                         },
-                        name:"待评价"
+                        name:"待确认"
                     }
                     ,waitAppraise:{
                         icon:{

@@ -28,7 +28,7 @@
                 nav: {
                     special:{
                         icon:{
-                            iconClass: 'icon-special'
+                            iconClass: 'icon-special-offer'
                         }
                         ,to: {
                             name:"bound"

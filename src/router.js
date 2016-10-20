@@ -1,24 +1,21 @@
 //header-view 组件
 const login = resolve => require(['./components/login/load'], resolve)
-
-    // 登入
+// 登入
 const loadMobile = resolve => require(['./components/login/load_mobile'], resolve)
 const loadUser = resolve => require(['./components/login/load_user'], resolve)
-    //优惠券列表
+
+//优惠券列表
 const coupon = resolve => require(['./components/coupon/coupon'], resolve)
 const couponList = resolve => require(['./components/coupon/couponList'], resolve)
 
+//我的收藏
+const enshrine = resolve => require(['./components/enshrine/enshrine'], resolve)
+const enshrineList = resolve => require(['./components/enshrine/enshrineList'], resolve)
+
 //footer-view 组件
 const footerView = resolve => require(['./components/footerNav'], resolve)
-
     // 会员中心 --
 const user = resolve => require(['./components/user'], resolve)
-
-
-//no nav 组件
-
-
-
 
 // 个人信息
 const userInformation = resolve => require(['./components/userInformation'], resolve)
@@ -66,6 +63,13 @@ export const routes = [
         children:[
             // 会员中心
             { path: '/' , name: 'user' , component: user }
+        ]
+    }
+    ,{
+        path: '/user/enshrine',name: 'enshrine',component: enshrine,
+        children:[
+            // 商品&店铺
+            {path: 'list/:type',name: 'enshrineList',component: enshrineList}
         ]
     }
     ,{ path: '/user/details' , name: 'userInformation' , component: userInformation }
