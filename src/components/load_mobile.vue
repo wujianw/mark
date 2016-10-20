@@ -5,16 +5,16 @@
                 <li class="flex-space">
                     <div class="mobile-text flex-space">
                         <i class="icon icon-user"></i>
-                        <input class="input" type="number" v-model.number="mobile" placeholder="请输入您的手机号码"
+                        <input class="input" type="text" v-model="mobile" placeholder="请输入您的手机号码"
                                maxlength="11">
                         <i class="icon icon-off"></i>
                     </div>
-                    <div class="mobile-btn"><p>获取验证码</p></div>
+                    <div class="mobile-btn"><p @click="refCaptcha">{{refCaptchaText}}</p></div>
                 </li>
                 <li class="flex-space">
                     <div class="mobile-text flex-space">
                         <i class="icon icon-authCode"></i>
-                        <input class="input" type="number" v-model.number="verification" placeholder="请输入您收到的短信验证码">
+                        <input class="input" type="text" v-model="vcode" placeholder="请输入您收到的短信验证码">
                         <i class="icon icon-off"></i>
                     </div>
                 </li>
@@ -22,15 +22,88 @@
             <div>
                 <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意<a href="">《积分宝消费养老用户服务协议》</a></p>
             </div>
-            <div class="load-btn" @click="">
-                <span>登录</span>
+            <div class="load-btn" @click="createdUser">
+                <span :disabled="!disabled">登录</span>
             </div>
             <div class="hint-voice">
                 <p>收不到短信？ 使用<span>语音验证码</span></p>
+                <p>{{getToken}}</p>
             </div>
         </div>
     </transition>
 </template>
+<script type="text/babel">
+    import { mapGetters } from 'vuex'
+    export default{
+        data(){
+            return {
+                mobile: '',
+                vcode: '',
+                refCaptchaText:"获取验证码",
+                refCaptchaBtn : true,
+                fn:null
+            }
+        },
+        computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            }),
+            disabled() {
+                return (this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/));
+            },
+
+        },
+        methods: {
+            //发送成功，倒计时
+            countDown(){
+                this.$nextTick(function () {
+                    var self = this, count = 60;
+                    self.refCaptchaBtn = !this.refCaptchaBtn;
+                    self.refCaptchaText = count + "s";
+                    this.fn = setInterval(function () {
+                        count--;
+                        if (!count) {
+                            self.refCaptchaText = "重新发送";
+                            self.refCaptchaBtn = true;
+                            clearInterval(self.fn);
+                        }else{
+                            self.refCaptchaText = count + "s";
+                        }
+                    }, 1000);
+                });
+            },
+            //验证手机号码，验证发送短信
+//            type=memberLogin&mobile=%@&smsType=0
+            refCaptcha() {
+                this.$nextTick(function () {
+                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
+                        console.log(this.mobile)
+                        this.$http.get('api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
+                            .then((response) => {
+                            this.refCaptchaBtn = false;
+                            var data = JSON.parse(response.data);
+                                console.log(data)
+                            this.countDown();
+                        },(response) => {
+                            this.refCaptchaBtn = true;
+                        }).catch(res => {
+                            console.log("jia")
+                        });
+                    }
+                    return false;
+                });
+            },
+            createdUser(){
+                let params = {
+                    "userType":"member",
+                    "loginId":this.mobile,
+                    "vcode":this.vcode
+                }
+                this.$store.dispatch('loginMobile', params)
+            }
+        }
+    }
+</script>
 <style>
     .load-view {
         position:absolute;
@@ -112,14 +185,3 @@
         font-size: 26px;
     }
 </style>
-<script>
-    export default{
-        data(){
-            return {
-                mobile: '',
-                verification: ''
-            }
-        },
-        methods: {}
-    }
-</script>
