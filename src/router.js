@@ -36,6 +36,14 @@ const agreementDetails = resolve => require(['./components/agreementDetails'], r
 
 //我的钱包
 const mineWallet = resolve => require(['./components/mineWallet'], resolve)
+
+
+//钱包设置
+const walletSet = resolve => require(['./components/walletSet'], resolve)
+
+//现金红包
+const redMoney = resolve => require(['./components/redMoney'], resolve)
+
 export const routes = [
     {
         path: '/login/mobile',
@@ -106,5 +114,20 @@ export const routes = [
         path: '/mineWallet' ,
         name: 'mineWallet' ,
         component: mineWallet
+    },
+     {
+        path: '/walletSet' ,
+        name: 'walletSet' ,
+        component: walletSet
+    },
+    {
+        path: '/redMoney' ,
+        name: 'redMoney' ,
+        component: redMoney
     }
+
+
+
+
+
 ]
