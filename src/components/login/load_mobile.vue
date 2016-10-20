@@ -22,8 +22,8 @@
             <div>
                 <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意<a href="">《积分宝消费养老用户服务协议》</a></p>
             </div>
-            <div class="load-btn" @click="createdUser">
-                <span :disabled="!disabled">登录</span>
+            <div class="load-btn" @click="createdUser" :disabled="!disabled">
+                <span>登录</span>
             </div>
             <div class="hint-voice">
                 <p>收不到短信？ 使用<span>语音验证码</span></p>
@@ -87,7 +87,7 @@
                         },(response) => {
                             this.refCaptchaBtn = true;
                         }).catch(res => {
-                            console.log("jia")
+                            console.log("")
                         });
                     }
                     return false;

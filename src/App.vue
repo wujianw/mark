@@ -1,13 +1,13 @@
 <template>
     <div id="app">
-        <user-load></user-load>
+        <router-view></router-view>
     </div>
 </template>
 <script>
-    import userLoad from './components/loads'
+//    import userLoad from './components/loads'
     export default {
         components: {
-            userLoad
+//            userLoad
         }
     }
 </script>
