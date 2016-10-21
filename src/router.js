@@ -106,9 +106,9 @@ export const routes = [
     }
     ,{ path: '/agreement', name: 'agreement', component: agreement }
     ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
-    ,{ path: '/mineWallet',  name: 'mineWallet', component: mineWallet }
-    ,{ path: '/walletSet' , name: 'walletSet' , component: walletSet }
-    ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
-    ,{ path: '/income' , name: 'income' , component: income }
-    ,{ path: '/recharge' , name: 'recharge' , component: recharge }
+    //,{ path: '/mineWallet',  name: 'mineWallet', component: mineWallet }
+    //,{ path: '/walletSet' , name: 'walletSet' , component: walletSet }
+    //,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
+    //,{ path: '/income' , name: 'income' , component: income }
+    //,{ path: '/recharge' , name: 'recharge' , component: recharge }
 ]
