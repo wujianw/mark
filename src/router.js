@@ -49,6 +49,19 @@ const agreementDetails = resolve => require(['./components/agreementDetails'], r
 //我的钱包
 const mineWallet = resolve => require(['./components/mineWallet'], resolve)
 
+////钱包设置
+//const walletSet = resolve => require(['./components/walletSet'], resolve)
+//
+////现金红包
+//const redMoney = resolve => require(['./components/redMoney'], resolve)
+//
+////收支明细
+//const income = resolve => require(['./components/income'], resolve)
+//
+////充值
+//const recharge = resolve => require(['./components/recharge'], resolve)
+
+
 export const routes = [
     {
         path: '/login',name: 'login',component:login,
@@ -94,4 +107,8 @@ export const routes = [
     ,{ path: '/agreement', name: 'agreement', component: agreement }
     ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
     ,{ path: '/mineWallet',  name: 'mineWallet', component: mineWallet }
+    ,{ path: '/walletSet' , name: 'walletSet' , component: walletSet }
+    ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
+    ,{ path: '/income' , name: 'income' , component: income }
+    ,{ path: '/recharge' , name: 'recharge' , component: recharge }
 ]

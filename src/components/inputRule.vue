@@ -9,6 +9,7 @@
 <style lang="scss">
     $placeholderColor:#e1dfdf;
     .input-rule-el{
+        margin:20px 0;
         padding:12px 0;
         height:74px;
         .input{
@@ -30,7 +31,7 @@
             }
             input{
                 flex-grow:2;
-                padding-left:20px;
+                padding-left:25px;
                 border:none;
                 font-size:30px;
                 line-height:42px;
