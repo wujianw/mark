@@ -1,18 +1,35 @@
 <template>
     <header class="header-nav-wrap">
         <nav class="flex-space header-nav load-wrap flex-center">
+<<<<<<< HEAD
             <router-link tag="div" active-class="load-active" class="load-link" v-for="item in links" :to="item.to" >{{item.name}}</router-link>
+=======
+            <router-link tag="div" active-class="load-active" class="load-link" v-for="item in links" :to="item.to" replace>{{item.name}}</router-link>
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
         </nav>
         <router-view></router-view>
     </header>
 </template>
 <style lang="scss">
+<<<<<<< HEAD
     .header-nav-wrap{
         .load-wrap{ background: #fff; text-align: center; }
         .load-link{ flex-grow: 1; font: 28px "Microsoft Yahei"; line-height:76px; border-bottom: 5px solid #afafaf; }
         .load-link span{ color: #505050; }
         .load-active{ border-bottom: 5px solid #e85350; }
         .load-active span{ color: #e85352; }
+=======
+    .load-wrap{ background: #fff; text-align: center; }
+    .load-link{ flex-grow: 1; font: 28px/76px "Microsoft Yahei"; border-bottom: 5px solid #afafaf; }
+    .load-link span{ color: #505050; }
+    .load-active{ border-bottom: 5px solid #e85350; }
+    .load-active span{ color: #e85352; }
+    .left-enter-active, .left-leave-active {
+        transition: opacity .5s;
+    }
+    .left-enter, .left-leave-active {
+        opacity: 0;
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
     }
 </style>
 <script type="text/babel">

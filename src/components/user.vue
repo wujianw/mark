@@ -10,7 +10,11 @@
             </div>
             <div>
                 <router-link :to="{name:'userInformation',query:{token:1}}">
+<<<<<<< HEAD
                     <span class="link-details">完善信息<i class="icon icon-arrowRight"></i></span>
+=======
+                    <span class="link-details">完善信息<i class="icon icon-arrow-right"></i></span>
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
                 </router-link>
             </div>
         </div>
@@ -136,7 +140,11 @@
                                 iconClass:'icon-annuity',
                                 color:'#ffb100'
                             },
+<<<<<<< HEAD
                             to: { name: 'recharge' }
+=======
+                            to: { name: 'loadMobile' }
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
                         }
                     }
                     ,ticket: {
@@ -162,7 +170,11 @@
                                 iconClass:'icon-enshrine',
                                 color:'#d95693'
                             },
+<<<<<<< HEAD
                             to:{ name: 'loadMobile' }
+=======
+                            to:{ name: 'enshrineList',params:{type:"shops"}}
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
                         }
                     }
                     ,setting: {
@@ -187,7 +199,11 @@
                         icon:{
                             iconClass:'icon-waitConsume'
                         },
+<<<<<<< HEAD
                         name:"待评价"
+=======
+                        name:"待确认"
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
                     }
                     ,waitAppraise:{
                         icon:{

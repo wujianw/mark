@@ -1,9 +1,20 @@
 <template>
+<<<<<<< HEAD
     <footer class="footer-nav-wrap">
         <nav class="flex-space-around footer-nav">
             <block-btn v-for="item in nav" :icon="item.icon" :name="item.name" :to="item.to"></block-btn>
         </nav>
     </footer>
+=======
+    <div>
+        <router-view></router-view>
+        <footer class="footer-nav-wrap">
+            <nav class="flex-space-around footer-nav">
+                <block-btn v-for="item in nav" :icon="item.icon" :name="item.name" :to="item.to"></block-btn>
+            </nav>
+        </footer>
+    </div>
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
 </template>
 <style lang="scss">
     .footer-nav-wrap{
@@ -25,7 +36,11 @@
                 nav: {
                     special:{
                         icon:{
+<<<<<<< HEAD
                             iconClass: 'icon-special'
+=======
+                            iconClass: 'icon-special-offer'
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
                         }
                         ,to: {
                             name:"bound"

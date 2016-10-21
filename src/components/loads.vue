@@ -25,6 +25,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+<<<<<<< HEAD
     .load-wrap{ background: #fff; text-align: center; }
     .load-link{ flex-grow: 1; font: 28px/76px "Microsoft Yahei"; border-bottom: 5px solid #afafaf; }
     .load-link span{ color: #505050; }
@@ -37,4 +38,7 @@
     .left-enter, .left-leave-active {
         opacity: 0;
     }
+=======
+
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
 </style>

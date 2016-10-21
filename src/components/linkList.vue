@@ -4,7 +4,11 @@
             <i v-if="icon.iconClass" class="icon" :class="icon.iconClass" :style="styleObj"></i>
         </div>
         <div class="link-details" :data-text="details">
+<<<<<<< HEAD
             <i class="icon icon-arrowRight"></i>
+=======
+            <i class="icon icon-arrow-right"></i>
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
         </div>
     </router-link>
 </template>

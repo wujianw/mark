@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+<<<<<<< HEAD
         <user-load></user-load>
     </div>
 </template>
@@ -8,6 +9,16 @@
     export default {
         components: {
             userLoad
+=======
+        <router-view></router-view>
+    </div>
+</template>
+<script>
+//    import userLoad from './components/loads'
+    export default {
+        components: {
+//            userLoad
+>>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
         }
     }
 </script>
