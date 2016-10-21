@@ -5,5 +5,6 @@ body{font: 16px/1 Tahoma,Helvetica,Arial,"\5b8b\4f53",sans-serif;}
 img{border: none;}
 li{list-style: none;}
 a{text-decoration: none;}
-/*input{outline: none; -webkit-appearance: none;}*/
+input{outline: none; -webkit-appearance: none;border: none;}
+
 body{width: 750px;margin:0 auto;}

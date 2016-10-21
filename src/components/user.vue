@@ -136,7 +136,7 @@
                                 iconClass:'icon-annuity',
                                 color:'#ffb100'
                             },
-                            to: { name: 'loadMobile' }
+                            to: { name: 'recharge' }
                         }
                     }
                     ,ticket: {

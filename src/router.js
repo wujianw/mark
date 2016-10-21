@@ -44,6 +44,12 @@ const walletSet = resolve => require(['./components/walletSet'], resolve)
 //现金红包
 const redMoney = resolve => require(['./components/redMoney'], resolve)
 
+//收支明细
+const income = resolve => require(['./components/income'], resolve)
+
+//充值
+const recharge = resolve => require(['./components/recharge'], resolve)
+
 export const routes = [
     {
         path: '/login/mobile',
@@ -125,7 +131,18 @@ export const routes = [
         name: 'redMoney' ,
         component: redMoney
     }
-
+    ,
+    {
+        path: '/income' ,
+        name: 'income' ,
+        component: income
+    }
+    ,
+    {
+        path: '/recharge' ,
+        name: 'recharge' ,
+        component: recharge
+    }
 
 
 
