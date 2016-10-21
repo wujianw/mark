@@ -11,10 +11,14 @@
             <div>
                 <router-link :to="{name:'userInformation',query:{token:1}}">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <span class="link-details">完善信息<i class="icon icon-arrowRight"></i></span>
 =======
                     <span class="link-details">完善信息<i class="icon icon-arrow-right"></i></span>
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+                    <span class="link-details">完善信息<i class="icon icon-arrow-right"></i></span>
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
                 </router-link>
             </div>
         </div>
@@ -171,10 +175,14 @@
                                 color:'#d95693'
                             },
 <<<<<<< HEAD
+<<<<<<< HEAD
                             to:{ name: 'loadMobile' }
 =======
                             to:{ name: 'enshrineList',params:{type:"shops"}}
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+                            to:{ name: 'enshrineList',params:{type:"shops"}}
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
                         }
                     }
                     ,setting: {
@@ -200,10 +208,14 @@
                             iconClass:'icon-waitConsume'
                         },
 <<<<<<< HEAD
+<<<<<<< HEAD
                         name:"待评价"
 =======
                         name:"待确认"
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+                        name:"待确认"
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
                     }
                     ,waitAppraise:{
                         icon:{

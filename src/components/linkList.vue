@@ -5,10 +5,14 @@
         </div>
         <div class="link-details" :data-text="details">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <i class="icon icon-arrowRight"></i>
 =======
             <i class="icon icon-arrow-right"></i>
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+            <i class="icon icon-arrow-right"></i>
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
         </div>
     </router-link>
 </template>

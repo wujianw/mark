@@ -69,7 +69,7 @@
                         icon:{
                             iconClass:'icon-password'
                         },
-                        to: {name: 'loadMobile' },
+                        to: {name: 'password'},
                         details:"修改/找回"
                     }
                     ,agreement:{

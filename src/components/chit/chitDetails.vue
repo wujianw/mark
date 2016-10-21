@@ -1,5 +1,6 @@
 <template>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div>
 
     </div>
@@ -7,6 +8,8 @@
 <style lang="scss">
 
 =======
+=======
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
     <div class="chit-details-el flex-start">
         <div class="flex-center title-wrap">
             <div class="title">{{title}}</div>
@@ -62,12 +65,16 @@
         }
     }
 }
+<<<<<<< HEAD
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
 </style>
 <script type="text/babel">
     export default{
         data(){
             return{
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
@@ -75,6 +82,11 @@
                 title:'代金券名称',
                 num:"12121212"
 >>>>>>> 7c6bba66ebdc46888a8e7b270da403a03b171902
+=======
+                date:'2016-10-20 10:20',
+                title:'代金券名称',
+                num:"12121212"
+>>>>>>> 200acd83eba2c8e2b16851d8fda8a3ee4e3657f9
             }
         }
         ,components:{
