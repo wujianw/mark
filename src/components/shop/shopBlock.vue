@@ -8,9 +8,8 @@
                 <div class="content">
                     <div class="shop-name">商家名称<i class="icon icon-yen"></i></div>
                     <div class="evaluate">
-                        <i v-for="n in 5" class="icon icon-evaluate">&nbsp</i>
+                        <i v-for="n in 5" class="icon icon-evaluate" :class="[n >= score + 1 ? 'no':'',n > score && n < score + 1 ? 'half-style' : '']"></i>
                         <span>{{evaluate}}评价</span>
-                        <i class="icon icon-evaluate half-style">&nbsp</i>
                     </div>
                 </div>
             </div>
@@ -19,12 +18,15 @@
                 <div class="integral">10%</div>
             </div>
         </div>
-        <div><i class="icon icon-benefit"></i><span></span></div>
-        <div><i class="icon icon-special"></i><span></span></div>
+        <div class="benefit-special">
+            <div class="benefit"><i class="icon icon-benefit"></i>到店买单<span>9折（扫码立减）</span></div>
+            <div class="special"><i class="icon icon-special"></i>商家E&nbsp店<span>多件特价正在进行中</span></div>
+        </div>
     </div>
 </template>
 <style lang="scss">
     .shop-block-el{
+        background:#fff;
         .pic{
             height:146px;
             width:226px;
@@ -38,6 +40,7 @@
                 color:#505050;
                 i{font-size:30px;color:#e95453;}
             }
+            /* 评价 */
             .evaluate{
                 padding-top:26px;
                 font-size:20px;
@@ -49,10 +52,11 @@
                 .half-style {
                     position:relative;
                     display:inline-block;
-                    width:1em;
-                    font-size:22px;
+                    width:22px;
+                    font-size:22px;;
+                    height:18px;
                     color: transparent;
-                    overflow:hidden;
+                    /*overflow:hidden;*/
                     white-space: pre;
                 }
                 .half-style:before {
@@ -61,7 +65,7 @@
                     position:absolute;
                     top:0;
                     width: 50%;
-                    overflow:hidden;
+                    /*overflow:hidden;*/
                     color: #f9a929;
                 }
                 .half-style:after {
@@ -78,7 +82,7 @@
                 }
             }
         }
-
+        /* 积分率&距离 */
         .integral-distance{
             align-self:flex-start;
             .distance{
@@ -103,6 +107,23 @@
             }
 
         }
+        /* 活动简介--> 优惠&特殊 */
+        .benefit-special{
+            border-top:1px solid #f2f2f2;
+            border-bottom:1px solid #f2f2f2;
+            color:#505050;
+            font-size:22px;
+            i{padding:12px;font-size:26px;}
+            .benefit{
+                padding:16px 0 8px;
+                i{color:#f7a926;}
+            }
+            .special{
+                padding:8px 0 16px;
+                i{color:#e85350;}
+            }
+            span{padding-left:40px;color:#afafaf;}
+        }
     }
 
 </style>
@@ -110,8 +131,13 @@
     export default {
         data() {
             return {
-                evaluate:0
+                evaluate:0,
+                score:3
             }
+        }
+        ,computed:{
+        }
+        ,methods:{
         }
     }
 </script>

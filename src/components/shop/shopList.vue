@@ -27,7 +27,7 @@
             line-height: 36px;
             font-size:20px;
             color:#fff;
-            i{font-size:30px;}
+            i{font-size:20px;}
         }
         nav{
             background:#fff;

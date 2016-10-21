@@ -20,6 +20,7 @@ const shopList = resolve => require(['./components/shop/shopList'], resolve)
 
 // 个人信息
 const userInformation = resolve => require(['./components/userInformation'], resolve)
+const password = resolve => require(['./components/login/password'], resolve)
 
 //绑定
 const bound = resolve => require(['./components/bound'], resolve)
@@ -76,6 +77,7 @@ export const routes = [
         ]
     }
     ,{ path: '/user/details' , name: 'userInformation' , component: userInformation }
+    ,{ path: '/user/password' , name: 'password' , component: password }
     ,{ path: '/user/bound' , name: 'bound' , component: bound }
     ,{ path: '/user/orders/:type' , name: 'orders' , component: orders }
     ,{ path: '/user/orders/:type/details' , name: 'orderDetails' , component: orderDetails }
