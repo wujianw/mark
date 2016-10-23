@@ -28,5 +28,5 @@
     .flex-space{display: flex;align-items: center;justify-content: space-between;}
     .flex-end{display: flex;align-items: center;justify-content: flex-end;}
     .flex-end-end{display: flex;align-items: flex-end;justify-content: flex-end;}
-    .flex-space-around{display: flex;align-items: center;justify-content: space-between;}
+    .flex-space-around{display: flex;align-items: center;justify-content: space-around;}
 </style>
