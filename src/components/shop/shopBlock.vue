@@ -1,6 +1,6 @@
 <template>
     <div class="shop-block-el">
-        <div class="flex-space">
+        <router-link tag="div" :to="{name:'shopDetails'}" class="flex-space">
             <div class="flex-start content-wrap">
                 <div class="pic">
                     <img src="" alt="">
@@ -17,7 +17,7 @@
                 <div class="distance">1.8km</div>
                 <div class="integral">10%</div>
             </div>
-        </div>
+        </router-link>
         <div class="benefit-special">
             <div class="benefit"><i class="icon icon-benefit"></i>到店买单<span>9折（扫码立减）</span></div>
             <div class="special"><i class="icon icon-special"></i>商家E&nbsp店<span>多件特价正在进行中</span></div>
@@ -40,47 +40,7 @@
                 color:#505050;
                 i{font-size:30px;color:#e95453;}
             }
-            /* 评价 */
-            .evaluate{
-                padding-top:26px;
-                font-size:20px;
-                color:#afafaf;
-                i{margin-right:12px;color:#f9a929;font-size:22px;}
-                i.no{color:#e0dfdf;}
-                span{padding-left:2px;}
-                /* 半个星星 */
-                .half-style {
-                    position:relative;
-                    display:inline-block;
-                    width:22px;
-                    font-size:22px;;
-                    height:18px;
-                    color: transparent;
-                    /*overflow:hidden;*/
-                    white-space: pre;
-                }
-                .half-style:before {
-                    display:block;
-                    z-index:1;
-                    position:absolute;
-                    top:0;
-                    width: 50%;
-                    /*overflow:hidden;*/
-                    color: #f9a929;
-                }
-                .half-style:after {
-                    display:block;
-                    direction: rtl;
-                    position:absolute;
-                    z-index:2;
-                    top:0;
-                    left:50%;
-                    width: 50%;
-                    content: "\e622";
-                    overflow:hidden;
-                    color: #e0dfdf;
-                }
-            }
+
         }
         /* 积分率&距离 */
         .integral-distance{
@@ -105,7 +65,6 @@
                 &:before{content:"赠";}
                 &:after{content:"养老金";}
             }
-
         }
         /* 活动简介--> 优惠&特殊 */
         .benefit-special{
@@ -125,7 +84,47 @@
             span{padding-left:40px;color:#afafaf;}
         }
     }
-
+    /* 评价 */
+    .evaluate{
+        padding-top:26px;
+        font-size:20px;
+        color:#afafaf;
+        i{margin-right:12px;color:#f9a929;font-size:22px;}
+        i.no{color:#e0dfdf;}
+        span{padding-left:2px;}
+        /* 半个星星 */
+        .half-style {
+            position:relative;
+            display:inline-block;
+            width:22px;
+            font-size:22px;;
+            height:18px;
+            color: transparent;
+            /*overflow:hidden;*/
+            white-space: pre;
+        }
+        .half-style:before {
+            display:block;
+            z-index:1;
+            position:absolute;
+            top:0;
+            width: 50%;
+            /*overflow:hidden;*/
+            color: #f9a929;
+        }
+        .half-style:after {
+            display:block;
+            direction: rtl;
+            position:absolute;
+            z-index:2;
+            top:0;
+            left:50%;
+            width: 50%;
+            content: "\e622";
+            overflow:hidden;
+            color: #e0dfdf;
+        }
+    }
 </style>
 <script type="text/babel">
     export default {

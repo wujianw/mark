@@ -17,6 +17,8 @@ const footerView = resolve => require(['./components/footerNav'], resolve)
     // 会员中心 --
 const user = resolve => require(['./components/user'], resolve)
 const shopList = resolve => require(['./components/shop/shopList'], resolve)
+const goodDetails = resolve => require(['./components/shop/goodDetails'], resolve)
+const shopDetails = resolve => require(['./components/shop/shopDetails'], resolve)
 
 // 个人信息
 const userInformation = resolve => require(['./components/userInformation'], resolve)
@@ -86,6 +88,9 @@ export const routes = [
             { path: '/shopList' , name: 'shopList' , component: shopList }
         ]
     }
+    //商家详情
+    ,{ path: '/shopDetails' , name: 'shopDetails' , component: shopDetails }
+    ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,
         children:[

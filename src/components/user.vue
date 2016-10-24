@@ -34,61 +34,61 @@
     .user-center-wrap{
         background:#f2f2f2;
         color:$userColor;
-    }
 
-    /* 个人信息&背景 */
-    .user-center {
-        height: 222px;
-        padding: 0 24px;
-        background: url("../assets/img/user-center.png") no-repeat;
-        background-size: 100% 100%;
-    }
-    /* 头像--图片 */
-    .hd-pic {
-        height: 110px;
-        width: 110px;
-        padding: 0 8px;
-        border-radius:50%;
-        img{
-            width:100%;
-            height:100%;
+
+        /* 个人信息&背景 */
+        .user-center {
+            height: 222px;
+            padding: 0 24px;
+            background: url("../assets/img/user-center.png") no-repeat;
+            background-size: 100% 100%;
         }
-    }
-
-    /* 昵称&养老金 */
-    .nickname-wrap {
-        padding-left:38px;
-        line-height:$smFontSize + $fontSize;
-        font-size:$smFontSize;
-        .annuity{
-            font-size:$fontSize;
-            color:$annuityColor;
-            &:after {
-                content: "元";
+        /* 头像--图片 */
+        .hd-pic {
+            height: 110px;
+            width: 110px;
+            padding: 0 8px;
+            border-radius:50%;
+            img{
+                width:100%;
+                height:100%;
             }
         }
-        .nickname{font-size:$fontSize;}
-    }
 
-    /* 箭头样式 */
-    .link-details{
-        font-size:$smFontSize;
-        color:$userColor;
-        i{font-size:$smFontSize;}
-    }
+        /* 昵称&养老金 */
+        .nickname-wrap {
+            padding-left:38px;
+            line-height:$smFontSize + $fontSize;
+            font-size:$smFontSize;
+            .annuity{
+                font-size:$fontSize;
+                color:$annuityColor;
+                &:after {
+                    content: "元";
+                }
+            }
+            .nickname{font-size:$fontSize;}
+        }
 
-    /* 购物状态--- link to list */
-    .consumption{
-        background:#fff;
-        height:135px;
-    }
+        /* 箭头样式 */
+        .link-details{
+            font-size:$smFontSize;
+            color:$userColor;
+            i{font-size:$smFontSize;}
+        }
 
-    /* 会员中心li--- link to details */
-    .list-link-wrap{
-        border-top:18px solid #f2f2f2;
-        &:last-of-type{padding-bottom:102px;}
-    }
+        /* 购物状态--- link to list */
+        .consumption{
+            background:#fff;
+            height:135px;
+        }
 
+        /* 会员中心li--- link to details */
+        .list-link-wrap{
+            border-top:18px solid #f2f2f2;
+            &:last-of-type{padding-bottom:102px;}
+        }
+    }
 </style>
 <script>
     import linkList from "./linkList.vue"

@@ -7,10 +7,10 @@
                 <p class="money">20.00<span class="moneyLint">&nbsp元</span> </p>
             </div>
 
-            <footer class="flex-space">
+            <div class="flex-space">
                 <router-link class="go-next" tag="p" :to="obj.to">{{obj.btnName}}</router-link>
                 <router-link class="go-next1" tag="p" :to="obj.to">{{obj.btnName}}</router-link>
-            </footer>
+            </div>
         </div>
 
         <div class="timeLint">最近30天红包明细</div>
