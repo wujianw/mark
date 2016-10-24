@@ -29,4 +29,5 @@
     .flex-end{display: flex;align-items: center;justify-content: flex-end;}
     .flex-end-end{display: flex;align-items: flex-end;justify-content: flex-end;}
     .flex-space-around{display: flex;align-items: center;justify-content: space-around;}
+    .nowrap{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;/* width:14em; */}
 </style>
