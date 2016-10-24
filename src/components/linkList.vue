@@ -27,7 +27,6 @@
             i{font-size:22px;}
             &:before{content:attr(data-text);}
         }
-
     }
 </style>
 <script type="text/babel">
