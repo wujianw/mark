@@ -16,9 +16,17 @@ const enshrineList = resolve => require(['./components/enshrine/enshrineList'], 
 const footerView = resolve => require(['./components/footerNav'], resolve)
     // 会员中心 --
 const user = resolve => require(['./components/user'], resolve)
+
+// 附近商家
 const shopList = resolve => require(['./components/shop/shopList'], resolve)
 const goodDetails = resolve => require(['./components/shop/goodDetails'], resolve)
 const shopDetails = resolve => require(['./components/shop/shopDetails'], resolve)
+
+
+// 评价
+const evaluateNav = resolve => require(['./components/evaluate/evaluateNav'], resolve)
+const evaluateList = resolve => require(['./components/evaluate/evaluateList'], resolve)
+// 特产区商品
 const specialGoods = resolve => require(['./components/special/specialGoods'], resolve)
 
 // 个人信息
@@ -102,6 +110,16 @@ export const routes = [
             {path: 'list/:type',name: 'enshrineList',component: enshrineList}
         ]
     }
+
+
+    ,{ path: '/evaluate' , name: 'evaluate' , component: evaluateNav,
+        children:[
+            // 商品&店铺
+            {path: 'list',name: 'evaluateList',component: evaluateList}
+        ]
+    }
+
+
     ,{ path: '/user/details' , name: 'userInformation' , component: userInformation }
     ,{ path: '/user/password' , name: 'password' , component: password }
     ,{ path: '/user/bound' , name: 'bound' , component: bound }

@@ -13,7 +13,7 @@
             </li>
         </ul>
         <div class="btn-wrap flex-center">
-            <span>查看全部</span>
+            <router-link tag="span" :to="{name:'evaluateList'}">查看全部</router-link>
         </div>
     </div>
 </template>
