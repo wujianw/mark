@@ -57,16 +57,7 @@
                 </div>
             </div>
             <ul class="good-list">
-                <router-link tag="li" :to="{name:''}" class="flex-space">
-                    <div class="flex-start">
-                        <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
-                        <div class="good-details">
-                            <p class="title">商品名称</p>
-                            <p class="gold">100<span>150</span></p>
-                        </div>
-                    </div>
-                    <p class="btn">购买</p>
-                </router-link>
+                <good-item></good-item>
             </ul>
         </section>
         <div class="link-picword">
@@ -75,49 +66,6 @@
     </div>
 </template>
 <style lang="scss">
-    .good-list{
-        li{height:176px;}
-        .good-pic{
-            width:144px;
-            height:144px;
-            padding:12px;
-            img{
-                width:100%;
-                height:100%;
-            }
-        }
-        .good-details{
-            padding-left:12px;
-            .title{
-                line-height:68px;
-                font-size:26px;
-                color:#505050;
-            }
-            .gold{
-                line-height: 46px;
-                font-size:28px;
-                color:#e85352;
-                &:before{content:"￥";font-size:22px;}
-                span{
-                    display:inline-block;
-                    padding-left:28px;
-                    font-size:24px;
-                    color:#afafaf;
-                    &:before{content:"￥";font-size:20px;}
-                }
-            }
-        }
-        .btn{
-            margin-right:24px;
-            width: 138px;
-            border-radius: .2em;
-            background:#e85352;
-            text-align: center;
-            line-height:52px;
-            font-size:26px;
-            color:#fff;
-        }
-    }
     .coupon-list{
         margin-left:66px;
         .coupon-item{
@@ -257,14 +205,15 @@
     }
 </style>
 <script type="text/babel">
+    import goodItem from "./goodItem"
     export default{
         data(){
             return{
-                
+
             }
         }
         ,components:{
-            
+            goodItem
         }
     }
 </script>

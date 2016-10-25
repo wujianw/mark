@@ -36,7 +36,7 @@
     }
 </style>
 <script type="text/babel">
-    import inputText from "./inputText.vue"
+    import inputText from "./../inputText.vue"
     export default {
         data() {
             return {

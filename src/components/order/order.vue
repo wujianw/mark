@@ -7,7 +7,7 @@
         </header>
         <router-link tag="main" :to="details.to">
             <div class="flex-start">
-                <div class="good-pic"><img src="../../static/img/good-pic.jpg" alt=""></div>
+                <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
                 <div class="good-details">
                     <p>商品名称</p>
                     <p>有效日期</p>

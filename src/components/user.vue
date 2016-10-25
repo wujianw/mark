@@ -112,14 +112,14 @@
                                 }
                             }
                         }
-                        ,tradeList: {
-                            title:"交易记录",
-                            icon:{
-                                iconClass:'icon-tradeList',
-                                color:'#d55b97'
-                            },
-                            to: { name:'loadMobile' }
-                        }
+//                        ,tradeList: {
+//                            title:"交易记录",
+//                            icon:{
+//                                iconClass:'icon-tradeList',
+//                                color:'#d55b97'
+//                            },
+//                            to: { name:'loadMobile' }
+//                        }
                     }
                     ,gold: {
                         wallet: {

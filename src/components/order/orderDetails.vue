@@ -100,9 +100,9 @@
     }
 </style>
 <script>
-    import goodBlock from './goodBlock'
-    import linkList from './linkList'
-    import ticketBlock from './ticketBlock'
+    import goodBlock from './../goodBlock'
+    import linkList from './../linkList'
+    import ticketBlock from './../ticketBlock'
     export default{
         data(){
             return {

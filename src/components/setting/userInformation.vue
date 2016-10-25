@@ -27,7 +27,7 @@
     }
 </style>
 <script type="text/babel">
-    import linkList from './linkList'
+    import linkList from './../linkList'
     export default {
         data() {
             return {

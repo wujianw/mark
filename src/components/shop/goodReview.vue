@@ -5,8 +5,7 @@
                 <div class="flex-space">
                     <p class="info info-js evaluate">
                         <span class="info-name">{{review.memberName}}</span>
-                        <i v-for="n in 5" class="icon icon-evaluate"
-                           :class="[n >= review.score + 1 ? 'no':'',n > review.score && n < review.score + 1 ? 'half-style' : '']"></i>
+                        <star :score="review.score"></star>
                     </p>
                     <p class="time">2016-10-02 10:00</p>
                 </div>
@@ -58,21 +57,25 @@
     }
 </style>
 <script type="text/babel">
+    import star from "../star"
     export default{
-        props:{
+        components:{
+            star
+        }
+        ,props:{
             reviews:{
-                type:Object,
+                type:Array,
                 default() {
                     return [
                         {
                             content: "少年阿飞少年阿飞少年阿少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年飞少年阿飞少年阿飞"
                             , memberName: "少年阿飞"
-                            , score: 0
+                            , score: 3.1
                         }
                         ,{
                             content: "少年阿飞少年阿飞少年阿飞少年阿飞少年阿飞"
                             , memberName: "少年阿飞"
-                            , score: 0
+                            , score:0.1
                         }
 
                     ]

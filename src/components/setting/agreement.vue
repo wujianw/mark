@@ -4,10 +4,10 @@
     </div>
 </template>
 <style lang="scss">
-    
+
 </style>
 <script>
-    import linkList from './linkList'
+    import linkList from './../linkList'
     export default{
         data(){
             return{

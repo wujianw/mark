@@ -49,7 +49,7 @@
                             iconClass: 'icon-message'
                         }
                         ,to: {
-                            name:"bound"
+                            name:"specialGoods"
                         }
                         ,name: "消息"
                     }

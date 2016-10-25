@@ -19,19 +19,20 @@ const user = resolve => require(['./components/user'], resolve)
 const shopList = resolve => require(['./components/shop/shopList'], resolve)
 const goodDetails = resolve => require(['./components/shop/goodDetails'], resolve)
 const shopDetails = resolve => require(['./components/shop/shopDetails'], resolve)
+const specialGoods = resolve => require(['./components/special/specialGoods'], resolve)
 
 // 个人信息
-const userInformation = resolve => require(['./components/userInformation'], resolve)
+const userInformation = resolve => require(['./components/setting/userInformation'], resolve)
 const password = resolve => require(['./components/login/password'], resolve)
 
 //绑定
-const bound = resolve => require(['./components/bound'], resolve)
+const bound = resolve => require(['./components/setting/bound'], resolve)
 
 //订单列表 {query:{token,goodId},params:{type}}
-const orders = resolve => require(['./components/orders'], resolve)
+const orders = resolve => require(['./components/order/orders'], resolve)
 
 //订单详情 {query:{orderName},params:{type}}
-const orderDetails = resolve => require(['./components/orderDetails'], resolve)
+const orderDetails = resolve => require(['./components/order/orderDetails'], resolve)
 
 //退款详情
 const applyRefund = resolve => require(['./components/applyRefund'], resolve)
@@ -43,10 +44,10 @@ const chitDetails = resolve => require(['./components/chit/chitDetails'], resolv
 
 
 //协议列表
-const agreement = resolve => require(['./components/agreement'], resolve)
+const agreement = resolve => require(['./components/setting/agreement'], resolve)
 
 //协议详情
-const agreementDetails = resolve => require(['./components/agreementDetails'], resolve)
+const agreementDetails = resolve => require(['./components/setting/agreementDetails'], resolve)
 
 //我的钱包
 const mineWallet = resolve => require(['./components/wallet/mineWallet'], resolve)
@@ -83,13 +84,16 @@ export const routes = [
         path: '/',name: 'footerView',component: footerView,
         children:[
             // 会员中心
-            { path: '/user' , name: 'user' , component: user },
+            { path: '/user' , name: 'user' , component: user }
             // 附近商家
-            { path: '/shopList' , name: 'shopList' , component: shopList }
+            ,{ path: '/shopList' , name: 'shopList' , component: shopList }
+            // 特价商品列表
+            ,{ path: '/shopList/specialGoods' , name: 'specialGoods' , component: specialGoods }
+            //商家详情
+            ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
         ]
     }
-    //商家详情
-    ,{ path: '/shopDetails' , name: 'shopDetails' , component: shopDetails }
+
     ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,
