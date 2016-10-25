@@ -43,7 +43,7 @@ const orders = resolve => require(['./components/order/orders'], resolve)
 const orderDetails = resolve => require(['./components/order/orderDetails'], resolve)
 
 //退款详情
-const applyRefund = resolve => require(['./components/applyRefund'], resolve)
+const applyRefund = resolve => require(['./components/order/applyRefund'], resolve)
 
 //代金券列表
 const chitList = resolve => require(['./components/chit/chitList'], resolve)
@@ -125,7 +125,7 @@ export const routes = [
     ,{ path: '/user/bound' , name: 'bound' , component: bound }
     ,{ path: '/user/orders/:type' , name: 'orders' , component: orders }
     ,{ path: '/user/orders/:type/details' , name: 'orderDetails' , component: orderDetails }
-    ,{ path: '/user/orders/applyRefund' , name: 'applyRefund' , component: applyRefund }
+    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
     ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
     ,{

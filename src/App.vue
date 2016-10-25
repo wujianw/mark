@@ -21,7 +21,7 @@
         background: #f2f2f2;
     }
     #app{
-        height:100%;
+        min-height:100%;
     }
     .flex-center{display: flex;align-items: center;justify-content: center;}
     .flex-start{display: flex;align-items: center;justify-content: flex-start;}

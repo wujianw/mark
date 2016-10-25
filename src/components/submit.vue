@@ -22,6 +22,7 @@
 <script type="text/babel">
     /*
      *提交按钮组件
+     * @params {value,dis}
      */
     export default{
         methods:{
