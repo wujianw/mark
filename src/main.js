@@ -18,8 +18,9 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    //mode: 'history',
+    mode: 'history',
     base: __dirname,
+    saveScrollPosition: true,
     routes : routes
 })
 

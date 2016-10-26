@@ -31,7 +31,7 @@
                             iconClass: 'icon-special-offer'
                         }
                         ,to: {
-                            name:"bound"
+                            name:"nearbyHot"
                         }
                         ,name: "特卖"
                     }

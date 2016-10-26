@@ -15,7 +15,7 @@
      * 特产区商品列表组件
      * @params
      */
-    import goodItem from "./goodItem"
+    import goodItem from "./favorGoodItem"
     export default{
         data() {
             return {

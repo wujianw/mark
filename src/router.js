@@ -42,8 +42,10 @@ const orders = resolve => require(['./components/order/orders'], resolve)
 //订单详情 {query:{orderName},params:{type}}
 const orderDetails = resolve => require(['./components/order/orderDetails'], resolve)
 
-//退款详情
+// 申请退款
 const applyRefund = resolve => require(['./components/order/applyRefund'], resolve)
+//退款详情
+const refundDetail =resolve=>require(['./components/order/refundDetail'],resolve);
 
 //代金券列表
 const chitList = resolve => require(['./components/chit/chitList'], resolve)
@@ -76,6 +78,8 @@ const income = resolve => require(['./components/wallet/income'], resolve)
 //充值
 const recharge = resolve => require(['./components/wallet/recharge'], resolve)
 
+//附近热卖
+const nearbyHot=resolve=>require(['./components/special/nearbyHot'],resolve);
 
 export const routes = [
     {
@@ -99,6 +103,7 @@ export const routes = [
             ,{ path: '/shopList/specialGoods' , name: 'specialGoods' , component: specialGoods }
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
+            ,{ path:'/nearbyHot',name: 'nearbyHot',component: nearbyHot }
         ]
     }
 
@@ -126,6 +131,7 @@ export const routes = [
     ,{ path: '/user/orders/:type' , name: 'orders' , component: orders }
     ,{ path: '/user/orders/:type/details' , name: 'orderDetails' , component: orderDetails }
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
+    ,{ path:'/user/refundDetail', name: 'refundDetail', component: refundDetail }
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
     ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
     ,{
@@ -143,4 +149,5 @@ export const routes = [
     ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
     ,{ path: '/income' , name: 'income' , component: income }
     ,{ path: '/recharge' , name: 'recharge' , component: recharge }
+
 ]
