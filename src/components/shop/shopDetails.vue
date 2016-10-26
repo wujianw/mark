@@ -200,8 +200,8 @@
             background:linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 39px) top left,
             linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 39px) bottom right,
             linear-gradient(0deg,#e3e3e3 38px,#e3e3e3 1px,#e3e3e3 39px) center;
-            background-size: 266px 100%;background-repeat:no-repeat;}
-
+            background-size: 266px 100%;background-repeat:no-repeat;
+        }
     }
 </style>
 <script type="text/babel">
