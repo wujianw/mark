@@ -1,6 +1,6 @@
 <template>
     <div class="radio-check">
-        <input :type="type" :id="id" :name="name"/>
+        <input :type="type" :id="id" :name="name" :checked="check"/>
         <label :for="id" @touchstart="touchStart" @click="sum">
             {{text}}
             <slot></slot>
@@ -77,7 +77,7 @@
 </style>
 <script type="text/babel">
     /*
-     *@params {name,id,text}
+     *@params {name,id,text,type,check}
      */
     export default {
         data() {
@@ -108,6 +108,10 @@
             ,type:{
                 type:String,
                 default:"radio"
+            }
+            ,check:{
+                type:Boolean,
+                default:false
             }
         }
     }

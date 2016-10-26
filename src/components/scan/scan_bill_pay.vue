@@ -7,7 +7,7 @@
         <div class="pay-details">订单编号<span>{{orderNum}}</span></div>
         <div class="pay-way">
             <h3 class="title">选择付款方式</h3>
-            <radio id="wx" name="check">
+            <radio id="wx" name="check" :check="true">
                 <div class="way flex-start wx">
                     <img src="" alt="">
                     <div class="message">
