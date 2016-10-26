@@ -1,6 +1,6 @@
 <template>
     <router-link :to="to" tag="div" class="good-block-el flex-space">
-        <div class="good-pic"><img src="../../static/img/good-pic.jpg" alt=""></div>
+        <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
         <div class="good-details flex-space">
             <div>
                 <p class="shop-name">商家名称</p>

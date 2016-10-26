@@ -81,6 +81,13 @@ const recharge = resolve => require(['./components/wallet/recharge'], resolve)
 //附近热卖
 const nearbyHot=resolve=>require(['./components/special/nearbyHot'],resolve);
 
+
+//扫码买单
+const scanBill =resolve=>require(['./components/scan/scan_bill'],resolve);
+
+//扫码买单支付
+const scanBillPay =resolve=>require(['./components/scan/scan_bill_pay'],resolve);
+
 export const routes = [
     {
         path: '/login',name: 'login',component:login,
@@ -131,7 +138,7 @@ export const routes = [
     ,{ path: '/user/orders/:type' , name: 'orders' , component: orders }
     ,{ path: '/user/orders/:type/details' , name: 'orderDetails' , component: orderDetails }
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
-    ,{ path:'/user/refundDetail', name: 'refundDetail', component: refundDetail }
+    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
     ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
     ,{
@@ -149,5 +156,6 @@ export const routes = [
     ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
     ,{ path: '/income' , name: 'income' , component: income }
     ,{ path: '/recharge' , name: 'recharge' , component: recharge }
-
+    ,{ path: '/scanBillPay', name: 'scanBillPay', component: scanBillPay }
+    ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
 ]

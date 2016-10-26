@@ -172,7 +172,7 @@
                                 iconClass:'icon-setting',
                                 color:'#41cf9a'
                             },
-                            to: { name: 'loadMobile' }
+                            to: { name: 'userInformation' }
                         }
                     }
                 }

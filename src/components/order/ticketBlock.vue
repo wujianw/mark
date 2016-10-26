@@ -4,9 +4,9 @@
             <div class="ticket" :data-ticket-type="ticketType" :data-validity="validity"><slot></slot></div>
             <div v-if="btnClass" :class="btnClass"></div>
         </router-link>
-        <div class="go-refund-details flex-center">
+        <router-link :to="{name:'refundDetail'}" class="go-refund-details flex-center">
             <span>查看退款详情</span>
-        </div>
+        </router-link>
     </div>
 </template>
 <style lang="scss">

@@ -49,7 +49,7 @@
                             iconClass: 'icon-message'
                         }
                         ,to: {
-                            name:"specialGoods"
+                            name:"scanBill"
                         }
                         ,name: "消息"
                     }
