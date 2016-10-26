@@ -88,6 +88,8 @@ const scanBill =resolve=>require(['./components/scan/scan_bill'],resolve);
 //扫码买单支付
 const scanBillPay =resolve=>require(['./components/scan/scan_bill_pay'],resolve);
 
+const success =resolve=>require(['./components/order/success'],resolve);
+
 export const routes = [
     {
         path: '/login',name: 'login',component:login,
@@ -158,4 +160,5 @@ export const routes = [
     ,{ path: '/recharge' , name: 'recharge' , component: recharge }
     ,{ path: '/scanBillPay', name: 'scanBillPay', component: scanBillPay }
     ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
+    ,{ path: '/success', name: 'success', component: success }
 ]

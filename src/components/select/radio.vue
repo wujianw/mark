@@ -1,7 +1,10 @@
 <template>
     <div class="radio-check">
         <input :type="type" :id="id" :name="name"/>
-        <label :for="id" @touchstart="touchStart" @click="sum">{{text}}</label>
+        <label :for="id" @touchstart="touchStart" @click="sum">
+            {{text}}
+            <slot></slot>
+        </label>
     </div>
 </template>
 <style lang="scss">

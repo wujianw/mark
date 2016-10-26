@@ -27,7 +27,7 @@
         </div>
         <div class="submit-wrap">
             <p>询问营业员确定消费金额后输入</p>
-            <submit value="确认买单" :dis="true"></submit>
+            <submit value="确认买单" @commit="" :dis="true"></submit>
         </div>
     </div>
 </template>
