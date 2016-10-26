@@ -34,17 +34,9 @@
         <div class="submit" @click="">
             <span>确认支付</span>
         </div>
-
-
-        <div class="load-wrap flex-center" v-if="false">
-            <router-link :to="{ name: 'loadMobile'}" active-class="load-active" class="scan_bill_header"><span>手机验证登入</span></router-link>
-            <router-link :to="{ name: 'loadUser'}" active-class="load-active" class="scan_bill_header"><span>账号密码登入</span></router-link>
-        </div>
     </div>
 </template>
 <script type="text/babel">
-    import spanTextstart from './spanTextstart.vue'
-    import inputTextstart from './inputTextstart.vue'
     export default {
         data () {
             return {
@@ -54,12 +46,8 @@
             }
         }
         ,props:{
-        }
-        ,components:{
-            spanTextstart,
-            inputTextstart
-        }
 
+        }
     }
 </script>
 
