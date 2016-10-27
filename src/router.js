@@ -4,6 +4,9 @@ const login = resolve => require(['./components/login/load'], resolve)
 const loadMobile = resolve => require(['./components/login/load_mobile'], resolve)
 const loadUser = resolve => require(['./components/login/load_user'], resolve)
 
+// 忘记密码
+const findPassword = resolve => require(['./components/login/findPassword'], resolve)
+const setPassword = resolve => require(['./components/login/setPassword'], resolve)
 //优惠券列表
 const coupon = resolve => require(['./components/coupon/coupon'], resolve)
 const couponList = resolve => require(['./components/coupon/couponList'], resolve)
@@ -112,6 +115,8 @@ export const routes = [
             { path: 'user', name:'loadUser', component: loadUser , beforeEnter:loginRedirect }
         ]
     }
+    ,{ path: '/user/findPassword' , name: 'findPassword' , component: findPassword }
+    ,{ path: '/user/setPassword' , name: 'setPassword' , component: setPassword }
 
     ,{
         path: '/',name: 'footerView', component: footerView,
@@ -119,7 +124,7 @@ export const routes = [
             // 会员中心
             { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {
                 if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
-                    //next({name:'loadMobile'})
+                    next({name:'loadMobile'})
                 }
                 next()
             }}

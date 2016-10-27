@@ -24,7 +24,9 @@
                 <p>
                     <router-link :to="{ name: 'loadMobile'}"><span>立即注册</span></router-link>
                 </p>
-                <p>忘记密码</p>
+                <p>
+                    <router-link :to="{ name: 'findPassword'}"><span>忘记密码</span></router-link>
+                </p>
             </div>
         </div>
     </transition>
