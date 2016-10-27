@@ -90,7 +90,7 @@ const scanBillPay =resolve=>require(['./components/scan/scan_bill_pay'],resolve)
 
 //支付成功
 const success =resolve=>require(['./components/order/success'],resolve);
-
+// 确认支付
 const verifyPay =resolve=>require(['./components/order/verifyPay'],resolve);
 
 export const routes = [

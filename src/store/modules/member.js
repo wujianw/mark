@@ -9,7 +9,6 @@ const state = {
 // mutations
 const mutations = {
     [types.LOGIN_MOBILE_SUCCESS] (state,member) {
-        console.log(member)
         state.member = member
     },
     [types.LOGIN_MOBILE_FAILURE] (state) {

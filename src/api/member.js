@@ -6,9 +6,9 @@ export default {
     //{ "userType": "member", loginId, vcode }
   getLoginInformation (option,cb,errorCb) {
       return Vue.http.post(
-          'api/open/member/vcodelogin.json',
-          {params:{"userType":"member","loginId":option.mobile,"vcode":option.vcode}
-      }).then(res => {
+          '/api/open/member/vcodelogin.json',
+          {"userType":"member","loginId":option.loginId,"vcode":option.vcode}
+      ).then(res => {
           let data = res.json()
           console.log(res.data)
           return cb(data)

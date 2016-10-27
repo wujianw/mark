@@ -50,8 +50,7 @@
             }),
             disabled() {
                 return (this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/));
-            },
-
+            }
         },
         methods: {
             //发送成功，倒计时
@@ -78,7 +77,7 @@
                 this.$nextTick(function () {
                     if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
                         console.log(this.mobile)
-                        this.$http.get('api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
+                        this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
                             .then((response) => {
                             this.refCaptchaBtn = false;
                             var data = JSON.parse(response.data);
