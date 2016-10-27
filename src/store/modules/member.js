@@ -8,10 +8,10 @@ const state = {
 
 // mutations
 const mutations = {
-    [types.LOGIN_MOBILE_SUCCESS] (state,member) {
+    [types.LOGIN_SUCCESS] (state,member) {
         state.member = member
     },
-    [types.LOGIN_MOBILE_FAILURE] (state) {
+    [types.LOGIN_FAILURE] (state) {
         state.member = null
     }
 }

@@ -75,7 +75,7 @@
 //            type=memberLogin&mobile=%@&smsType=0
             refCaptcha() {
                 this.$nextTick(function () {
-                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
+                    if(!(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn)){
                         console.log(this.mobile)
                         this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
                             .then((response) => {

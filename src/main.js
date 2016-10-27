@@ -28,12 +28,9 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource);
 Vue.http.options.xhr = { withCredentials: true }
 Vue.http.options.root = '/';
-
-
 Vue.http.options.emulateJSON = true;
 const app = new Vue({
     router:router,
     store:store,
     render: h => h(App)
 }).$mount('#app')
-

@@ -1,15 +1,38 @@
 <template>
     <div id="app">
         <router-view></router-view>
+        <loading v-show="showLoading" ></loading>
     </div>
 </template>
-<script>
-//    import userLoad from './components/loads'
+<script type="text/babel">
+    import loading from './components/loading'
+    import Vue from 'vue'
     export default {
-        components: {
-//            userLoad
+        data() {
+            return {
+                showLoading: false
+            }
+        }
+        ,created() {
+            let self = this
+            Vue.http.interceptors.push((request, next) =>  {
+                self.showLoading = true
+                next((response) => {
+                    if(!response.ok){
+                        //if(response.status == 400) response.statusText ="登入超时，请重新登入"
+                        //MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
+                        console.log("失败")
+                    }
+                    self.showLoading = false
+                    return response
+                })
+            })
+        }
+        ,components:{
+            loading
         }
     }
+
 </script>
 <style>
     html {
