@@ -1,9 +1,13 @@
 /**
- * Mocking client-server processing
+ * API
  */
 import Vue from 'vue'
+
 export default {
-    //{ "userType": "member", loginId, vcode }
+  /**
+   * 验证码和普通登入
+   * @params  option:接口参数 ,cb：成功回调 ,errorCb：失败回调
+   */
   getLoginInformation (option,cb,errorCb) {
       let url,params;
       if(typeof option.vcode != 'undefined') {
@@ -13,13 +17,17 @@ export default {
           url = '/api/open/member/login.json'
           params = {"userType":"member","loginId":option.loginId,"password":option.password}
       }
-
       return Vue.http.post(url,params).then(res => {
-          let data = res.json()
-          //window.localStorage.token=data.token;
-          return cb(data)
+          let data = JSON.parse(res.data)
+          if(data.code != 0) {
+              errorCb()
+              return Promise.reject()
+          }else {
+              window.localStorage.token=data.data.token;
+          }
+          return cb(data.data)
       }).catch(res => {
-          errorCb({name :1})
+          errorCb()
           return Promise.reject()
       })
   }

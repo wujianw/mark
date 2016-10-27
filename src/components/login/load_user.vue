@@ -5,19 +5,19 @@
                 <li class="flex-space">
                     <div class="mobile-text flex-space">
                         <i class="icon icon-user"></i>
-                        <input class="input" type="number" v-model.number="mobile" placeholder="请输入您的手机号码" maxlength="11">
+                        <input class="input" type="number" v-model="loginId" placeholder="请输入您的手机号码" maxlength="11">
                         <i class="icon icon-off"></i>
                     </div>
                 </li>
                 <li class="flex-space">
                     <div class="mobile-text flex-space">
                         <i class="icon icon-password"></i>
-                        <input class="input" type="password" v-model.number="password" placeholder="请输入您密码">
+                        <input class="input" type="password" v-model="password" placeholder="请输入您密码">
                         <i class="icon icon-off"></i>
                     </div>
                 </li>
             </ul>
-            <div class="load-btn" @click="">
+            <div class="load-btn" @click="createdUser">
                 <span>登录</span>
             </div>
             <div class="flex-space no-password">
@@ -29,12 +29,26 @@
         </div>
     </transition>
 </template>
-<script>
+<script type="text/babel">
     export default{
         data() {
             return {
                 password: '',
-                mobile: ''
+                loginId: ''
+            }
+        }
+        ,methods:{
+            createdUser(){
+                let params = {
+                    "userType":"member",
+                    "loginId":this.loginId,
+                    "password":this.password
+                }
+                this.$store.dispatch('login', params).then(res => {
+                    this.$router.push({name:'user'})
+                }).catch(res =>{
+                    console.log(2)
+                })
             }
         }
     }

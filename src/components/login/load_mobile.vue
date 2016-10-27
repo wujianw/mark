@@ -75,8 +75,7 @@
 //            type=memberLogin&mobile=%@&smsType=0
             refCaptcha() {
                 this.$nextTick(function () {
-                    if(!(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn)){
-                        console.log(this.mobile)
+                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
                         this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":"memberLogin"}})
                             .then((response) => {
                             this.refCaptchaBtn = false;
@@ -98,7 +97,11 @@
                     "loginId":this.mobile,
                     "vcode":this.vcode
                 }
-                this.$store.dispatch('loginMobile', params)
+                this.$store.dispatch('login', params).then(res => {
+                    this.$router.push({name:'user'})
+                }).catch(res =>{
+                    console.log(2)
+                })
             }
         }
     }

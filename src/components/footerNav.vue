@@ -58,8 +58,7 @@
                             iconClass: 'icon-user'
                         }
                         ,to: {
-                            name: "user",
-                            query: {token:1}
+                            name: "user"
                         }
                         ,name: "会员中心"
                     }

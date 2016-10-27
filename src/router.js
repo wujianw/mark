@@ -79,42 +79,57 @@ const income = resolve => require(['./components/wallet/income'], resolve)
 const recharge = resolve => require(['./components/wallet/recharge'], resolve)
 
 //附近热卖
-const nearbyHot=resolve=>require(['./components/special/nearbyHot'],resolve);
+const nearbyHot = resolve => require(['./components/special/nearbyHot'],resolve);
 
 
 //扫码买单
-const scanBill =resolve=>require(['./components/scan/scan_bill'],resolve);
+const scanBill = resolve => require(['./components/scan/scan_bill'],resolve);
 
 //扫码买单支付
-const scanBillPay =resolve=>require(['./components/scan/scan_bill_pay'],resolve);
+const scanBillPay = resolve => require(['./components/scan/scan_bill_pay'],resolve);
 
 //支付成功
-const success =resolve=>require(['./components/order/success'],resolve);
+const success = resolve => require(['./components/order/success'],resolve);
 // 确认支付
-const verifyPay =resolve=>require(['./components/order/verifyPay'],resolve);
+const verifyPay = resolve => require(['./components/order/verifyPay'],resolve);
 
+
+// 已登入重定向
+const loginRedirect = (to, from, next) => {
+    if(typeof window.localStorage.token != 'undefined' && window.localStorage.token.length > 5) {
+        next({name:'user'})
+    }
+    next()
+}
 export const routes = [
     {
         path: '/login',name: 'login',component:login,
         children:[
             //手机验证码登入
-            { path: 'mobile', name:'loadMobile', component: loadMobile },
+            { path: 'mobile', name:'loadMobile', component: loadMobile, beforeEnter: loginRedirect },
+
             //帐号密码登入
-            { path: 'user', name:'loadUser', component: loadUser }
+            { path: 'user', name:'loadUser', component: loadUser , beforeEnter:loginRedirect }
         ]
     }
 
     ,{
-        path: '/',name: 'footerView',component: footerView,
+        path: '/',name: 'footerView', component: footerView,
         children:[
             // 会员中心
-            { path: '/user' , name: 'user' , component: user }
+            { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {
+                if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                    //next({name:'loadMobile'})
+                }
+                next()
+            }}
             // 附近商家
             ,{ path: '/shopList' , name: 'shopList' , component: shopList }
             // 特价商品列表
             ,{ path: '/shopList/specialGoods' , name: 'specialGoods' , component: specialGoods }
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
+
             ,{ path:'/nearbyHot',name: 'nearbyHot',component: nearbyHot }
         ]
     }
