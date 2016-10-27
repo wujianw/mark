@@ -1,9 +1,7 @@
 <template>
-
-    <div>
-        <div class="container" >
+    <div class="scan-bill-pay-el" >
         <div class="pay-details">商家名称<span>{{shopName}}</span></div>
-        <div class="pay-details">实付金额<span>&yen{{realPay}}</span></div>
+        <div class="pay-details">实付金额<span>&yen;{{realPay}}</span></div>
         <div class="pay-details">订单编号<span>{{orderNum}}</span></div>
         <div class="pay-way">
             <h3 class="title">选择付款方式</h3>
@@ -54,7 +52,7 @@
     }
 </script>
 <style lang="scss">
-    .container{
+    .scan-bill-pay-el{
         background:#fff;
         .pay-details{
             padding:0 38px;
