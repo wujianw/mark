@@ -11,6 +11,7 @@
 <style lang="scss">
     $placeholderColor:#e1dfdf;
     .input-el{
+        flex-grow: 2;
         padding:12px 0;
         height:74px;
         .input{
@@ -86,7 +87,7 @@
                 type: String,
                 default: "text"
             }
-            ,maxLength: Number
+            ,maxLength: String
             ,value: {
                 type:String,
                 default: ""

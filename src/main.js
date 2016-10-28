@@ -3,6 +3,7 @@
 import './assets/css/reset.css'
 import './assets/fonts/iconfont.css'
 import './assets/js/mobile-initialize'
+
 import Vue from 'vue'
 import App from './App'
 import { routes } from './router'

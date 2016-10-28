@@ -10,7 +10,8 @@
     export default {
         data() {
             return {
-                showLoading: false
+                showLoading: false,
+                showModal: false
             }
         }
         ,created() {
@@ -20,8 +21,8 @@
                 next((response) => {
                     if(!response.ok){
                         //if(response.status == 400) response.statusText ="登入超时，请重新登入"
-                        //MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
-                        console.log("失败")
+//                        MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
+//                        console.log("失败")
                     }
                     self.showLoading = false
                     return response

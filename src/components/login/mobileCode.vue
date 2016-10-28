@@ -1,0 +1,103 @@
+<template>
+    <ul class="load-mobile-el">
+        <li class="flex-space">
+            <input-text :value="mobile" @input="mobileFn" maxLength="11"  placeholder="请输入您的手机号码" :icon="mobileIcon">
+                <div class="mobile-btn"><p @click="refCaptcha">{{refCaptchaText}}</p></div>
+            </input-text>
+        </li>
+        <slot></slot>
+        <li class="flex-space">
+            <input-text :value="vcode" @input="vcodeFn" placeholder="请输入您收到的短信验证码" :icon="vcodeIcon" maxLength="4"></input-text>
+        </li>
+    </ul>
+</template>
+<style lang="scss">
+    .mobile-btn {
+        flex-grow: 1;
+        margin-left: 10px;
+        background: #e85350;
+        border-radius: 10px;
+        text-align: center;
+        font: 26px/74px "Microsoft Yahei";
+        color: #fff;
+    }
+</style>
+<script type="text/babel">
+    import inputText from '../inputText'
+    /*
+     * 双向绑定 手机验证码组件
+     * 示例 <mobileCode :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]"></mobileCode>
+     * @params 
+     */
+    export default{
+        data() {
+            return {
+                refCaptchaText: "获取验证码",
+                fn:null
+                ,vcodeIcon:{
+                    iconClass:'icon-verification'
+                }
+                ,mobileIcon:{
+                    iconClass:'icon-user'
+                }
+                ,refCaptchaBtn: true
+            }
+        }
+        ,components: {
+            inputText
+        }
+        ,methods: {
+            mobileFn(value) {
+                this.$emit('mobileFn', value)
+            }
+            ,vcodeFn(value) {
+                this.$emit('vcodeFn', value)
+            }
+            //发送成功，倒计时
+            ,countDown(){
+                this.$nextTick(function () {
+                    var self = this, count = 60;
+                    self.refCaptchaBtn = !this.refCaptchaBtn;
+                    self.refCaptchaText = count + "s";
+                    this.fn = setInterval(function () {
+                        count--;
+                        if (!count) {
+                            self.refCaptchaText = "重新发送";
+                            self.refCaptchaBtn = true;
+                            clearInterval(self.fn);
+                        }else{
+                            self.refCaptchaText = count + "s";
+                        }
+                    }, 1000);
+                });
+            },
+            //验证手机号码，验证发送短信
+            refCaptcha() {
+                this.$nextTick(function () {
+                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
+                        this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
+                            .then((response) => {
+                                this.refCaptchaBtn = false;
+//                                var data = JSON.parse(response.data);
+                                this.countDown();
+                            },(response) => {
+                                this.refCaptchaBtn = true;
+                            }).catch(res => {
+
+                            });
+                    }
+                    return false;
+                });
+            }
+        }
+        ,props:{
+            mobile:{
+                type:String,
+                default:""
+            }
+            ,vcode:String
+            ,type:String
+
+        }
+    }
+</script>

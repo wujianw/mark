@@ -2,20 +2,8 @@
     <transition name="left">
         <div class="load-view">
             <ul class="load-mobile-view">
-                <li class="flex-space">
-                    <div class="mobile-text flex-space">
-                        <i class="icon icon-user"></i>
-                        <input class="input" type="number" v-model="loginId" placeholder="请输入您的手机号码" maxlength="11">
-                        <i class="icon icon-off"></i>
-                    </div>
-                </li>
-                <li class="flex-space">
-                    <div class="mobile-text flex-space">
-                        <i class="icon icon-password"></i>
-                        <input class="input" type="password" v-model="password" placeholder="请输入您密码">
-                        <i class="icon icon-off"></i>
-                    </div>
-                </li>
+                <input-text v-model="loginId" placeholder="请输入您的账号" :icon="loginIdIcon"></input-text>
+                <input-text v-model="password" type="password" placeholder="请输入您密码" :icon="passwordIcon"></input-text>
             </ul>
             <div class="load-btn" @click="createdUser">
                 <span>登录</span>
@@ -31,10 +19,45 @@
         </div>
     </transition>
 </template>
+<style>
+    .load-mobile-view li {
+    padding-top: 24px;
+    }
+
+    .mobile-text {
+    flex-grow: 3;
+    height: 74px;
+    border-radius: 10px;
+    background: #fff;
+
+    }
+
+    .mobile-text i {
+    width: 60px;
+    text-align: center;
+    font-size: 44px;
+    }
+
+    .mobile-text .input {
+    flex-grow: 1;
+    margin: 15px 0;
+    padding-left: 5px;
+    font: 26px/44px "Microsoft Yahei";
+    border: none;
+    border-left: 1px solid #000;
+    }
+</style>
 <script type="text/babel">
+    import inputText from '../inputText'
     export default{
         data() {
             return {
+                loginIdIcon: {
+                    iconClass: 'icon-user'
+                }
+                ,passwordIcon: {
+                    iconClass: 'icon-password'
+                },
                 password: '',
                 loginId: ''
             }
@@ -52,6 +75,9 @@
                     console.log(2)
                 })
             }
+        }
+        ,components:{
+            inputText
         }
     }
 </script>

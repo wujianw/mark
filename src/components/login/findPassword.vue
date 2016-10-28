@@ -1,11 +1,15 @@
 <template>
     <div class="find-password-el">
-        <input-rule type="password" placeholder="请输入您的手机号" v-model="originPassword"></input-rule>
-        <div class="slide-wrap">
-            <div class="slide" v-touch="{methods:touchMove}">&gt;&gt;</div>
-        </div>
-        <input-rule type="password" placeholder="请输入短信验证码" v-model="verifyPassword"></input-rule>
-        <submit value="验证(1/2)" :dis="!dis" @commit="userSubmit"></submit>
+        <mobile-code type="findPwd" :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]">
+            <div class="slide-wrap">
+                <span class="message">按住滑块拖至最右</span>
+                <div class="slide" v-touch="{methods:touchEnd}">
+                    <div class="slide-block" >&gt;&gt;</div>
+                </div>
+            </div>
+        </mobile-code>
+        <!--<input-rule type="password" placeholder="请输入短信验证码" v-model="verifyPassword"></input-rule>-->
+        <submit class="" value="验证(1/2)" :dis="!dis" @commit="verify"></submit>
     </div>
 </template>
 <style lang="scss">
@@ -13,73 +17,90 @@
         padding:26px 22px;
         .slide-wrap{
             position:relative;
+            margin:20px 0;
             background: #fff;
-            height: 74px;
+            text-align: center;
+            line-height: 74px;
+            border-radius:10px;
+            font-size:30px;
+            color:#9a989b;
             .slide{
                 position:absolute;
+                top:0;
                 left:0;
-                width:74px;
+                width:148px;
                 height:74px;
-                background:red;
+                border-radius:10px;
+                background:#00ce9a;
+                .slide-block{
+                    width:72px;
+                    height:72px;
+                    border:1px solid #f2f2f2;
+                    border-radius:10px;
+                    background:#fff;
+                    text-align:center;
+                    line-height:72px;
+                    float:right;
+                }
             }
         }
+        .submit-el{margin:20px 0;}
     }
 </style>
 <script type="text/babel">
-    import inputRule from '../inputRule'
+    import mobileCode from './mobileCode'
     import submit from '../submit'
+    import MessageBox from '../../msgbox';
     const touchStart = (e,self) => {
         var touches = e.touches[0];
-        var tapObj = self.tapObj;
+        var tapObj = self.tapObj; // 引用类型赋值
         tapObj.pageX = touches.pageX;
         tapObj.pageY = touches.pageY;
-        tapObj.clientX = touches.clientX;
-        tapObj.clientY = touches.clientY;
         self.time = +new Date();
 
     }
     const touchMove = (e,self) => {
         if(e.targetTouches.length > 1 || e.scale && e.scale !== 1) return;
         var tapObj = self.tapObj;
-        var touch = e.changedTouches[0];
-        var endPos = {x:touch.pageX - tapObj.pageX,y:touch.pageY - tapObj.pageY};
-        var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0;
-        if(isScrolling === 0){
-            event.preventDefault();      //阻止触摸事件的默认行为，即阻止滚屏
-            console.log(1)
+        var touches = e.changedTouches[0];
+        tapObj.distanceX = touches.pageX - tapObj.pageX;
+        e.preventDefault();
+        if(tapObj.width == 706){
+            return false
+        }
+        tapObj.width = Math.ceil(148 + tapObj.distanceX)
+        if(tapObj.width < 74 ){
+            self.style.width = 74 + 'px';
+        }else if ( tapObj.width > 710){
+            tapObj.width = 706
+            self.style.width = 706 +'px';
+        }else {
+            self.style.width = tapObj.width + 'px';
         }
     }
     const touchEnd = (e,self) => {
-        var touches = e.changedTouches[0];
         var tapObj = self.tapObj;
         self.time = +new Date() - self.time;
-        tapObj.distanceX = tapObj.pageX - touches.pageX;
-        tapObj.distanceY = tapObj.pageY - touches.pageY;
-        if (!isTap(self)){
-            return
+        if (self.disabled || tapObj.width < 700){
+            setTimeout(function () {
+                self.style.width = 148+'px';
+            }, 150)
+        }else{
+            setTimeout(function () {
+                self.handler(e);
+            }, 150)
         }
-        setTimeout(function () {
-            self.handler(e);
-        }, 150)
-    }
-    const isTap = (self) => {
-        if (self.disabled) {
-            return false;
-        }
-        var tapObj = self.tapObj;
-        return self.time < 150 && Math.abs(tapObj.distanceX) < 2 && Math.abs(tapObj.distanceY) < 2;
     }
     export default{
         data(){
             return{
-                originPassword:"",
-                newPassword:"",
-                verifyPassword:"",
-                dis:false
+                mobile:"",
+                vcode:"",
+                actionCode:false
             }
         }
         ,components:{
-            inputRule,
+            mobileCode,
             submit
         }
         ,directives:{
@@ -88,14 +109,19 @@
                     var value = binding.value;
                     el.tapObj = {};
                     el.handler = function (e) { //This directive.handler
-//                        if (!value && el.href && !binding.modifiers.prevent) {
-//                            return window.location = el.href;
-//                        }
                         value.event = e;
                         value.tapObj = el.tapObj;
                         value.methods.call(this, value);
                     };
                     el.addEventListener('touchstart', function (e) {
+                        Object.defineProperties(e, { // 重写currentTarget对象 与jq相同
+                            "currentTarget": {
+                                value: el,
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            },
+                        });
                         if (binding.modifiers.stop) e.stopPropagation()
                         if (binding.modifiers.prevent) e.preventDefault()
                         touchStart(e, el);
@@ -110,7 +136,7 @@
                             },
                         });
                         e.preventDefault();
-                        return touchMove(e, el);
+                        touchMove(e, el);
                     }, false);
                     el.addEventListener('touchend', function (e) {
                         Object.defineProperties(e, { // 重写currentTarget对象 与jq相同
@@ -126,18 +152,6 @@
                     }, false);
                 },
                 update : function(fn) {
-//                    var self = this
-//                    self.tapObj = {}
-//                    if(typeof fn !== 'function') {
-//                        return console.error('The param of directive "v-tap" must be a function!')
-//                    }
-//                    self.handler = function(e) {
-//                        e.tapObj = self.tapObj;
-//                        fn.call(self,e);
-//                    };
-//                    this.el.addEventListener('touchstart',function(e) { self.touchstart(e,self); },false);
-//                    this.el.addEventListener('touchmove',function(e) { self.touchmove(e,self); },false);
-//                    this.el.addEventListener('touchend',function(e) { self.touchend(e,self); },false);
                 },
                 unbind : function() {
 
@@ -145,22 +159,29 @@
             }
         }
         ,methods:{
-            userSubmit() {
-                //调用密码修改接口，成功后返回登入页面
+            touchEnd(){
+                this.actionCode = true
             }
-            ,touchStart(){
+            ,verify(){
+                console.log(this.mobile+','+this.vcode)
+                this.$http.get('/api/open/member/find_pwd2.json',{params:{"mobile":this.mobile,"vcode":this.vcode}})
+                        .then(res => {
+                            let data = JSON.parse(res.data)
+                            console.log(data)
+                            if(data.code == 0){
+                                this.$router.push({name:'setPassword',params:{"mobile":this.mobile,"vcode":this.vcode}})
+                            }else{
+                                MessageBox.alert(data.message)
+                            }
+                        })
+//                this.$router.push({name:'setPassword',params:{"mobile":this.mobile,"vcode":this.vcode}})
+            }
 
-            }
-            ,touchMove(event) {
-                console.log(1)
-            }
-            ,touchEnd(event) {
-                console.log(1)
-            }
         }
         ,computed:{
             dis() {
-                return this.originPassword && this.newPassword === this.verifyPassword && this.newPassword
+                return this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/) && this.actionCode
+//                return true
             }
         }
     }
