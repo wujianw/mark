@@ -5,8 +5,8 @@
                 <input-text v-model="loginId" placeholder="请输入您的账号" :icon="loginIdIcon"></input-text>
                 <input-text v-model="password" type="password" placeholder="请输入您密码" :icon="passwordIcon"></input-text>
             </ul>
-            <div class="load-btn" @click="createdUser">
-                <span>登录</span>
+            <div class="load-btn">
+                <submit class="" value="登录" :dis="!(password&&loginId)" @commit="createdUser"></submit>
             </div>
             <div class="flex-space no-password">
                 <p>
@@ -49,6 +49,7 @@
 </style>
 <script type="text/babel">
     import inputText from '../inputText'
+    import submit from '../submit'
     export default{
         data() {
             return {
@@ -78,6 +79,7 @@
         }
         ,components:{
             inputText
+            ,submit
         }
     }
 </script>

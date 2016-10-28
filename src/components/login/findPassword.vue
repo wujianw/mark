@@ -8,11 +8,10 @@
                 </div>
             </div>
         </mobile-code>
-        <!--<input-rule type="password" placeholder="请输入短信验证码" v-model="verifyPassword"></input-rule>-->
         <submit class="" value="验证(1/2)" :dis="!dis" @commit="verify"></submit>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .find-password-el{
         padding:26px 22px;
         .slide-wrap{

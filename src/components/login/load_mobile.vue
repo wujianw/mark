@@ -5,12 +5,12 @@
             <div>
                 <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意<a href="">《积分宝消费养老用户服务协议》</a></p>
             </div>
-            <div class="load-btn" @click="createdUser" :disabled="!disabled">
-                <span>登录</span>
+            <div class="load-btn">
+                <submit class="" value="登录" :dis="!disabled" @commit="createdUser"></submit>
             </div>
             <div class="hint-voice">
                 <p>收不到短信？ 使用<span>语音验证码</span></p>
-                <p>{{getToken}}</p>
+                <!--<p>{{getToken}}</p>-->
             </div>
         </div>
     </transition>
@@ -18,19 +18,18 @@
 <script type="text/babel">
     import { mapGetters } from 'vuex'
     import mobileCode from './mobileCode'
+    import submit from '../submit'
 
     export default{
         data(){
             return {
                 mobile: '',
                 vcode: ''
-//                refCaptchaText:"获取验证码",
-//                refCaptchaBtn : true,
-
             }
         }
         ,components:{
             mobileCode
+            ,submit
         },
         computed: {
             ...mapGetters({
@@ -50,7 +49,7 @@
                 this.$store.dispatch('login', params).then(res => {
                     this.$router.push({name:'user'})
                 }).catch(res =>{
-                    console.log(2)
+//                    console.log(2)
                 })
             }
         }
@@ -79,12 +78,6 @@
 
     .load-btn {
         margin: 58px auto 55px;
-        text-align: center;
-        background: #e85352;
-        border-radius: 10px;
-        line-height: 80px;
-        font-size: 30px;
-        color: #fff;
     }
 
     .hint-voice {
