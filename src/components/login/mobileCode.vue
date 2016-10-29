@@ -11,7 +11,7 @@
         </li>
     </ul>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .mobile-btn {
         flex-grow: 1;
         margin-left: 10px;

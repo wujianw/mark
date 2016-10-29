@@ -19,7 +19,7 @@
         </li>
     </ul>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 
     .evaluate-list-el{
         background:#fff;

@@ -3,7 +3,7 @@
         <link-list v-for="item in lists" :title="item.title" :to="item.to" ></link-list>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 
 </style>
 <script>

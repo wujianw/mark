@@ -8,7 +8,7 @@
         </footer>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .footer-nav-wrap{
         position:fixed;
         bottom:0;

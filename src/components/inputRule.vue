@@ -6,7 +6,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     $placeholderColor:#e1dfdf;
     .input-rule-el{
         margin:20px 0;

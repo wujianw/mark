@@ -40,7 +40,7 @@
         }
     }
 </script>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .success-el{
         .success{text-align:center;position:relative;background:#fff;}
         .success:before {content:"";position: absolute;

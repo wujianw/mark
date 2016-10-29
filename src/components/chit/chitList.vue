@@ -3,7 +3,7 @@
         <chit-block chitNum="565654165454564" date="2016-05-02"></chit-block>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .chit-list-el{
         padding:0 17px;
     }

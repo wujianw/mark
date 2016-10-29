@@ -65,7 +65,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .coupon-list{
         margin-left:66px;
         .coupon-item{

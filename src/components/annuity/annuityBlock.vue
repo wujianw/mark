@@ -13,7 +13,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .annuity-block-el{
         height:128px;
         padding:0 26px 0 14px;

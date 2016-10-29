@@ -4,7 +4,7 @@
            :class="[n >= score + 1 ? 'no':'',n > score && n < score + 1 ? 'half-style' : '']"></i>
     </span>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .star-el {
         i {
             margin-right: 12px;

@@ -10,7 +10,7 @@
         </div>
     </router-link>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .chit-block-el{
         border-top:22px solid #f2f2f2;
         background:#fff url('../../assets/img/chit-block-bg.png') no-repeat;

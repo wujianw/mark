@@ -15,7 +15,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .coupon-block-el{
         border-top:22px solid #f2f2f2;
         background:#fff;

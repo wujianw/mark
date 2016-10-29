@@ -9,7 +9,7 @@
         <router-view></router-view>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .evaluate-nav-el{
         .evaluate-nav{
             background: #fff;

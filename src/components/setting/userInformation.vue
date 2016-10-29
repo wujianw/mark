@@ -5,7 +5,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .user-information-bg{
         background:#fff;
     }

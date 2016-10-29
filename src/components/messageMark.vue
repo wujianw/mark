@@ -3,7 +3,7 @@
         <slot></slot>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .mark-el{
         padding:0 10px 0 25px;
         background:#f9a929;

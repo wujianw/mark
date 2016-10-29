@@ -17,7 +17,7 @@
         </router-link>
     </transition>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .enshrine-block-el{
         height:170px;
         padding:0 34px 0 12px;

@@ -38,7 +38,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .order-details-el{
         background:#fff;
         font-family:"Microsoft Yahei";

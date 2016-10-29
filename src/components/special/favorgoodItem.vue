@@ -18,7 +18,7 @@
         </div>
     </router-link>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     /* 单个商品 */
     .unit{
         background-color:#fff;

@@ -18,7 +18,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 .enshrine-good-list-el{
     border-top:22px solid #f2f2f2;
     .good-details{

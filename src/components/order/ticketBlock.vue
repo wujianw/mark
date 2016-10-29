@@ -9,7 +9,7 @@
         </router-link>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 .ticket-block-el{
     .ticket-wrap{height:88px;padding:0 22px;border-bottom:1px solid #f2f2f2;}
     .ticket{

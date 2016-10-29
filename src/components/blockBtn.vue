@@ -3,7 +3,7 @@
         <i class="icon" :class="icon.iconClass" :style="styleObj"></i>
     </router-link>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .block-btn{
         flex-direction:column;
         flex-grow:1;

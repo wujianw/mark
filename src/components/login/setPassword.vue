@@ -6,7 +6,7 @@
         <submit value="确认修改(2/2)" :dis="!dis" @commit="userSubmit"></submit>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .password-el{
         padding:26px 22px;
     }

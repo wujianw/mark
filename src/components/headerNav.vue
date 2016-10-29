@@ -6,7 +6,7 @@
         <router-view></router-view>
     </header>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .load-wrap{ background: #fff; text-align: center; }
     .load-link{ flex-grow: 1; font: 28px/76px "Microsoft Yahei"; border-bottom: 5px solid #afafaf; }
     .load-link span{ color: #505050; }

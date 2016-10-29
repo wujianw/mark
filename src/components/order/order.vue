@@ -21,7 +21,7 @@
         </footer>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .order-el{
         background:#fff;
         border-top:18px solid #f2f2f2;

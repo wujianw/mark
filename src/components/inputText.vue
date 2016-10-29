@@ -8,7 +8,7 @@
         <slot></slot>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     $placeholderColor:#e1dfdf;
     .input-el{
         flex-grow: 2;

@@ -40,7 +40,7 @@
 
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 
     .income-head{
         box-sizing: border-box;

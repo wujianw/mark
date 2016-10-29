@@ -25,7 +25,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 .verify-pay-el{
 
     .success{height:280px;position:relative;background:#fff;}

@@ -48,7 +48,7 @@
 
     }
 </script>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .flex-right-left{
         display: flex;align-items: center;justify-content: center;
         >div{

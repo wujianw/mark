@@ -50,7 +50,7 @@
 
     }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
     .scan-bill-el{
         background: #fff;
         /* 金额输入 */

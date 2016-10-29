@@ -4,7 +4,7 @@
         <input-text class="search" placeholder="输入商品/商家搜索" :icon="icon"></input-text>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .header-container{
         padding-left: 13px;
         padding-right: 13px;

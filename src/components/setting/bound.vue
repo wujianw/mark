@@ -10,7 +10,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .bound-wrap{
         padding:12px 20px;
         .title{

@@ -28,7 +28,7 @@
         }
     }
 </script>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .good-list-el{
         height:176px;
         .good-pic{

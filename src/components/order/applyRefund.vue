@@ -25,7 +25,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 .apply-refund-el{
     background: #fff;
     section{

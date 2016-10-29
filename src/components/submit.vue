@@ -3,7 +3,7 @@
         <input type="button" :value="value" :disabled="dis" @click.prevent="commit">
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .submit-el{
         input{
             width:100%;

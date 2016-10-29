@@ -11,7 +11,7 @@
         </div>
     </router-link>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .good-block-el{
         font-family:"Microsoft Yahei";
         .good-pic{

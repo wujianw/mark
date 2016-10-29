@@ -72,7 +72,7 @@
         </footer>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .good-details-el{background:#fff;
         .gold .rmb{font-size:75%;font-family: "Microsoft YaHei";}
         .hd{position:relative;}

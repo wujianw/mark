@@ -31,7 +31,7 @@
 <script type="text/babel">
 
 </script>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .refund-detail-el{
         background: #fff;
         .refund-detail{

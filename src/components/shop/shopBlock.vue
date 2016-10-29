@@ -24,7 +24,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .shop-block-el{
         background:#fff;
         .pic{

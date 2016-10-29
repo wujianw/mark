@@ -40,7 +40,7 @@
 
 
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 
     .recharge-head{
 

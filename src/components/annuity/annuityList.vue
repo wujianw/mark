@@ -14,7 +14,7 @@
         <annuity-block></annuity-block>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 
     /* 主题栏 */
     .annuity-title{

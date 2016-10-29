@@ -17,7 +17,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     /* 评论 */
     .good-review-el{
         .good-review-li{

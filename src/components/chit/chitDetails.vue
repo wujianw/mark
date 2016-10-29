@@ -10,7 +10,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 .chit-details-el{
     flex-direction: column;
     height:100%;

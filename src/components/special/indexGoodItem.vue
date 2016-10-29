@@ -29,7 +29,7 @@
         }
     }
 </script>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .special-index-good-el{
         height:176px;
         border-bottom: 18px solid #f2f2f2;

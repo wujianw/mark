@@ -6,7 +6,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .coupon-list-el{
         .coupon-list{
             padding:0 16px;

@@ -7,7 +7,7 @@
         </label>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .radio-check{
         label{
             display:block;

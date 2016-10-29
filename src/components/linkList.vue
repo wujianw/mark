@@ -4,11 +4,11 @@
             <i v-if="icon.iconClass" class="icon" :class="icon.iconClass" :style="styleObj"></i>
         </div>
         <div class="link-details" :data-text="details">
-            <i class="icon icon-arrow-right"></i>
+            <i class="icon icon-arrow-right" v-if="arrow"></i>
         </div>
     </router-link>
 </template>
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     .link-li{
         height:72px;
         padding:0 20px;
@@ -61,9 +61,10 @@
                     return {}
                 }
             },
-            details:{
-                type:String,
-                default:''
+            details:[String, Number],
+            arrow:{
+                type:Boolean,
+                default:true
             }
         }
     }
