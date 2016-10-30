@@ -22,15 +22,13 @@
         </div>
     </div>
 </template>
-<style lang='scss'>
+<style lang='scss' rel="stylesheet/scss">
     $userColor: #505050;
     $annuityColor: #e85352;
     $waitColor: #c4c4c4;
     $smFontSize: 22px;
     $statusFontSize: 22px;
     $fontSize: 24px;
-
-
     .user-center-wrap{
         background:#f2f2f2;
         color:$userColor;

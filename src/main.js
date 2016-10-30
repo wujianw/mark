@@ -24,7 +24,9 @@ const router = new VueRouter({
     saveScrollPosition: true,
     routes : routes
 })
-
+//无限加载指令
+import infiniteScroll from 'vue-infinite-scroll';
+Vue.use(infiniteScroll)
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
 Vue.http.options.xhr = { withCredentials: true }

@@ -41,7 +41,10 @@
                 type:Object,
                 default() {
                     return {
-                        name:"chitDetails"
+                        name:"chitDetails",
+                        query:{
+                            codeContent:'http://www.jfb315.com'
+                        }
                     }
                 }
             }

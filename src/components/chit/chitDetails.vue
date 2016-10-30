@@ -4,14 +4,17 @@
             <div class="title">{{title}}</div>
             <div class="date">{{date}}</div>
         </div>
-        <div class="flex-start pic">
+        <div class="flex-start pic" >
             <p class="num">{{num}}</p>
-            <img src="" alt="">
+            <div class="img-wrap" ref="qrcode"></div>
         </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
 .chit-details-el{
+    position:absolute;
+    top:0;bottom:0;
+    width:100%;
     flex-direction: column;
     height:100%;
     background:#fff;
@@ -36,7 +39,7 @@
     }
     .pic{
         flex-direction: column;
-        flex-grow:3;
+        flex-grow:1;
         width:640px;
         border:1px solid #f0f0f0;
         text-align: center;
@@ -46,23 +49,37 @@
             color:#373737;
             &:before{content:"券码";padding-right:1.5em;}
         }
-        img{
-            width:378px;
-            height:378px;
+        .img-wrap{
+            padding:10px;
             border-radius: .5em;
             border:1px solid #f0f0f0;
+            img{
+                width:358px;
+                height:358px;
+            }
         }
     }
 }
 </style>
 <script type="text/babel">
+    import QRCode from "../../assets/js/qrcode"
     export default{
         data(){
             return{
                 date:'2016-10-20 10:20',
                 title:'代金券名称',
-                num:"12121212"
+                num:"12121212",
             }
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                let self = vm
+                var child = self.$refs.qrcode
+                const qrcode = new QRCode(child, {
+                    text: to.query.codeContent,
+                    correctLevel : QRCode.CorrectLevel.H
+                })
+            })
         }
         ,components:{
 
