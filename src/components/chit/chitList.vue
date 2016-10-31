@@ -1,9 +1,7 @@
 <template>
     <div class="chit-list-el">
-        <chit-block chitNum="565654165454564" date="2016-05-02"></chit-block>
-        <chit-block chitNum="565654165454564" date="2016-05-02"></chit-block>
         <div ref="more" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-
+            <chit-block v-for="list in lists"  :code="list.code" :name="list.name" :date="list.useEndDateTime"></chit-block>
         </div>
     </div>
 </template>
@@ -14,14 +12,26 @@
 </style>
 <script type="text/babel">
     import chitBlock from "./chitBlock"
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
                 busy: false
+                ,lists:null
             }
         }
-        ,components:{
-            chitBlock
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                member.getChit({token:vm.getToken}).then(val => {
+                    vm.lists = val.rows
+                })
+            })
         }
         ,methods:{
             more() {
@@ -37,8 +47,8 @@
                 }, 1000);
             }
         }
-        ,beforeDestroy(){
-            console.log(121212121212)
+        ,components:{
+            chitBlock
         }
     }
 </script>

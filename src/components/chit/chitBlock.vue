@@ -1,8 +1,8 @@
 <template>
     <router-link tag="div" :to="to" class="chit-block-el flex-space">
         <div class="chit-content">
-            <h3>测试代金券</h3>
-            <p :data-num="chitNum">券码</p>
+            <h3>{{name}}</h3>
+            <p :data-num="code">券码</p>
             <p>有效期至{{date}}</p>
         </div>
         <div class="pic-code flex-center">
@@ -35,7 +35,8 @@
 <script type="text/babel">
     export default{
         props:{
-            chitNum:String,
+            code:String,
+            name:String,
             date:String,
             to:{
                 type:Object,

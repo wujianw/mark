@@ -3,7 +3,9 @@ import * as types from '../mutation-types'
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-    member: null
+    member: {
+        token:window.localStorage.token
+    }
 }
 
 // mutations

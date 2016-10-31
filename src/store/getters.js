@@ -1,1 +1,1 @@
-export const getToken = state => {return state.member.member}
+export const getToken = state => {return state.member.member.token}

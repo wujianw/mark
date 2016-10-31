@@ -7,6 +7,7 @@
 <script type="text/babel">
     import loading from './components/loading'
     import Vue from 'vue'
+    import MessageBox from './msgbox';
     export default {
         data() {
             return {
@@ -21,7 +22,7 @@
                 next((response) => {
                     if(!response.ok){
                         //if(response.status == 400) response.statusText ="登入超时，请重新登入"
-//                        MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
+                        MessageBox.alert(response.status || "系统繁忙，请稍后再试！")
 //                        console.log("失败")
                     }
                     self.showLoading = false
