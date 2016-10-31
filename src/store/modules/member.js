@@ -4,7 +4,8 @@ import * as types from '../mutation-types'
 // shape: [{ id, quantity }]
 const state = {
     member: {
-        token:window.localStorage.token
+        // token:window.localStorage.token
+        token:'token'
     }
 }
 

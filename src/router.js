@@ -123,9 +123,9 @@ export const routes = [
         children:[
             // 会员中心
             { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {
-                if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
-                    next({name:'loadMobile'})
-                }
+                // if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                //     next({name:'loadMobile'})
+                // }
                 next()
             }}
             // 附近商家

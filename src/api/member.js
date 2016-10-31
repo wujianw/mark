@@ -2,7 +2,24 @@
  * API
  */
 import Vue from 'vue'
+import store from '../store'
 import MessageBox from '../msgbox';
+const TOKEN = store.getters.getToken
+/**
+ * 数据请求 code:0 成功
+ * @params
+ */
+const postData = (url,params) => {
+    return Vue.http.post(url,params).then(res => {
+        let data = JSON.parse(res.data)
+        if(data.code != 0) {
+            return Promise.reject()
+        }
+        return Promise.resolve(data.data)
+    }).catch(res => {
+        return Promise.reject()
+    })
+}
 export default {
     /**
      * 验证码和普通登入
@@ -35,7 +52,7 @@ export default {
      * 代金券列表
      * @params  token,start,rows
      */
-    ,getChit({token,start=0,rows=10}={}) {
+    ,getChit({token=TOKEN,start=0,rows=10}={}) {
         let url,params;
         url = '/api/pri/coupon/list.json'
         params = {"token":token,"start":start,"rows":rows}
@@ -49,22 +66,5 @@ export default {
             return Promise.reject()
         })
     }
-    /**
-     * 订单列表
-     * @params  token,start,rows
-     */
-    ,getOrder({token,start=0,rows=10,state,isComment}={}) {
-        let url,params;
-        url = '/api/pri/order/list.json'
-        params = {"token":token,"start":start,"rows":rows}
-        return Vue.http.post(url,params).then(res => {
-            let data = JSON.parse(res.data)
-            if(data.code != 0) {
-                return Promise.reject()
-            }
-            return Promise.resolve(data.data)
-        }).catch(res => {
-            return Promise.reject()
-        })
-    }
+
 }

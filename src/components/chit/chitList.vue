@@ -1,8 +1,8 @@
 <template>
     <div class="chit-list-el">
-        <div ref="more" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <!--<div ref="more" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">-->
             <chit-block v-for="list in lists"  :code="list.code" :name="list.name" :date="list.useEndDateTime"></chit-block>
-        </div>
+        <!--</div>-->
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -30,10 +30,12 @@
             })
         }
         ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                member.getChit({token:vm.getToken}).then(val => {
+            member.getChit().then(val => {
+                next(vm => {
                     vm.lists = val.rows
                 })
+            }).catch(res => {
+                next(false)
             })
         }
         ,methods:{
