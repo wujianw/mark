@@ -49,6 +49,7 @@
 .icon-evaluate:before { content: "\e622"; }
 .icon-special:before { content: "\e623"; }
 .icon-pull-down:before { content: "\e624"; }
+.icon-pull-down-after:after { content: "\e624"; }
 .icon-shop:before { content: "\e625"; }
 .icon-big:before { content: "\e626"; }
 .icon-add:before { content: "\e627"; }

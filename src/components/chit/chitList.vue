@@ -21,6 +21,9 @@
                 ,lists:null
             }
         }
+        ,components:{
+            chitBlock
+        }
         ,computed: {
             ...mapGetters({
                 getToken:'getToken'
@@ -42,13 +45,9 @@
                 setTimeout(() => {
                     var height = app.clientHeight;
                     app.style.height = height + 300 + 'px';
-                    console.log('end... ' + new Date());
                     self.busy = false;
                 }, 1000);
             }
-        }
-        ,components:{
-            chitBlock
         }
     }
 </script>

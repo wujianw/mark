@@ -3,13 +3,17 @@
         <div class="user-information-wrap">
             <link-list v-for="item in lists" :title="item.title" :icon="item.icon" :to="item.to" :details="item.details"></link-list>
         </div>
+        <submit class="submit" @commit="logout" value="退出登入" :dis="!1"></submit>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .user-information-bg{
-        background:#fff;
+        .submit{
+            margin:200px 20px;
+        }
     }
     .user-information-wrap{
+        background:#fff;
         border-top:18px solid #f2f2f2;
         .link-li{
             height:75px;
@@ -28,6 +32,7 @@
 </style>
 <script type="text/babel">
     import linkList from './../linkList'
+    import submit from './../submit'
     export default {
         data() {
             return {
@@ -84,6 +89,13 @@
         }
         ,components:{
             linkList
+            ,submit
+        }
+        ,methods:{
+            logout() {
+                localStorage.removeItem('token')
+                this.$router.push({name:'loadMobile'})
+            }
         }
     }
 </script>
