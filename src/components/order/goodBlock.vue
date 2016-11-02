@@ -7,7 +7,7 @@
                 <p class="good-name">商品名称</p>
                 <p class="gold">300.33</p>
             </div>
-            <p><i class="icon icon-arrowRight"></i></p>
+            <p><i class="icon icon-arrow-right"></i></p>
         </div>
     </router-link>
 </template>

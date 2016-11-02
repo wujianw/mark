@@ -1,54 +1,16 @@
 <template>
     <div>
-        <nav class="order-nav-wrap">
-            <nav :class="{active:isActive}" @click="navToggle">
-                <div class="state icon" :class="isActive?'':'icon-pull-down-after'">全部</div>
-                <div class="state">代金券</div>
-                <div class="state">到店买单</div>
-            </nav>
-            <div class="btn">编辑</div>
-        </nav>
-        <order :details="details"></order>
+        <div ref="more" v-infinite-scroll="pushData" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            <order v-for="item in lists" :obj="item" :key="item.id"></order>
+        </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
-    .order-nav-wrap{
-        position:relative;
-        height:72px;
-        background:#fff;
-        text-align: center;
-        line-height:72px;
-        font-size:28px;
-        /*overflow: hidden;*/
-        /*overflow: visible;*/
-        nav{
-            position:absolute;
-            z-index: 2;
-            width:100%;
-            height:72px;
-            overflow: hidden;
-            background:#fff;
-            transition: height 1s ease;
-            &.active{height:365px;}
-        }
-        .btn{
-            position:absolute;
-            z-index: 3;
-            right:22px;
-            top:0;
-
-            color:#fbc111;
-        }
-        .state{
-            border-bottom:1px solid #f2f2f2;
-            font-size:28px;
-            color:#505050;
-        }
-        .icon-pull-down-after:after{font-size:16px;}
-    }
 </style>
 <script type="text/babel">
     import order from './order'
+    import member from '../../api/member'
+    import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
@@ -59,14 +21,72 @@
                         params:{type:1}
                     }
                 }
+                ,lists:null
+                ,busy:true //无限加载开关 true:关闭
             }
+        }
+        ,computed: {
+            ...mapGetters({
+                chitOrder:'chitOrder',
+                scanOrder:'scanOrder',
+                chitOrderChange:'chitOrderChange',
+                scanOrderChange:'scanOrderChange',
+                chit:'chit',
+                scan:'scan'
+            }),
         }
         ,components:{
             order
         }
+        ,created(){
+            this.fetchData()
+        }
+        ,watch: {
+            $route(){
+                this.fetchData()
+            }
+        }
         ,methods:{
-            navToggle(){
-                this.isActive = !this.isActive
+            /*
+             * fetch order data
+             * @param   function
+             * @option
+             */
+            fetchData(rows=10) {
+                let self = this,
+                    type = self.$route.params.type;
+                self.busy = true
+                let off = type == "chit"
+                if(off ? self.chitOrderChange : self.scanOrderChange){
+                    self.$store.dispatch('fetchOrder',{type,rows}).then(() => {
+                        self.mold(off)
+                    })
+                }else{
+                    self.mold(off)
+                }
+            },
+            /*
+             * push order data for infinite update
+             * @param   function
+             * @option
+             */
+            pushData(rows=10) {
+                let self = this,
+                    type = self.$route.params.type;
+                self.busy = true
+                let off = type == "chit"
+                self.$store.dispatch('pushOrder',{type,rows}).then(() => {
+                    self.mold(off)
+                })
+            },
+            mold(off) {
+                if(off){
+                    this.lists = this.chitOrder
+                    this.busy = this.chit
+                }else{
+                    this.lists = this.scanOrder
+                    this.busy = this.scan
+                }
             }
         }
     }

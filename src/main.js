@@ -10,7 +10,6 @@ import { routes } from './router'
 import store from './store'
 //开启debug模式
 Vue.config.debug = true
-//var website_url = document.getElementById("p_s_f_website_url").value;
 Vue.filter('gold', function (value) {
     return value.toFixed(2)
 })

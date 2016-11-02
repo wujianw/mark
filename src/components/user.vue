@@ -32,8 +32,6 @@
     .user-center-wrap{
         background:#f2f2f2;
         color:$userColor;
-
-
         /* 个人信息&背景 */
         .user-center {
             height: 222px;
@@ -104,10 +102,8 @@
                                 color:'#fe7c5c'
                             },
                             to: {
-                                name:'orders',
-                                params: {
-                                    type : 1
-                                }
+                                name:"orders",
+                                params:{type:"chit"}
                             }
                         }
 //                        ,tradeList: {

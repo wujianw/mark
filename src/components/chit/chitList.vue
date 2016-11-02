@@ -13,7 +13,6 @@
 <script type="text/babel">
     import chitBlock from "./chitBlock"
     import member from "../../api/member"
-    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
@@ -23,11 +22,6 @@
         }
         ,components:{
             chitBlock
-        }
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
         }
         ,beforeRouteEnter (to, from, next) {
             member.getChit().then(val => {

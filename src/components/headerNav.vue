@@ -3,7 +3,9 @@
         <nav class="flex-space header-nav load-wrap flex-center">
             <router-link tag="div" active-class="load-active" class="load-link" v-for="item in links" :to="item.to" replace>{{item.name}}</router-link>
         </nav>
-        <router-view></router-view>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
     </header>
 </template>
 <style lang="scss" rel="stylesheet/scss">

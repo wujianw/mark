@@ -8,3 +8,24 @@ export const login = ({ commit },option) => {
         data => commit(types.LOGIN_FAILURE,data)
     )
 }
+
+//全部订单列表处理，获取&更新
+export const fetchOrder = ({ commit },{type,rows}) => {
+    let name = type =="chit" ? types.FETCH_CHIT_ORDER : types.FETCH_SCAN_ORDER
+    return member.postOrder(type,{rows:rows}).then(data => commit(name,{list:data.rows,rows}))
+
+}
+
+//全部订单列表处理，无限加载
+export const pushOrder = ({ commit,state },{type,rows}) => {
+    let name,start
+    if(type =="chit"){
+        name = types.PUSH_CHIT_ORDER
+        start = state.member.chitStart
+    }else {
+        name = types.PUSH_SCAN_ORDER
+        start = state.member.scanStart
+    }
+    console.log(start)
+    return member.postOrder(type,{start:start,rows:rows}).then(data => commit(name,{list:data.rows,rows}))
+}

@@ -40,6 +40,7 @@ const password = resolve => require(['./components/login/password'], resolve)
 const bound = resolve => require(['./components/setting/bound'], resolve)
 
 //订单列表 {query:{token,goodId},params:{type}}
+const ordersNav = resolve => require(['./components/order/ordersNav'], resolve)
 const orders = resolve => require(['./components/order/orders'], resolve)
 
 //订单详情 {query:{orderName},params:{type}}
@@ -155,13 +156,19 @@ export const routes = [
             {path: 'list',name: 'evaluateList',component: evaluateList}
         ]
     }
-
+    // 全部订单
+    ,{ path: '/user/orders' , name: 'ordersNav' , component: ordersNav,
+        children:[
+            // 订单类型
+            {path: 'list/:type',name: 'orders',component: orders}
+        ]
+    }
 
     ,{ path: '/user/details' , name: 'userInformation' , component: userInformation }
     ,{ path: '/user/password' , name: 'password' , component: password }
     ,{ path: '/user/bound' , name: 'bound' , component: bound }
-    ,{ path: '/user/orders/:type' , name: 'orders' , component: orders }
-    ,{ path: '/user/orders/:type/details' , name: 'orderDetails' , component: orderDetails }
+
+    ,{ path: '/user/details/:type' , name: 'orderDetails' , component: orderDetails }
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
     ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }

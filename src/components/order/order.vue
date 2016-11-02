@@ -1,23 +1,23 @@
 <template>
     <div class="order-el">
-        <header class="flex-space" :data-status="obj.statusName">
-            <div class="title flex-space" :data-shop="obj.shopName">
+        <header class="flex-space" :data-status="state.name">
+            <div class="title flex-space" :data-shop="obj.merchantName">
                 <div class="hd-logo"></div>
             </div>
         </header>
-        <router-link tag="main" :to="details.to">
+        <router-link tag="main" :to="to">
             <div class="flex-start">
-                <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
+                <div class="good-pic"><img :src="orderDetails.goodsImages" alt=""></div>
                 <div class="good-details">
-                    <p>商品名称</p>
-                    <p>有效日期</p>
-                    <p>数量</p>
+                    <p>{{orderDetails.goodsName}}</p>
+                    <!--<p class="date">{{orderDetails.activityEndTime}}</p>-->
+                    <p>&#215;{{orderDetails.buyNumber}}</p>
                 </div>
             </div>
-            <p class="total">合计:<span>360.00</span></p>
+            <p class="total">合计:<span>{{obj.orderAmount}}</span></p>
         </router-link>
         <footer class="flex-space">
-            <router-link class="go-next" tag="p" :to="obj.to">{{obj.btnName}}</router-link>
+            <!--<router-link class="go-next" tag="p" :to="state.to">{{state.btn}}</router-link>-->
         </footer>
     </div>
 </template>
@@ -70,6 +70,7 @@
                 font-family: sans-serif;
                 line-height:44px;
                 font-size:26px;
+                .date:before{content:"有效期至";}
             }
             .total{
                 position:absolute;
@@ -108,35 +109,73 @@
      */
     export default {
         data() {
-            return {}
+            return {
+                to:{
+                    name:'orderDetails',
+                    params:{
+                        type:this.obj.orderNum
+                    }
+                },
+                orderDetails:{
+                    goodsName:this.obj.orderDetails[0].goodsName
+                    ,activityEndTime:this.obj.orderDetails[0].activityEndTime
+                    ,buyNumber:this.obj.orderDetails[0].buyNumber
+                    ,goodsImages:this.obj.orderDetails[0].goodsImages
+                }
+            }
+        }
+        ,computed:{
+            state() {
+                return this.show(this.obj.state,this.obj.comment)
+            }
+        }
+        ,methods:{
+            show(state,comment){
+                let obj = {}
+                switch(state){
+                    case "created" :
+                        obj.name = "待支付"
+                        obj.btn = "查看券码"
+                        break
+                    case "deliveryed" :
+                        obj.name =  "待消费"
+                        obj.btn =  "付款"
+                        break
+                    case "refunding" :
+                        obj.name =  "退款中"
+                        obj.btn =  "查看详情"
+                        break
+                    case "finished" :
+                        if(comment){
+                            obj.name =  "已完成"
+                            obj.btn =  "查看详情"
+                        }else {
+                            obj.name =  "待评价"
+                            obj.btn =  "评价"
+                        }
+                        break
+                }
+                return obj
+            }
         }
         ,props:{
-            details:{
-                type:Object,
-                default: function() {
-                    return {
-                        to:{
-                            name:"",
-                            type:1
-                        }
-                    }
-                }
-            },
             obj:{
                 type:Object,
                 default: function() {
                     return {
-                        status:""
-                        ,statusName:"待消费"
-                        ,shopName:"积分宝体验店"
-                        , to:{
-                            name:"",
-                            type:1
-                        }
-                        ,btnName:"消费"
+                        state:"待消费"
+                        ,comment:0
+                        ,merchantName:"积分宝体验店"
+                        ,buyNumber:""
+                        ,orderAmount:""
+                        ,orderDetails:[{
+                            goodsId:1
+                            ,activityEndTime:""
+                        }]
                     }
                 }
             }
         }
     }
 </script>
+

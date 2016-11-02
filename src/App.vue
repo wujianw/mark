@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <router-view></router-view>
-        <loading v-show="showLoading" ></loading>
+        <loading v-show="showLoading"></loading>
     </div>
 </template>
 <script type="text/babel">
