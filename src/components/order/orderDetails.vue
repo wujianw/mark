@@ -103,18 +103,41 @@
     import goodBlock from './goodBlock'
     import linkList from './../linkList'
     import ticketBlock from './ticketBlock'
+    import member from '../../api/member'
     export default{
         data(){
             return {
                 title:'商家信息',
-                btnClass:"refund-btn",
+                btnClass:'refund-btn',
                 to:{
                     name:'applyRefund',
                     query:{
-                        orderNum:"1212111212"
+                        orderNum:'1212111212'
                     }
-                }
+                },
+                information:null
             }
+        }
+        ,computed:{
+//            good() {
+//                console.log(this.information.merchantName)
+//                return{
+//                    merchantName:this.information.merchantName,
+//                    goodsName:this.information.goodsName,
+//                    buyerAmount:this.information.buyerAmount,
+//                    to:{
+//                        name:""
+//                    }
+//                }
+//            }
+        }
+        ,beforeRouteEnter(to,from,next){
+            console.log(to.query.orderId)
+            member.postOrderDetails({orderId:to.query.orderId}).then(data => {
+                next(vm => {
+                    vm.information = data
+                })
+            })
         }
         ,components: { goodBlock,linkList,ticketBlock }
     }

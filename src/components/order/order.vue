@@ -10,14 +10,14 @@
                 <div class="good-pic"><img :src="orderDetails.goodsImages" alt=""></div>
                 <div class="good-details">
                     <p>{{orderDetails.goodsName}}</p>
-                    <!--<p class="date">{{orderDetails.activityEndTime}}</p>-->
+                    <p class="date">{{orderDetails.couponGmtEnd}}</p>
                     <p>&#215;{{orderDetails.buyNumber}}</p>
                 </div>
             </div>
             <p class="total">合计:<span>{{obj.orderAmount}}</span></p>
         </router-link>
         <footer class="flex-space">
-            <!--<router-link class="go-next" tag="p" :to="state.to">{{state.btn}}</router-link>-->
+            <router-link class="go-next" tag="p" :to="state.to">{{state.btn}}</router-link>
         </footer>
     </div>
 </template>
@@ -105,22 +105,24 @@
 </style>
 <script type="text/babel">
     /*
-     * params {obj:{}}
+     * @params {obj:{}}
      */
     export default {
         data() {
             return {
                 to:{
                     name:'orderDetails',
-                    params:{
-                        type:this.obj.orderNum
+                    query:{
+                        orderId:this.obj.id
                     }
                 },
                 orderDetails:{
                     goodsName:this.obj.orderDetails[0].goodsName
+                    ,goodsId:this.obj.orderDetails[0].goodsId
                     ,activityEndTime:this.obj.orderDetails[0].activityEndTime
                     ,buyNumber:this.obj.orderDetails[0].buyNumber
                     ,goodsImages:this.obj.orderDetails[0].goodsImages
+                    ,couponGmtEnd:this.obj.orderDetails[0].couponGmtEnd
                 }
             }
         }
@@ -131,27 +133,58 @@
         }
         ,methods:{
             show(state,comment){
-                let obj = {}
+                let obj = {
+                    name:"",
+                    btn:"",
+                    to:{
+                        name:""
+                    }
+                }
                 switch(state){
                     case "created" :
                         obj.name = "待支付"
                         obj.btn = "查看券码"
+                        obj.to = {
+                            name:""
+                        }
                         break
                     case "deliveryed" :
                         obj.name =  "待消费"
                         obj.btn =  "付款"
+                        obj.to = {
+                            name:""
+                        }
                         break
                     case "refunding" :
                         obj.name =  "退款中"
                         obj.btn =  "查看详情"
+                        obj.to = {
+                            name:'orderDetails',
+                            params:{
+                                type:this.obj.id
+                            }
+                        }
                         break
                     case "finished" :
                         if(comment){
                             obj.name =  "已完成"
                             obj.btn =  "查看详情"
+                            obj.to = {
+                                name:'orderDetails',
+                                params:{
+                                    type:this.obj.id
+                                }
+                            }
                         }else {
                             obj.name =  "待评价"
                             obj.btn =  "评价"
+                            obj.to = {
+                                name:"goEvaluate",
+                                query:{
+                                    orderNo:this.obj.orderNum,
+                                    goodsId:this.orderDetails.goodsId
+                                }
+                            }
                         }
                         break
                 }
@@ -163,15 +196,11 @@
                 type:Object,
                 default: function() {
                     return {
-                        state:"待消费"
-                        ,comment:0
-                        ,merchantName:"积分宝体验店"
+                        state:""
+                        ,merchantName:""
                         ,buyNumber:""
                         ,orderAmount:""
-                        ,orderDetails:[{
-                            goodsId:1
-                            ,activityEndTime:""
-                        }]
+                        ,orderDetails:[{}]
                     }
                 }
             }

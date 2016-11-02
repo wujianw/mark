@@ -45,6 +45,7 @@ const orders = resolve => require(['./components/order/orders'], resolve)
 
 //订单详情 {query:{orderName},params:{type}}
 const orderDetails = resolve => require(['./components/order/orderDetails'], resolve)
+const goEvaluate = resolve => require(['./components/order/goEvaluate'], resolve)
 
 // 申请退款
 const applyRefund = resolve => require(['./components/order/applyRefund'], resolve)
@@ -163,14 +164,16 @@ export const routes = [
             {path: 'list/:type',name: 'orders',component: orders}
         ]
     }
+    ,{ path: '/user/details' , name: 'orderDetails' , component: orderDetails }
+    ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
+    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
+    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
 
-    ,{ path: '/user/details' , name: 'userInformation' , component: userInformation }
+    ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation }
     ,{ path: '/user/password' , name: 'password' , component: password }
     ,{ path: '/user/bound' , name: 'bound' , component: bound }
 
-    ,{ path: '/user/details/:type' , name: 'orderDetails' , component: orderDetails }
-    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
-    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
+
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
     ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
     ,{

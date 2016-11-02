@@ -1,11 +1,11 @@
 <template>
-    <router-link :to="to" tag="div" class="good-block-el flex-space">
+    <router-link :to="good.to" tag="div" class="good-block-el flex-space">
         <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
         <div class="good-details flex-space">
             <div>
-                <p class="shop-name">商家名称</p>
-                <p class="good-name">商品名称</p>
-                <p class="gold">300.33</p>
+                <!--<p class="shop-name">{{good.merchantName}}</p>-->
+                <!--<p class="good-name">{{good.goodsName}}</p>-->
+                <!--<p class="gold">{{good.buyerAmount}}</p>-->
             </div>
             <p><i class="icon icon-arrow-right"></i></p>
         </div>
@@ -55,11 +55,16 @@
 
         }
         ,props:{
-            to:{
+            good:{
                 type:Object,
-                default:function() {
+                default() {
                     return {
-                        name:""
+                        to:{
+                            name:""
+                        },
+                        merchantName:"",
+                        goodsName:"",
+                        buyerAmount:""
                     }
                 }
             }

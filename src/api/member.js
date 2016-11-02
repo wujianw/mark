@@ -16,7 +16,7 @@ const postData = (url,params) => {
             MessageBox.alert(data)
             return Promise.reject()
         }
-        // console.log(JSON.stringify(data.data))
+        console.log(JSON.stringify(data.data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
