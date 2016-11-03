@@ -2,7 +2,7 @@
     <transition name="left">
         <router-link tag="div" :to="{name:''}" class="enshrine-block-el flex-space" :class="{'good-block':isGood}" v-show="isVisible">
             <div class="flex-start">
-                <div class="pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
+                <div class="pic"><img :src="goodsdata"></div>
                 <slot></slot>
             </div>
             <div>
@@ -81,6 +81,10 @@
                 type:Boolean,
                 default:false
             }
+            ,goodsdata:String
+
+
+
         }
     }
 </script>

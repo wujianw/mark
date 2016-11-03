@@ -1,21 +1,27 @@
 <template>
     <div class="enshrine-good-list-el">
+
+
         <div v-if="isGood">
-            <block :isGood="isGood">
+            <block :isGood="isGood" v-for="item in goodsdata" :goodsdata="item.goodsImages">
                 <div class="good-details">
-                    <p>草泥马</p>
-                    <p>30.0<span>58.0</span></p>
+                    <p>{{item.goodsName}}</p>
+                    <p>{{item.buyPrice}}<span>{{item.marketPrice}}</span></p>
                 </div>
             </block>
         </div>
+
+
         <div v-else>
-            <block :isGood="isGood">
-                <div class="shop-details">
-                    <p>草泥马</p>
-                    <p>操你妈逼</p>
+            <block :isGood="isGood" v-for="item in merchantdata" :goodsdata="item.background">
+                <div  class="shop-details">
+                    <p>{{item.merchant_name}}</p>
+                    <p>{{item.business_type_name}}</p>
                 </div>
             </block>
         </div>
+
+
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -63,11 +69,32 @@
 </style>
 <script type="text/babel">
     import block from "./block"
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
+
+                merchantdata:[],
+                goodsdata:[],
                 isGood : false
             }
+        }
+
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+
+
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                member.getMembercollect(vm.getToken).then(val => {
+                    vm.merchantdata = val.merchantdata
+                    vm.goodsdata = val.goodsdata
+                })
+            })
         }
         ,created(){
             this.fetchData()

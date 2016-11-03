@@ -1,19 +1,10 @@
 <template>
     <div class="mine-wallet-el">
-
         <router-link :to="{name:'income'}" tag="header" class="head" >
             <div class="title">当前余额(元)</div>
             <div class="gold">{{details.cashBalance}}</div>
-
         </router-link>
-
-
-
-
         <router-link :to="{name:'agreement'}" class="wallet-agreement flex-space"><span>查看详情</span></router-link>
-        <!--<div class="list-link-wallet" v-for="items in linkList">-->
-            <!--<link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to" :arrow="!item"></link-list>-->
-        <!--</div>-->
         <div class="list-link-wallet">
             <link-list v-for="item in redPack" :title="item.title" :icon="item.icon" :to="item.to" :details="item.details" :arrow="!item"></link-list>
         </div>
@@ -21,7 +12,6 @@
             <link-list :title="setting.title" :icon="setting.icon" :to="setting.to" :details="setting.details"></link-list>
         </div>
         <div class="wallet-hint">提示:积分宝平台不限制支付金额,如果微信或支付宝提示订单超过单笔限额,请核实您的账户及网银的每日消费限额.</div>
-
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -82,9 +72,8 @@
     import linkList from '../linkList'
     import member from "../../api/member"
     import { mapGetters } from 'vuex'
-    export default{
-        data(){
-
+    export default {
+        data() {
             return {
                 redPack:{
                     redPacked:{
@@ -121,7 +110,6 @@
                 }
             }
         }
-
         ,computed: {
             ...mapGetters({
                 getToken:'getToken'
@@ -133,21 +121,14 @@
                 this.redPack.integral.details = this.details.totalearn
             }
         }
-        ,created(){
+        ,created() {
+            let self = this
             member.getwelletHome(this.getToken).then(val => {
-                this.details = val
-
-                console.log(JSON.stringify(val))
-
-
+                self.details = val
             })
         }
-
-        , components: {
+        ,components: {
             linkList
-        }
-        ,methods:{
-
         }
     }
 </script>

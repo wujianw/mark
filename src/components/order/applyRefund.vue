@@ -13,8 +13,8 @@
         </section>
         <section>
             <h3>退还内容</h3>
-            <p>现金：<input type="text" name="refCashAmout" readonly v-model="cashAmout" class="gold"></p>
-            <p>红包：<input type="text" name="refRedPacket" readonly v-model="refRedPacket" class="gold"></p>
+            <p>现金：<span class="gold">{{refCashAmout}}</span></p>
+            <p>红包：<span class="gold">{{refRedPacket}}</span></p>
             <input type="hidden" name="refGiveAway" :value="refGiveAway">
         </section>
         <section>
@@ -23,61 +23,16 @@
         </section>
         <section>
             <h3>退款原因</h3>
-            <radio v-for="item in refundReason" name="refundReason" :id="'refundReason'+item.rkey" :text="item.rvalue" :value="item.rkey"></radio>
+            <radio v-for="item in refundReasonTemplate" @sum="reason" :id="'refundReason'+item.rkey" :text="item.rvalue" :value="item.rkey"></radio>
         </section>
         <div class="other-wrap flex-space">
-            <input type="text" name="refundRemark" class="other" placeholder="请输入其他意见">
+            <input type="text" name="refundRemark" class="other" v-model="refundRemark" placeholder="请输入其他意见">
         </div>
         <div class="submit-wrap">
-            <submit value="申请退款" :dis="!1"></submit>
+            <submit value="申请退款" :dis="disable" @commit="apply"></submit>
         </div>
     </div>
 </template>
-<style lang="scss" rel="stylesheet/scss">
-.apply-refund-el{
-    background: #fff;
-    section{
-        font-size:26px;
-        border-bottom:18px solid #f2f2f2;
-    }
-    h3{
-        padding:0 24px;
-        border-bottom:1px solid #f2f2f2;
-        line-height:64px;
-        font-size:26px;
-        font-weight:normal;
-        color:#7c7c7c;
-    }
-    p{
-        padding:0 24px;
-        line-height:58px;
-        color:#383838;
-        &:after{content:"元";}
-        .gold{
-            border:none;
-            font-size:26px;
-            color:#e85352;
-        }
-    }
-    .other-wrap{
-        padding:0 10px;
-        height:80px;
-        background:#fff;
-        input{
-            width:100%;
-            height:64px;
-            padding:0 20px;
-            border:none;
-            border-radius: .5em;
-            background:#eee;
-            font-size:26px;
-        }
-    }
-    .submit-wrap{
-        padding:20px 10px;
-    }
-}
-</style>
 <script type="text/babel">
     import radio from './../select/radio'
     import submit from './../submit'
@@ -88,21 +43,29 @@
             return{
                 num:1,
                 lists:[],
-                refCashAmout:0,
-                refRedPacket:0,
-                refGiveAway:0,
-                couponIds:[]
+                cashAmout:0,//应退现金金额（一张）
+                redPacket:0,//应退红包（一张）
+                giveAway:0,//扣除赠送（一张）
+                couponIds:[],
+                refundReason:"",
+                refundRemark:""
             }
         }
         ,computed: {
             ...mapGetters({
-                refundReason:"refundReason"
+                refundReasonTemplate:"refundReason"
             }),
-            cashAmout() {
-                return this.refCashAmout*this.num
+            refCashAmout() {
+                return this.cashAmout*this.num //应退现金金额
             },
-            redPacket() {
-                return this.refRedPacket*this.num
+            refRedPacket() {
+                return this.redPacket*this.num //应退红包
+            },
+            refGiveAway() {
+                return this.giveAway*this.num //扣除赠送
+            },
+            disable() {
+                return this.couponIds.length == 0
             }
         }
         ,created() {
@@ -113,25 +76,93 @@
         ,beforeRouteEnter(to,from,next) {
             let orderNum = to.query.orderNum
             member.postCanRefund({orderNum}).then(res => {
+                if(res.list.length == 0){
+                    return next(false)
+                }
                 next(vm => {
                     vm.lists = res.list
-                    vm.refCashAmout = res.refCashAmout
-                    vm.refRedPacket = res.refRedPacket
-                    vm.refGiveAway = res.refGiveAway
+                    vm.cashAmout = res.refCashAmout
+                    vm.redPacket = res.refRedPacket
+                    vm.giveAway = res.refGiveAway
+                    vm.couponIds.push(res.list[0].id)
                 })
             })
         }
         ,methods:{
-            // 统计check的代金券条数
+            // 统计条数&保存代金券id
             option(checked,value) {
                 if(checked) {
                     this.num++
                     this.couponIds.push(value)
                 }else {
                     this.num--
+                    this.couponIds = this.couponIds.filter(item => item != value)
                 }
+            },
+            reason(checked,value) {
+                if(checked){
+                    this.refundReason = value
+                }
+            },
+            //提交退款申请
+            apply() {
+                let self = this
+                let params = {
+                    refundReason:self.refundReason,
+                    refCashAmout:self.refCashAmout,
+                    refRedPacket:self.refRedPacket,
+                    refGiveAway:self.refGiveAway,
+                    refundRemark:self.refundRemark,
+                    couponIds:self.couponIds.join(","),
+                }
+                member.postApplyRefund(params).then(res => {
+                    console.log(res)
+                })
             }
         }
         ,components:{ radio,submit }
     }
 </script>
+<style lang="scss" rel="stylesheet/scss">
+    .apply-refund-el{
+        background: #fff;
+        section{
+            font-size:26px;
+            border-bottom:18px solid #f2f2f2;
+        }
+        h3{
+            padding:0 24px;
+            border-bottom:1px solid #f2f2f2;
+            line-height:64px;
+            font-size:26px;
+            font-weight:normal;
+            color:#7c7c7c;
+        }
+        p{
+            padding:0 24px;
+            line-height:58px;
+            color:#383838;
+            .gold{
+                color:#e85352;
+                &:after{content:"元";}
+            }
+        }
+        .other-wrap{
+            padding:0 10px;
+            height:80px;
+            background:#fff;
+            input{
+                width:100%;
+                height:64px;
+                padding:0 20px;
+                border:none;
+                border-radius: .5em;
+                background:#eee;
+                font-size:26px;
+            }
+        }
+        .submit-wrap{
+            padding:20px 10px;
+        }
+    }
+</style>

@@ -84,7 +84,7 @@ export default {
     ,postOrderDetails({token=store.getters.getToken,orderId}={}) {
         let url,params;
         url = '/api/pri/order/detail.json'
-        params = {"token":token,"orderId":orderId}
+        params = {token,orderId}
         return postData(url,params)
     }
 
@@ -113,10 +113,10 @@ export default {
      * @params  function
      * @option  orderNum
      */
-    ,postApplyRefund({token=store.getters.getToken,refundReason,refCashAmout,refRedPacket}={}) {
+    ,postApplyRefund({token=store.getters.getToken,refundReason,refCashAmout,refRedPacket,refGiveAway,refundRemark,couponIds}={}) {
         let url,params;
         url = '/api/pri/refund/applycouponrefund.json'
-        params = {"token":token,"orderNum":orderNum}
+        params = {token,refundReason,refCashAmout,refRedPacket,refGiveAway,refundRemark,couponIds}
         return postData(url,params)
     }
     /**
@@ -146,12 +146,9 @@ export default {
      * @params
      */
     ,getwelletHome(token){
-
         let url,params;
-
         url = '/api/pri/wallet/index.json'
         params = {"token":token}
-
         return postData(url,params)
 
     }

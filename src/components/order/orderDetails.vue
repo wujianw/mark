@@ -7,7 +7,7 @@
                     <div class="ticket" :data-ticket-type="details.goodsName">
                         <span>有效期至：{{details.couponGmtEnd | date}}</span>
                     </div>
-                    <router-link tag="div" :to="{name:'applyRefund',query:{orderNum:order.orderNum}}" class="refund-btn"></router-link>
+                    <div class="refund-btn" @click="applyRefund"></div>
                 </div>
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
@@ -124,6 +124,7 @@
     import linkList from './../linkList'
     import ticketBlock from './ticketBlock'
     import member from '../../api/member'
+    import MessageBox from '../../msgbox';
     export default{
         data(){
             return {
@@ -154,6 +155,7 @@
                 }
                 ,good:null
                 ,state:null
+                ,refund:1
             }
         }
         ,filters: {
@@ -164,6 +166,8 @@
         ,beforeRouteEnter(to,from,next){
             member.postOrderDetails({orderId:to.query.orderId}).then(data => {
                 next(vm => {
+                    console.log(data.refund)
+                    vm.refund = data.refund
                     vm.details = {
                         couponGmtEnd: data.orderDetails[0].couponGmtEnd,
                         goodsName: data.orderDetails[0].goodsName,
@@ -198,7 +202,10 @@
             })
         }
         ,methods:{
-
+            applyRefund() {
+//                if(this.refund == 1) return MessageBox.alert("暂不提供退款服务")
+                this.$router.push({name:'applyRefund',query:{orderNum:this.order.orderNum}})
+            }
         }
         ,components: { goodBlock,linkList,ticketBlock }
     }
