@@ -1,11 +1,11 @@
 <template>
     <router-link :to="good.to" tag="div" class="good-block-el flex-space">
-        <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
+        <div class="good-pic"><img :src="good.goodsImages" alt=""></div>
         <div class="good-details flex-space">
             <div>
-                <!--<p class="shop-name">{{good.merchantName}}</p>-->
-                <!--<p class="good-name">{{good.goodsName}}</p>-->
-                <!--<p class="gold">{{good.buyerAmount}}</p>-->
+                <p class="shop-name">{{good.merchantName}}</p>
+                <p class="good-name">{{good.goodsTitle}}</p>
+                <p class="gold">{{good.salesPrice}}</p>
             </div>
             <p><i class="icon icon-arrow-right"></i></p>
         </div>
@@ -38,6 +38,7 @@
             .gold{
                 padding-top:10px;
                 color:#e85352;
+                font-family:"Microsoft Yahei";
                 &:before{content:"￥"}
             }
             i{font-size:30px;color:#505050;}
@@ -51,23 +52,8 @@
 
             }
         }
-        ,components:{
-
-        }
         ,props:{
-            good:{
-                type:Object,
-                default() {
-                    return {
-                        to:{
-                            name:""
-                        },
-                        merchantName:"",
-                        goodsName:"",
-                        buyerAmount:""
-                    }
-                }
-            }
+            good:Object
         }
     }
 </script>

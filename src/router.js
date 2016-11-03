@@ -153,7 +153,7 @@ export const routes = [
 
     ,{ path: '/evaluate' , name: 'evaluate' , component: evaluateNav,
         children:[
-            // 商品&店铺
+            //
             {path: 'list',name: 'evaluateList',component: evaluateList}
         ]
     }
@@ -165,8 +165,11 @@ export const routes = [
         ]
     }
     ,{ path: '/user/details' , name: 'orderDetails' , component: orderDetails }
+
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
+
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
+
     ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
 
     ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation }

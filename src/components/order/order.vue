@@ -192,18 +192,7 @@
             }
         }
         ,props:{
-            obj:{
-                type:Object,
-                default: function() {
-                    return {
-                        state:""
-                        ,merchantName:""
-                        ,buyNumber:""
-                        ,orderAmount:""
-                        ,orderDetails:[{}]
-                    }
-                }
-            }
+            obj:Object
         }
     }
 </script>
