@@ -2,8 +2,8 @@
     <div class="red-money-el">
         <header>
             <div class="red-head">
-                <p class="title">收到<span>2</span>个红包,共</p>
-                <p class="money">20.00<span>元</span> </p>
+                <p class="title">收到<span>{{rows.length}}</span>个红包,共</p>
+                <p class="money">{{blance}}<span>元</span> </p>
             </div>
             <div class="go-next flex-space">
                 <router-link tag="p" :to="{name:''}">去逛逛</router-link>
@@ -11,21 +11,25 @@
             </div>
         </header>
         <h3 class="title-details">最近30天红包明细</h3>
+
         <ul>
-            <li class="flex-space cell-view">
+            <li v-for="item in rows" :rows="item" class="flex-space cell-view">
+
                 <div class="red-image"></div>
                 <div class="red-details">
                     <div class="flex-space type-gold">
-                        <p>{{type}}</p>
-                        <p>{{money}}元</p>
+                        <p>{{item.transCodeName}}</p>
+                        <p>{{item.transAmount}}元</p>
                     </div>
                     <div class="flex-space time-state">
-                        <p> 来自****2016-5-5</p>
+                        <p> 来自****{{item.gmtCreated}}</p>
                         <p>已领取</p>
                     </div>
                 </div>
             </li>
         </ul>
+
+
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -108,12 +112,34 @@
     }
 </style>
 <script type="text/babel">
+
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
-                money:"10.00",
-                type:"现金红包"
+                rows:[]
+                ,blance:''
             }
+        }
+
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                member.getRedMoney(vm.getToken).then(val => {
+                    vm.blance = val.blance
+                    vm.rows = val.rows
+
+
+                    console.log(JSON.stringify(val))
+
+
+                })
+            })
         }
     }
 </script>

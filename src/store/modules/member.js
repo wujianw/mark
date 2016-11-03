@@ -14,7 +14,10 @@ const state = {
     scanOrder: [],
     scanOrderChange:true,
     scanStart:0,
-    scan:true
+    scan:true,
+    refundReason:null,
+
+
 }
 
 // mutations
@@ -49,6 +52,11 @@ const mutations = {
         state.scan = list.length != rows
         state.scanOrder.push(...list)
     },
+
+    // 退款 ----原因模板
+    [types.REFUND_REASON] (state,data) {
+        state.refundReason = data
+    }
 }
 
 export default {

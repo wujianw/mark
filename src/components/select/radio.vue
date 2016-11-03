@@ -1,7 +1,7 @@
 <template>
     <div class="radio-check">
-        <input :type="type" :id="id" :name="name" :checked="check"/>
-        <label :for="id" @touchstart="touchStart" @click="sum">
+        <input :type="type" :id="id" :name="name" :checked="check" :value="value" @change="sum"/>
+        <label :for="id" @touchstart="touchStart">
             {{text}}
             <slot></slot>
         </label>
@@ -80,16 +80,11 @@
      *@params {name,id,text,type,check}
      */
     export default {
-        data() {
-            return {
-                checked:false
-            }
-        },
         methods:{
             touchStart(){},
-            sum(){
-                this.checked = !this.checked
-                this.$emit('sum', this.checked)
+            sum(event){
+                let e = event.target
+                this.$emit('sum', e.checked,e.value)
             }
         }
         ,props:{
@@ -105,6 +100,7 @@
                 type:String,
                 default:""
             }
+            ,value:[String,Number]
             ,type:{
                 type:String,
                 default:"radio"

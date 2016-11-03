@@ -7,7 +7,7 @@
                     <div class="ticket" :data-ticket-type="details.goodsName">
                         <span>有效期至：{{details.couponGmtEnd | date}}</span>
                     </div>
-                    <router-link tag="div" :to="{name:'applyRefund'}" v-if="btnClass" class="refund-btn"></router-link>
+                    <router-link tag="div" :to="{name:'applyRefund',query:{orderNum:order.orderNum}}" class="refund-btn"></router-link>
                 </div>
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
@@ -128,7 +128,6 @@
         data(){
             return {
                 title:'商家信息'
-                ,btnClass:'refund-btn'
                 ,to:{
                     name:'applyRefund',
                     query:{

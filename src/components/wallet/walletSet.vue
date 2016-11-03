@@ -11,7 +11,7 @@
                 lists:{
                     pwoSet:{
                         title:"支付密码",
-                        to:{name:"agreementDetails"}
+                        to:{name:"walletPassword"}
                     } ,
                     service:{
                         title:"联系客服",

@@ -26,6 +26,11 @@ export const pushOrder = ({ commit,state },{type,rows}) => {
         name = types.PUSH_SCAN_ORDER
         start = state.member.scanStart
     }
-    console.log(start)
     return member.postOrder(type,{start:start,rows:rows}).then(data => commit(name,{list:data.rows,rows}))
 }
+
+//获取退款原因模板
+export const refundReason = ({ commit }) => {
+    return member.postRefundReason().then(data => commit(types.REFUND_REASON,data))
+}
+

@@ -12,3 +12,7 @@ export const PUSH_CHIT_ORDER = 'PUSH_CHIT_ORDER'
 export const FETCH_SCAN_ORDER = 'FETCH_SCAN_ORDER'
 //push scan order
 export const PUSH_SCAN_ORDER = 'PUSH_SCAN_ORDER'
+
+// refund reason template
+export const REFUND_REASON = 'REFUND_REASON'
+

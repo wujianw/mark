@@ -21,21 +21,18 @@
 
 
 
-        <router-link tag="main" :to="details.to" class="flex-space income-cell">
-
-
+        <div v-for="item in rows" :rows="item" class="flex-space income-cell">
 
                 <div class="income-table-details" >
-                    <p class="income-table-name">名称名称</p>
-                    <p class="income-table-time">2033-23-23</p>
+                    <p class="income-table-name">{{item.transCodeName}}</p>
+                    <p class="income-table-time">{{item.gmtCreated}}</p>
                 </div>
 
-                <div class="income-table-money">+15</div>
+
+                <div :class="item.tradeType==0 ? 'activeClass':'errorClass'"> {{item.tradeType==0?'-':'+'}}{{item.transAmount}}</div>
 
 
-
-
-        </router-link>
+        </div>
 
 
     </div>
@@ -133,33 +130,51 @@
             margin-top: 8px;
             font-size: 20px;
             color: #afafaf;
+
         }
 
-
-        .income-table-money{
+        .errorClass{
             font-size: 26px;
             color: #e85453;
         }
-
+        .activeClass{
+            font-size: 26px;
+            color: #7c7c7c;
+        }
     }
 </style>
 <script type="text/babel">
+
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
+
     export default {
         data() {
-            return {}
-        }  ,props:{
-            details:{
-                type:Object,
-                default: function() {
-                    return {
-                        to:{
-                            name:"",
-                            type:1
-                        }
-                    }
-                }
+            return {
+                rows:[],
+                isActive: true,
             }
+        }
 
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+
+
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                member.getincome(vm.getToken).then(val => {
+                    vm.blance = val.blance
+                    vm.rows = val.rows
+
+                    console.log(JSON.stringify(val))
+
+
+
+                })
+            })
         }
     }
 </script>

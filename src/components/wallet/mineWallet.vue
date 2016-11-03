@@ -1,10 +1,16 @@
 <template>
     <div class="mine-wallet-el">
-        <header class="head">
+
+        <router-link :to="{name:'income'}" tag="header" class="head" >
             <div class="title">当前余额(元)</div>
-            <div class="gold">0.00</div>
-        </header>
-        <router-link :to="{name:''}" class="wallet-agreement flex-space"><span>查看详情</span></router-link>
+            <div class="gold">{{details.cashBalance}}</div>
+
+        </router-link>
+
+
+
+
+        <router-link :to="{name:'agreement'}" class="wallet-agreement flex-space"><span>查看详情</span></router-link>
         <!--<div class="list-link-wallet" v-for="items in linkList">-->
             <!--<link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to" :arrow="!item"></link-list>-->
         <!--</div>-->
@@ -19,6 +25,7 @@
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
+
     .mine-wallet-el{
         .head{
             padding:0 38px;
@@ -73,8 +80,11 @@
 </style>
 <script type="text/babel">
     import linkList from '../linkList'
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     export default{
         data(){
+
             return {
                 redPack:{
                     redPacked:{
@@ -84,7 +94,7 @@
                             iconClass:'icon-password'
                         },
                         to: {name: 'redMoney' },
-                        details:0.00
+                        details:0
                     }
                     ,integral: {
                         title:"积分",
@@ -103,9 +113,36 @@
                         iconClass:'icon-password'
                     },
                     to: {name: 'walletSet' },
+                },
+                details:{
+                    cashBalance:''
+                    ,redBalance:''
+                    ,totalearn:''
                 }
             }
         }
+
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+        }
+        ,watch:{
+            details() {
+                this.redPack.redPacked.details = this.details.redBalance
+                this.redPack.integral.details = this.details.totalearn
+            }
+        }
+        ,created(){
+            member.getwelletHome(this.getToken).then(val => {
+                this.details = val
+
+                console.log(JSON.stringify(val))
+
+
+            })
+        }
+
         , components: {
             linkList
         }
