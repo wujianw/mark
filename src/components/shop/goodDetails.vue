@@ -2,7 +2,8 @@
     <div class="good-details-el">
         <header class="hd">
             <div class="hd-pic">
-                <img src="" alt=""/>
+                <img :src="goods.goodsImages" alt=""/>
+                <!--<img src="" alt=""/>-->
             </div>
             <div class="hd-title">
                 <p>{{goods.goodsName}}</p>
@@ -20,7 +21,7 @@
             <span class="color-size">已售:{{goods.virtualBuy}}笔</span>
         </section>
         <section class="section inventory-quota flex-space">
-            <div class="color-size">库存：</div>
+            <div class="color-size">库存:{{goods.stockNumber}}件</div>
             <div class="color-size">每人限购:{{goods.canBuyNum}}件</div>
         </section>
         <section class="gd-mark flex-start">
@@ -30,10 +31,10 @@
         <main>
             <section class="lump">
                 <h3>
-                    <p>商品评论({{countreview}}人评价)</p>
+                    <p>商品评论({{countreviewLen}})人评价</p>
                 </h3>
                 <div class="lump-content">
-                    <good-review></good-review>
+                    <good-review :reviews="countreview"></good-review>
                 </div>
             </section>
             <section class="lump">
@@ -41,21 +42,23 @@
                     <p>商家信息</p>
                 </h3>
                 <div class="lump-content flex-space shop">
-                    <!--<div class="pic-shop"><img src="" alt=""></div>-->
+                    <div class="pic-shop"><img :src="shop.logoImg" alt="" class="shop-logo"></div>
                     <div class="info">
                         <p class="info-name">{{shop.name}}</p>
                         <p>{{shop.address}}</p>
                         <p><i class="icon icon-position"></i>1.8km</p>
                     </div>
                     <div>
-                        电话
+                        {{shop.mobile}}
                     </div>
                 </div>
+
             </section>
             <div class="link-picword">
                 <p>向下拖动 查看详情</p>
             </div>
             <div id="picWord">
+
             </div>
         </main>
         <footer class="footer">
@@ -163,6 +166,13 @@
             p.info-name{color:#505050;font-size:26px;}
             .info-price p{display:inline-block;}
             .info-price .market-pay{color:#b5b5b5;}
+            .pic-shop{
+
+                width: 200px;
+                height: 100px;
+
+                .shop-logo{width: 100%;height:100%}
+            }
         }
 
         .footer{position:fixed;bottom:0;width:750px;background:#f2f2f2;z-index:2;}
@@ -186,45 +196,48 @@
 </style>
 <script type="text/babel">
     import goodReview from './goodReview'
+    import shop from "../../api/shop"
+    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
-                countreview:"121212"
+                goods:{
+                    goodsImages:null
+                    ,goodsName:""
+                    ,goodsTitle:""
+                    ,buyPension:""
+                    ,buyPrice:""
+                    ,marketPrice:""
+                    ,virtualBuy:""
+                    ,canBuyNum:""
+                    ,couponUseDesc:""
+                    ,couponGmtStart:""
+                    ,couponGmtEnd:""
+                    ,buyerTips:""
+                    ,stockNumber:0
+                },
+                shop:{
+                    name:""
+                    ,address:""
+                    ,telephone:""
+                },
+                countreviewLen:0,
+                countreview:[]
             }
+        }
+        ,beforeRouteEnter (to, from, next) {
+            let goodsId = to.query.goodsId
+            next(vm => {
+                shop.getGoodsDetails({goodsId}).then(val => {
+                    vm.goods = val.goodsdata
+                    vm.countreview = val.reviews.rows.slice(0,2)
+                    vm.countreviewLen = val.reviews.rows.length
+                    vm.shop = val.shop
+                })
+            })
         }
         ,components:{
             goodReview
-        }
-        ,props:{
-            goods:{
-                type:Object,
-                default() {
-                    return {
-                        goodsName:"积分宝体验店100代金券"
-                        ,goodsTitle:"到店使用"
-                        ,buyPension:"1.50"
-                        ,buyPrice:"58.00"
-                        ,marketPrice:"100"
-                        ,virtualBuy:"1000"
-                        ,canBuyNum:""
-                        ,couponUseDesc:""
-                        ,couponGmtStart:""
-                        ,couponGmtEnd:""
-                        ,buyerTips:""
-                    }
-                }
-            }
-
-            ,shop:{
-                type:Object,
-                default() {
-                    return {
-                        name:"积分宝体验店"
-                        ,address:"中栋国际"
-                        ,telephone:"0571-11110000"
-                    }
-                }
-            }
         }
     }
 </script>

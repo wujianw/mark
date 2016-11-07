@@ -27,6 +27,7 @@
 <style lang="scss" rel="stylesheet/scss">
     .shop-block-el{
         background:#fff;
+        border-top:6px solid #f2f2f2;
         .pic{
             height:146px;
             width:226px;

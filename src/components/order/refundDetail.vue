@@ -26,26 +26,26 @@
                         <p>商家通过退款申请已将退款申请提交至支付账户</p>
                         <p>{{obj.confirmDate}}</p>
                     </div>
-                    <div class="progress-status" >
+                    <div class="progress-status active" >
                         <h4>已到账</h4>
                         <p>退款金额已原路退回您的支付账户，请查收</p>
                         <p>{{obj.finishDate}}</p>
                     </div>
                 </template>
                 <template v-if="obj.refundStatus == 31">
-                    <template v-if="obj.reverseDate">
+                    <template v-if="!obj.reverseDate">
                         <div class="progress-status active" >
                             <h4>商家拒绝退款</h4>
-                            <p>商家拒绝您的退款申请，您可以再次发起申请或联系客服</p>
+                            <p>商家拒绝您的退款申请，您可以再次发起申请或联系客服 <br>(拒绝理由:{{obj.rejectReason}})</p>
                             <p>{{obj.confirmDate}}</p>
                         </div>
-                        <div class="progress-status" >
+                        <div class="progress-status active" >
                             <h4>退款失败</h4>
                         </div>
                     </template>
                     <template v-else>
                         <div class="progress-status active" >
-                            <h4>取消退款</h4>
+                            <h4>买家会员撤销退款</h4>
                         </div>
                     </template>
                 </template>
@@ -72,7 +72,8 @@
                     confirmDate:"",
                     finishDate:"",
                     reverseDate:"",
-                    orderNum:""
+                    orderNum:"",
+                    rejectReason:""
                 }
             }
         },
@@ -92,7 +93,6 @@
         },
         beforeRouteEnter(to,from,next) {
             member.getRefundDetails({refundOrderNum:to.query.refundOrderNum}).then(res => {
-                console.log(res)
                 next(vm => {
                     vm.obj = res
                 })

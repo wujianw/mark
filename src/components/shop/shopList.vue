@@ -13,12 +13,13 @@
             <div class="nav-sort flex-center">排序<i class="icon icon-pull-down"></i></div>
         </nav>
         <div>
-            <shop-block></shop-block>
+            <shop-block v-for="n in 4"></shop-block>
         </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .shop-list-el{
+        margin-bottom:98px;
         .position-wrap{height:72px;}
         .position{
             padding:0 .5em;
@@ -47,9 +48,22 @@
 </style>
 <script type="text/babel">
     import shopBlock from './shopBlock'
+    import shop from '../../api/shop'
+    import { mapGetters } from 'vuex'
     export default {
         data() {
             return {}
+        }
+        ,created() {
+            if(!this.shopMenu || this.shopMenu.length == 0){
+                this.$store.dispatch("shopMenu")
+            }
+            this.$store.dispatch("toggleArea","330100")
+        }
+        ,computed: {
+            ...mapGetters({
+                shopMenu:'shopMenu'
+            })
         }
         ,components:{
             shopBlock

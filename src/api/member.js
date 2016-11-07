@@ -146,7 +146,7 @@ export default {
      * 优惠券请求
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
-    ,getCouponList(token,start=0,rows=10){
+    ,getCouponList(token=store.getters.getToken,start=0,rows=10){
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
         params = {"token":token,"start":start,"rows":rows}
@@ -168,10 +168,10 @@ export default {
      * 钱包首页
      * @params
      */
-    ,getwelletHome(token){
+    ,getwelletHome(token=store.getters.getToken){
         let url,params;
         url = '/api/pri/wallet/index.json'
-        params = {"token":token}
+        params = {token}
         return postData(url,params)
 
     }
@@ -185,7 +185,7 @@ export default {
      * rows   每页几条记录
      * start 记录起始条数
      */
-    ,getincome(token,startdate='2015-05-01',enddate='2016-10-01',start=0,rows=10,type=''){
+    ,getincome(token=store.getters.getToken,startdate='2015-05-01',enddate='2016-10-01',start=0,rows=10,type=''){
         let url,params;
         url = '/api/pri/wallet/cashdetail.json'
         params = {
@@ -203,7 +203,7 @@ export default {
      * 现金红包明细
      * @params
      */
-    ,getRedMoney(token){
+    ,getRedMoney(token=store.getters.getToken){
         let url,params;
         url = '/api/pri/wallet/reddetail.json'
         params = {"token":token}
@@ -214,7 +214,7 @@ export default {
      * 我的收藏 含店铺收藏列表  商品收藏列表
      * @params
      */
-    ,getMembercollect(token){
+    ,getMembercollect(token=store.getters.getToken){
         let url,params;
         url = '/api/pri/membercollect/mycollect.json'
         params = {"token":token}
@@ -226,7 +226,7 @@ export default {
      * 消息列表
      * @params
      */
-    ,getMessage(token){
+    ,getMessage(token=store.getters.getToken){
         let url,params;
         url = '/api/usermessage/packetList.json'
         params = {"token":token}

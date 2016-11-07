@@ -12,3 +12,8 @@ export const scan = state => {return state.member.scan}
 
 // 退款原因目标
 export const refundReason = state => {return state.member.refundReason}
+
+// 获取分类信息
+export const shopMenu = state => {return state.shop.menu}
+//
+export const areaList = state => {return state.shop.areaList}

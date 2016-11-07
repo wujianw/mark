@@ -14,14 +14,7 @@
     export default {
         data() {
             return {
-                isActive:false
-                ,details:{
-                    to:{
-                        name:'orderDetails',
-                        params:{type:1}
-                    }
-                }
-                ,lists:null
+                lists:null
                 ,busy:true //无限加载开关 true:关闭
             }
         }
@@ -33,7 +26,7 @@
                 scanOrderChange:'scanOrderChange',
                 chit:'chit',
                 scan:'scan'
-            }),
+            })
         }
         ,components:{
             order

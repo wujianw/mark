@@ -19,3 +19,11 @@ export const PUSH_SCAN_ORDER = 'PUSH_SCAN_ORDER'
 // refund reason template
 export const REFUND_REASON = 'REFUND_REASON'
 
+// fetch shop_menu
+export const FETCH_SHOP_MENU = 'FETCH_SHOP_MENU'
+
+// fetch all_area
+export const FETCH_ALL_AREA = 'FETCH_ALL_AREA'
+
+// toggle focus_area
+export const TOGGLE_FOCUS_AREA = 'TOGGLE_FOCUS_AREA'

@@ -13,13 +13,14 @@
 <script type="text/babel">
     /*
      * 商品组件  --- 商家详情使用
-     * @params 
+     * @params
      */
     export default{
         data(){
             return {
                 to:{
-                    name:'goodDetails'
+                    name:'goodDetails',
+                    query:{goodsId:467}
                 }
             }
         }

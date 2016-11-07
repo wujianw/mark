@@ -153,8 +153,8 @@
                         obj.btn =  "查看券码"
                         obj.to = {
                             name:'orderDetails',
-                            params:{
-                                type:this.obj.id
+                            query:{
+                                orderId:this.obj.id
                             }
                         }
                         break
@@ -163,8 +163,8 @@
                         obj.btn =  "查看详情"
                         obj.to = {
                             name:'orderDetails',
-                            params:{
-                                type:this.obj.id
+                            query:{
+                                orderId:this.obj.id
                             }
                         }
                         break
@@ -174,8 +174,8 @@
                             obj.btn =  "查看详情"
                             obj.to = {
                                 name:'orderDetails',
-                                params:{
-                                    type:this.obj.id
+                                query:{
+                                    orderId:this.obj.id
                                 }
                             }
                         }else {

@@ -25,6 +25,7 @@
             <h3>退款原因</h3>
             <radio v-for="(item, index) in refundReasonTemplate"
                    @sum="reason"
+                   name="refundReason"
                    :check="!index"
                    :id="'refundReason'+item.rkey"
                    :text="item.rvalue"
