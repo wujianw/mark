@@ -4,7 +4,7 @@
             <div class="ticket" data-ticket-type="卡券号：" :data-validity="obj.code"></div>
             <div class="consumeName" :class="state.stateClass"></div>
         </router-link>
-        <router-link v-if="obj.consume==2 || obj.consume==3" :to="{name:'refundDetail'}" class="go-refund-details flex-center">
+        <router-link v-if="obj.consume==2 || obj.consume==3" :to="to" class="go-refund-details flex-center">
             <span>查看退款详情</span>
         </router-link>
     </div>
@@ -42,7 +42,18 @@
 </style>
 <script>
     export default{
-        computed:{
+        data() {
+            return {
+                to:{
+                    name:'refundDetail',
+                    query:{
+                        refundOrderNum:this.obj.refundOrderNum,
+                        orderId:this.$route.query.orderId
+                    }
+                }
+            }
+        }
+        ,computed:{
             /*
             * 根据券码状态处理 按钮文字&颜色，路由
             * 0：待消费，1：已消费，2：退款中，3：退款完成

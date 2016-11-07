@@ -74,7 +74,6 @@
     export default{
         data(){
             return{
-
                 merchantdata:[],
                 goodsdata:[],
                 isGood : false

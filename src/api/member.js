@@ -16,7 +16,7 @@ const postData = (url,params) => {
             MessageBox.alert(data)
             return Promise.reject()
         }
-        console.log(JSON.stringify(data.data))
+        // console.log(JSON.stringify(data.data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
@@ -111,12 +111,35 @@ export default {
     /**
      * 提交退款申请
      * @params  function
-     * @option  orderNum
+     * @option  token,refundReason,refCashAmout,refRedPacket,refGiveAway,refundRemark,couponIds
      */
-    ,postApplyRefund({token=store.getters.getToken,refundReason,refCashAmout,refRedPacket,refGiveAway,refundRemark,couponIds}={}) {
+    ,postApplyRefund({token=store.getters.getToken,refundReason,refCashAmount,refRedPacket,refGiveAway,refundRemark,couponIds}={}) {
         let url,params;
         url = '/api/pri/refund/applycouponrefund.json'
-        params = {token,refundReason,refCashAmout,refRedPacket,refGiveAway,refundRemark,couponIds}
+        params = {token,refundReason,refCashAmount,refRedPacket,refGiveAway,refundRemark,couponIds}
+        console.log(params)
+        return postData(url,params)
+    }
+    /**
+     * 取消退款
+     * @params  function
+     * @option  orderNum
+     */
+    ,postRefundClose({token=store.getters.getToken,orderNum}={}) {
+        let url,params;
+        url = '/api/pri/refund/cancelrefund.json'
+        params = {token,orderNum}
+        return postData(url,params)
+    }
+
+    /**
+     * 查看退款详情
+     * @params  token,refundOrderNum:退款编号
+     */
+    ,getRefundDetails({token=store.getters.getToken,refundOrderNum}){
+        let url,params;
+        url = '/api/pri/refund/refundschedule.json'
+        params = {token,refundOrderNum}
         return postData(url,params)
     }
     /**

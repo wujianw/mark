@@ -1,12 +1,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
-var __webpack_public_path__ = "http://localhost:63342/mark/dist/"
+// var __webpack_public_path__ = "http://localhost:63342/mark/dist/"
+var __webpack_public_path__ = "http://jfb315.f3322.net:9090/"
 module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+    // assetsSubDirectory: 'htdocs/wx',
     assetsPublicPath: __webpack_public_path__,
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
@@ -23,7 +25,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://192.168.8.70/',
+        // target: 'http://192.168.8.70/',
+        target: 'http://jfb315.f3322.net:8086/',
         changeOrigin: true
       }
     },

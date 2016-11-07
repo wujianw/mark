@@ -1,35 +1,122 @@
 <template>
     <div class="refund-detail-el">
-        <div class="refund-detail">退款金额<span>158.00元</span></div>
-        <div class="refund-detail">退回账户<span>钱包余额</span></div>
-        <div class="refund-detail">到账时间<span>已到账</span></div>
+        <div class="refund-detail">退款金额<span>{{obj.applyRefAmount}}元</span></div>
+        <div class="refund-detail">退回账户<span>{{obj.refundChannelName}}</span></div>
+        <div class="refund-detail" v-if="obj.refundStatus != 31">到账时间<span>{{couponDefaultDay}}</span></div>
         <div class="refund-progress">
             <h3 class="flex-space refund-title" >
                 <span class="title">退款流程</span>
                 <span class="help">退款帮助</span>
             </h3>
             <div class="progress-wrap">
-                <div class="progress-status active" >
-                    <h4>到账处理中</h4>
-                    <p>退款申请处理完成后</p>
-                    <p>2016-10-21</p>
-                </div>
-                <div class="progress-status" >
-                    <h4>商家审核通过</h4>
-                    <p>退款申请处理完成后</p>
-                    <p>2016-10-21</p>
-                </div>
-                <div class="progress-status" >
-                    <h4>商家审核中</h4>
-                    <p>退款申请处理完成后</p>
-                    <p>2016-10-21</p>
-                </div>
+                <template v-if="obj.refundStatus == 11">
+                    <div class="progress-status active" >
+                        <h4>等待商家审核</h4>
+                        <p>正在等待商家审核，审核后将进行打款</p>
+                        <p>{{obj.gmtCreated}}</p>
+                    </div>
+                    <div class="progress-status" >
+                        <h4>到账处理</h4>
+                        <p>预计将在一个工作日内到账</p>
+                    </div>
+                </template>
+                <template v-if="obj.refundStatus == 30">
+                    <div class="progress-status active" >
+                        <h4>商家通过审核</h4>
+                        <p>商家通过退款申请已将退款申请提交至支付账户</p>
+                        <p>{{obj.confirmDate}}</p>
+                    </div>
+                    <div class="progress-status" >
+                        <h4>已到账</h4>
+                        <p>退款金额已原路退回您的支付账户，请查收</p>
+                        <p>{{obj.finishDate}}</p>
+                    </div>
+                </template>
+                <template v-if="obj.refundStatus == 31">
+                    <template v-if="obj.reverseDate">
+                        <div class="progress-status active" >
+                            <h4>商家拒绝退款</h4>
+                            <p>商家拒绝您的退款申请，您可以再次发起申请或联系客服</p>
+                            <p>{{obj.confirmDate}}</p>
+                        </div>
+                        <div class="progress-status" >
+                            <h4>退款失败</h4>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="progress-status active" >
+                            <h4>取消退款</h4>
+                        </div>
+                    </template>
+                </template>
             </div>
+        </div>
+        <div v-if = "this.obj.refundStatus == 11" class="close-refund-btn">
+            <submit value="取消退款" @commit="closeRefund" :dis="!1"></submit>
         </div>
     </div>
 </template>
 <script type="text/babel">
+    import member from "../../api/member"
+    import submit from "../submit"
+    import MessageBox from '../../msgbox';
+    export default{
+        data() {
+            return {
+                obj:{
+                    applyRefAmount:"",
+                    refundChannelName:"",
+                    couponDefaultDay:"",
+                    gmtCreated:"",
+                    refundStatus:null,
+                    confirmDate:"",
+                    finishDate:"",
+                    reverseDate:"",
+                    orderNum:""
+                }
+            }
+        },
+        components: {
+            submit
+        },
+        computed: {
+            couponDefaultDay() {
+                let str
+                if(this.obj.refundStatus == 11){
+                    str = "预计"+this.obj.couponDefaultDay+"天内到账"
+                } else {
+                    str = "已到账"
+                }
+                return str
+            }
+        },
+        beforeRouteEnter(to,from,next) {
+            member.getRefundDetails({refundOrderNum:to.query.refundOrderNum}).then(res => {
+                console.log(res)
+                next(vm => {
+                    vm.obj = res
+                })
+            })
+        },
+        methods: {
+            closeRefund() {
+                let self = this
+                let orderId = self.$route.query.orderId,
+                    orderNum = self.obj.orderNum
+                MessageBox.confirm("确定取消退款？").then(() => {
+                    self.$store.dispatch("refundClose",orderNum).then(() => {
+                        this.$router.replace({name:"orderDetails",query:{orderId}})
+                    }).catch(() => {
+                        MessageBox.alert("取消失败,请重新再试").then(() => {
+                            this.$router.replace({name:"orderDetails",query:{orderId}})
+                        })
+                    })
+                }).catch(() => {
 
+                })
+            }
+        }
+    }
 </script>
 <style lang="scss" rel="stylesheet/scss">
     .refund-detail-el{
@@ -68,6 +155,7 @@
                 background-repeat:no-repeat;
                 .progress-status{
                     padding:10px 0;
+                    min-height:111px;
                     border-bottom:1px solid #f2f2f2;
                     font: 22px/1.72 "sans-serif";
                     color:#afafaf;
@@ -94,6 +182,11 @@
                 }
             }
 
+        }
+        .close-refund-btn{
+            position:fixed;
+            bottom:0;
+            width:750px;
         }
     }
 </style>

@@ -52,7 +52,10 @@ const mutations = {
         state.scan = list.length != rows
         state.scanOrder.push(...list)
     },
-
+    //重新刷新 chit&    养老金
+    [types.UPDATE] (state) {
+        state.chitOrderChange = true
+    },
     // 退款 ----原因模板
     [types.REFUND_REASON] (state,data) {
         state.refundReason = data

@@ -143,16 +143,19 @@
                 switch(state){
                     case "created" :
                         obj.name = "待支付"
-                        obj.btn = "查看券码"
+                        obj.btn = "付款"
                         obj.to = {
                             name:""
                         }
                         break
                     case "deliveryed" :
                         obj.name =  "待消费"
-                        obj.btn =  "付款"
+                        obj.btn =  "查看券码"
                         obj.to = {
-                            name:""
+                            name:'orderDetails',
+                            params:{
+                                type:this.obj.id
+                            }
                         }
                         break
                     case "refunding" :

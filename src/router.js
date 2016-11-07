@@ -151,20 +151,20 @@ export const routes = [
     }
 
 
-    ,{ path: '/evaluate' , name: 'evaluate' , component: evaluateNav,
+    ,{ path: '/evaluate', name: 'evaluate', component: evaluateNav,
         children:[
             //
-            {path: 'list',name: 'evaluateList',component: evaluateList}
+            {path: 'list', name: 'evaluateList', component: evaluateList}
         ]
     }
     // 全部订单
-    ,{ path: '/user/orders' , name: 'ordersNav' , component: ordersNav,
+    ,{ path: '/user/orders', name: 'ordersNav', component: ordersNav,
         children:[
             // 订单类型
-            {path: 'list/:type',name: 'orders',component: orders}
+            {path: 'list/:type', name: 'orders', component: orders}
         ]
     }
-    ,{ path: '/user/details' , name: 'orderDetails' , component: orderDetails }
+    ,{ path: '/user/details', name: 'orderDetails', component: orderDetails, query:{orderId:""} }
 
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
 

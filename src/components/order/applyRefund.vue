@@ -13,7 +13,7 @@
         </section>
         <section>
             <h3>退还内容</h3>
-            <p>现金：<span class="gold">{{refCashAmout}}</span></p>
+            <p>现金：<span class="gold">{{refCashAmount}}</span></p>
             <p>红包：<span class="gold">{{refRedPacket}}</span></p>
             <input type="hidden" name="refGiveAway" :value="refGiveAway">
         </section>
@@ -23,7 +23,12 @@
         </section>
         <section>
             <h3>退款原因</h3>
-            <radio v-for="item in refundReasonTemplate" @sum="reason" :id="'refundReason'+item.rkey" :text="item.rvalue" :value="item.rkey"></radio>
+            <radio v-for="(item, index) in refundReasonTemplate"
+                   @sum="reason"
+                   :check="!index"
+                   :id="'refundReason'+item.rkey"
+                   :text="item.rvalue"
+                   :value="item.rkey"></radio>
         </section>
         <div class="other-wrap flex-space">
             <input type="text" name="refundRemark" class="other" v-model="refundRemark" placeholder="请输入其他意见">
@@ -43,10 +48,10 @@
             return{
                 num:1,
                 lists:[],
-                cashAmout:0,//应退现金金额（一张）
+                cashAmount:0,//应退现金金额（一张）
                 redPacket:0,//应退红包（一张）
                 giveAway:0,//扣除赠送（一张）
-                couponIds:[],
+                couponIds:[], // couponIds.join(",")提交
                 refundReason:"",
                 refundRemark:""
             }
@@ -55,25 +60,31 @@
             ...mapGetters({
                 refundReasonTemplate:"refundReason"
             }),
-            refCashAmout() {
-                return this.cashAmout*this.num //应退现金金额
+            refCashAmount() {
+                return this.cashAmount*this.num+"" //应退现金金额
             },
             refRedPacket() {
-                return this.redPacket*this.num //应退红包
+                return this.redPacket*this.num+"" //应退红包
             },
             refGiveAway() {
-                return this.giveAway*this.num //扣除赠送
+                return this.giveAway*this.num+"" //扣除赠送
             },
             disable() {
                 return this.couponIds.length == 0
             }
         }
         ,created() {
-            if(!this.refundReason || this.refundReason.length == 0){
-                this.$store.dispatch("refundReason")
+            // 读取退款原因模板
+            if(!this.refundReasonTemplate || this.refundReasonTemplate.length == 0){
+                this.$store.dispatch("refundReason").then(() => {
+                    this.refundReason = this.refundReasonTemplate[0].rkey
+                })
+            } else {
+                this.refundReason = this.refundReasonTemplate[0].rkey
             }
         }
         ,beforeRouteEnter(to,from,next) {
+            // 获取可退款代金券列表
             let orderNum = to.query.orderNum
             member.postCanRefund({orderNum}).then(res => {
                 if(res.list.length == 0){
@@ -81,10 +92,10 @@
                 }
                 next(vm => {
                     vm.lists = res.list
-                    vm.cashAmout = res.refCashAmout
+                    vm.cashAmount = res.refCashAmout
                     vm.redPacket = res.refRedPacket
                     vm.giveAway = res.refGiveAway
-                    vm.couponIds.push(res.list[0].id)
+                    vm.couponIds.push(res.list[0].id) // 默认选中第一张
                 })
             })
         }
@@ -106,17 +117,21 @@
             },
             //提交退款申请
             apply() {
-                let self = this
+                let self = this,
+                    orderId = self.$route.query.orderId
                 let params = {
                     refundReason:self.refundReason,
-                    refCashAmout:self.refCashAmout,
+                    refCashAmount:self.refCashAmount,
                     refRedPacket:self.refRedPacket,
                     refGiveAway:self.refGiveAway,
                     refundRemark:self.refundRemark,
-                    couponIds:self.couponIds.join(","),
+                    couponIds:self.couponIds.join(",")
                 }
                 member.postApplyRefund(params).then(res => {
-                    console.log(res)
+                    let refundOrderNum = res.refundOrderNum
+                    this.$router.replace({name:"refundDetail",query:{refundOrderNum,orderId}}) // 提交成功后去退款详情画面
+                }).catch(() => {
+
                 })
             }
         }

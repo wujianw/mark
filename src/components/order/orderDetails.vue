@@ -7,7 +7,10 @@
                     <div class="ticket" :data-ticket-type="details.goodsName">
                         <span>有效期至：{{details.couponGmtEnd | date}}</span>
                     </div>
-                    <div class="refund-btn" @click="applyRefund"></div>
+                    <div class="refund-btn"
+                         v-if="isHasRefuning != 2"
+                         :class="isHasRefuning == 0 ? 'refund-apply-btn' : 'refund-close-btn'"
+                         @click="applyRefund"></div>
                 </div>
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
@@ -115,8 +118,9 @@
             line-height:2;
             font-size:26px;
             color:#e85352;
-            &:before{content:"申请退款"}
         }
+        .refund-apply-btn:before{content:"申请退款"}
+        .refund-close-btn:before{content:"取消退款"}
     }
 </style>
 <script>
@@ -156,6 +160,7 @@
                 ,good:null
                 ,state:null
                 ,refund:1
+                ,isHasRefuning:2
             }
         }
         ,filters: {
@@ -166,45 +171,68 @@
         ,beforeRouteEnter(to,from,next){
             member.postOrderDetails({orderId:to.query.orderId}).then(data => {
                 next(vm => {
-                    console.log(data.refund)
-                    vm.refund = data.refund
-                    vm.details = {
-                        couponGmtEnd: data.orderDetails[0].couponGmtEnd,
-                        goodsName: data.orderDetails[0].goodsName,
-                        merchantName:data.merchantName,
-                        couponUseDesc: data.orderDetails[0].couponUseDesc,
-                        buyerTips: data.orderDetails[0].buyerTips,
-                        merchantAddress: data.merchantAddress
-                    }
-                    //订单信息
-                    vm.order = {
-                        orderNum:data.orderNum,
-                        gmtCreate:data.gmtCreate,
-                        buyerMobile:data.buyerMobile,
-                        buyNumber:data.orderDetails[0].buyNumber,
-                        orderAmount:data.orderAmount,
-                        packetPayAmout:data.packetPayAmout,
-                        goodsAmount:data.goodsAmount,
-                        merchantPension:data.goodsAmount,
-                    }
-                    vm.coupons = data.coupons
-                    vm.state = data.state
-                    vm.good = {
-                        to:{
-                            name:""
-                        },
-                        goodsTitle: data.orderDetails[0].goodsTitle,
-                        salesPrice: data.orderDetails[0].salesPrice,
-                        goodsImages: data.orderDetails[0].goodsImages,
-                        merchantName: data.merchantName,
-                    }
+                    vm.initialize(data)
                 })
             })
         }
         ,methods:{
+            // 重置数据
+            initialize(data) {
+                let vm = this
+                vm.refund = data.refund
+                //
+                vm.details = {
+                    couponGmtEnd: data.orderDetails[0].couponGmtEnd,
+                    goodsName: data.orderDetails[0].goodsName,
+                    merchantName:data.merchantName,
+                    couponUseDesc: data.orderDetails[0].couponUseDesc,
+                    buyerTips: data.orderDetails[0].buyerTips,
+                    merchantAddress: data.merchantAddress
+                }
+                vm.isHasRefuning = data.isHasRefuning // 0-展示申请退款按钮   1-展示取消退款按钮  2-不展示申请退款按钮和取消退款按钮
+                //订单信息
+                vm.order = {
+                    orderNum:data.orderNum,
+                    gmtCreate:data.gmtCreate,
+                    buyerMobile:data.buyerMobile,
+                    buyNumber:data.orderDetails[0].buyNumber,
+                    orderAmount:data.orderAmount,
+                    packetPayAmout:data.packetPayAmout,
+                    goodsAmount:data.goodsAmount,
+                    merchantPension:data.goodsAmount,
+                }
+                vm.coupons = data.coupons
+                vm.state = data.state
+                vm.good = {
+                    to:{
+                        name:""
+                    },
+                    goodsTitle: data.orderDetails[0].goodsTitle,
+                    salesPrice: data.orderDetails[0].salesPrice,
+                    goodsImages: data.orderDetails[0].goodsImages,
+                    merchantName: data.merchantName,
+                }
+            },
             applyRefund() {
-//                if(this.refund == 1) return MessageBox.alert("暂不提供退款服务")
-                this.$router.push({name:'applyRefund',query:{orderNum:this.order.orderNum}})
+                let self = this
+                let orderNum = self.order.orderNum,
+                    orderId = self.$route.query.orderId
+                if(self.refund == 1 && self.isHasRefuning == 0) return MessageBox.alert("暂不提供退款服务")
+                if(self.isHasRefuning == 1){
+                    MessageBox.confirm("确定取消退款？").then(() => {
+                        self.$store.dispatch("refundClose",orderNum).then(() => {
+                            member.postOrderDetails({orderId}).then(data => {
+                                self.initialize(data)
+                            })
+                        }).catch(() => {
+                            MessageBox.alert("取消失败,请重新再试")
+                        })
+                    }).catch(() => {
+
+                    })
+                } else {
+                    this.$router.push({name:'applyRefund',query:{orderNum,orderId}}) //申请退款画面
+                }
             }
         }
         ,components: { goodBlock,linkList,ticketBlock }

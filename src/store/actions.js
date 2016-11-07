@@ -34,3 +34,6 @@ export const refundReason = ({ commit }) => {
     return member.postRefundReason().then(data => commit(types.REFUND_REASON,data))
 }
 
+export const refundClose = ({ commit },orderNum) => {
+    return member.postRefundClose({orderNum}).then(data => commit(types.UPDATE))
+}
