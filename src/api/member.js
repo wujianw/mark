@@ -13,7 +13,7 @@ const postData = (url,params) => {
     return Vue.http.post(url,params).then(res => {
         let data = JSON.parse(res.data)
         if(data.code != 0) {
-            MessageBox.alert(data)
+            MessageBox.alert(data.data)
             return Promise.reject()
         }
         // console.log(JSON.stringify(data.data))

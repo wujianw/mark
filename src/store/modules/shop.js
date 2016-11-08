@@ -19,9 +19,8 @@ const mutations = {
         state.areaList = areaList
     },
     // 切换城市
-    [types.TOGGLE_FOCUS_AREA] (state,cityCode) {
+    [types.TOGGLE_FOCUS_AREA] (state,cityCode=state.location.currentCode) {
         state.countyList = state.areaList.filter(item => item.parentCode == cityCode)
-        console.log(state.countyList)
     }
 }
 

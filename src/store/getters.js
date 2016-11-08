@@ -15,5 +15,8 @@ export const refundReason = state => {return state.member.refundReason}
 
 // 获取分类信息
 export const shopMenu = state => {return state.shop.menu}
-//
+// 获取所有区域
 export const areaList = state => {return state.shop.areaList}
+
+// 获取当前城市区县数据
+export const countyList = state => {return state.shop.countyList}
