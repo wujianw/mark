@@ -56,7 +56,7 @@
     export default{
         props:{
             score:{
-                type:Number,
+                type:[Number,String],
                 default:0
             }
         }

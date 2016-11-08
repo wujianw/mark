@@ -3,19 +3,19 @@
         <router-link tag="div" :to="{name:'shopDetails'}" class="flex-space">
             <div class="flex-start content-wrap">
                 <div class="pic">
-                    <img src="" alt="">
+                    <img :src="imgUrl" alt="">
                 </div>
                 <div class="content">
-                    <div class="shop-name">商家名称<i class="icon icon-yen"></i></div>
+                    <div class="shop-name">{{obj.merchant_name}}<i class="icon icon-yen"></i></div>
                     <div class="evaluate">
-                        <star :score="score"></star>
-                        <span>{{evaluate}}评价</span>
+                        <star :score="obj.score"></star>
+                        <span>{{obj.score}}评价</span>
                     </div>
                 </div>
             </div>
             <div class="integral-distance">
-                <div class="distance">1.8km</div>
-                <message-mark class="integral"><span>赠10%养老金</span></message-mark>
+                <div class="distance">{{obj.distance | distance}}km</div>
+                <message-mark class="integral"><span>赠{{obj.fraction | percentage}}养老金</span></message-mark>
             </div>
         </router-link>
         <div class="benefit-special">
@@ -36,6 +36,7 @@
         }
         .content{
             padding-left:15px;
+            max-width: 300px;
             .shop-name{
                 font-size:30px;
                 color:#505050;
@@ -84,20 +85,63 @@
 <script type="text/babel">
     import messageMark from "../messageMark"
     import star from "../star"
+    import {imgLoad} from "../../assets/js/public"
+    import shopPic from "../../assets/img/default-shop.jpg"
+
     export default {
         data() {
             return {
                 evaluate:0,
-                score:3.1
+                imgUrl:shopPic
             }
         }
-        ,components:{
-            messageMark,
-            star
-        }
         ,computed:{
+//            imgUrl() {
+//            http://p-shop.jfb315.cn/htdocs/upload/shop/2016_05_08/1ad448a6-503b-47ed-b679-5bc246f0543c.jpg@226_146h
+//                let img = new Image()
+//                let url = this.obj.background+'@226_146h'
+//                img.src = url
+//                img.onerror = function () {
+//                    return '../../assets/img/default-shop.jpg'
+//                }
+//                img.onload = function () {
+//                    return url
+//                }
+//            }
+        },
+        created() {
+            let self = this
+            let img = new Image()
+            img.src = this.obj.background+'@226_146h'
+            img.onload = function () {
+                self.imgUrl = self.obj.background+'@226_146h'
+            }
         }
+        ,filters:{
+            percentage(value){
+                return (value*100).toFixed(2)+"%"
+            },
+            distance(value){
+                return (value/1000).toFixed(2)
+            }
+        }
+        ,props:{
+            obj:{
+                type:Object,
+                default() {
+                    return {
+                        merchant_name:null,
+                        fraction:0,
+                        score:0,
+                        background:null,
+                        distance:'计算中...'
+                    }
+                }
+            }
+        }
+
         ,methods:{
         }
+        ,components:{ messageMark, star }
     }
 </script>

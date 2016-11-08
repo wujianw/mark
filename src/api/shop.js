@@ -59,7 +59,6 @@ export default {
     getAreaVersion() {
         let url = '/api/open/interface_version/get_version.json?fname=GETAREA'
         return getData(url).then(data => {
-            console.log(data)
             if(window.localStorage.areaVersion != data) {
                 window.localStorage.areaVersion = data
                 return Promise.resolve(true)
@@ -67,5 +66,18 @@ export default {
                 return Promise.resolve(false)
             }
         })
+    },
+    /*
+     * 商户周边查询
+     */
+    postShopList({
+        lon=window.localStorage.lon,lat=window.localStorage.lat,
+        limit=40,page=0,sortrule='intelligence',
+        local,cityCode,areaCode,consumePtype,keywords}={}) {
+        let url,params
+        url = '/api/open/shop/around.json'
+        // url = '/api/open/shop/list.json'
+        params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
+        return postData(url,params)
     }
 }

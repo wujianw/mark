@@ -9,31 +9,22 @@
         </div>
         <div class="nav-warp">
             <nav class="flex-space" :class="isActive ? 'active' : ''">
-                <div class="nav-sort flex-center" @click="showSelect(countyList)">
-                    <span>区县</span>
-                    <i class="icon"
-                       :class="isActive ? 'icon-pull-down' : 'icon-pull-down-after'"></i>
-                </div>
-                <div class="nav-sort flex-center" @click="showSelect(shopMenu)">
-                    <span>分类</span>
-                    <i class="icon icon-pull-down"></i>
-                </div>
-                <div class="nav-sort flex-center" @click="showSelect(sort)">
-                    <span>排序</span>
-                    <i class="icon icon-pull-down"></i>
+                <div v-for="item in nav" class="nav-sort flex-center" @click="showSelect(item.list)">
+                    <span>{{item.text}}</span>
+                    <i class="icon" :class="isActive ? 'icon-pull-down' : 'icon-pull-down-after'"></i>
                 </div>
             </nav>
             <ul class="menu-ul" @click="toggleList">
                 <li v-for="item in list"
-                    :data-type="item.currentCode ? 'currentCode' : item.menu_code ? 'menu_code' : 'sortrule'"
-                    :data-name="item.currentCode || item.menu_code || item.sortrule">
-                    <span>{{item.currentName || item.menu_subtitle || item.name}}</span>
+                    :data-type="item.currentCode ? 'areaCode' : item.menu_code ? 'consumePtype' : 'sortrule'"
+                    :data-code="item.currentCode || item.menu_code || item.sortrule"
+                    :data-text="item.currentName || item.menu_subtitle || item.name">
                 </li>
             </ul>
         </div>
         <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
         <div>
-            <shop-block v-for="n in 4"></shop-block>
+            <shop-block v-for="item in shopList" :obj="item"></shop-block>
         </div>
     </div>
 </template>
@@ -70,6 +61,7 @@
                     padding:0 24px;
                     border-bottom:1px solid #f2f2f2;
                     line-height: 80px;
+                    &:after{content:attr(data-text);}
                 }
             }
             nav{
@@ -108,31 +100,79 @@
     import shopBlock from './shopBlock'
     import shop from '../../api/shop'
     import { mapGetters } from 'vuex'
+//    wx.config({
+//        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//        appId: 'wx5a45a2b5222a07da', // 必填，公众号的唯一标识
+//        timestamp: , // 必填，生成签名的时间戳
+//        nonceStr: '', // 必填，生成签名的随机串
+//        signature: '',// 必填，签名，见附录1
+//        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+//    });
     export default {
         data() {
             return {
                 isActive:false,
+                shopList:null,
                 list:null,
-                sort:[
+                shopSort:[
                     {sortrule:"intelligence",name:"智能排序"},
                     {sortrule:"distance",name:"距离最近"},
                     {sortrule:"ratio",name:"积分率最高"}
-                ]
+                ],
+                nav:null
             }
         }
         ,created() {
             if(!this.shopMenu || this.shopMenu.length == 0){
                 this.$store.dispatch("shopMenu")
             }
-            this.$store.dispatch("toggleArea")
+            if(!this.countyList || this.countyList.length == 0){
+                this.$store.dispatch("toggleArea")
+            }
+            shop.postShopList(this.params).then(data => {
+                this.shopList = data
+            })
         }
         ,computed: {
             ...mapGetters({
                 shopMenu:'shopMenu',
-                countyList:'countyList'
-            })
+                countyList:'countyList',
+                cityCode:'cityCode'
+            }),
+            nav() {
+                return {
+                    areaCode:{
+                        text:"区县",
+                        code:'',
+                        list:this.countyList
+                    },
+                    consumePtype:{
+                        text:"分类",
+                        code:'',
+                        list:this.shopMenu
+                    },
+                    sortrule:{
+                        text:"排序",
+                        code:'intelligence',
+                        list:this.shopSort
+                    }
+                }
+            },
+            params() {
+                return {
+                    lon:window.localStorage.lon,
+                    lat:window.localStorage.lat,
+                    local:1,
+                    keywords:'',
+                    areaCode:this.nav.areaCode.code,
+                    consumePtype:this.nav.consumePtype.code,
+                    cityCode:this.cityCode,
+                    sortrule:this.nav.sortrule.code
+                }
+            }
         }
         ,methods:{
+            // 区域,分类,排序 选着展示切换
             showSelect(data) {
                 if(!this.isActive){
                     this.isActive = true
@@ -141,20 +181,24 @@
                 }
                 this.list = data
             }
+            // 遮罩关闭
             ,showShade() {
                 this.isActive = false
             }
+            // 切换区域,分类,排序修改shopList
             ,toggleList(event) {
                 let dataSet = event.target.dataset,
                     type = dataSet.type,
-                    name = dataSet.name
-                let params = {
-                    currentCode:'',
-                    menu_code:'',
-                    sortrule:''
-                }
-                params[type] = name
-                console.log(params)
+                    text = dataSet.text,
+                    code = dataSet.code
+                this.params[type] = code
+                console.log(this.params)
+                shop.postShopList(this.params).then(data => {
+                    this.nav[type].text = text
+                    this.nav[type].code = code
+                    this.isActive = false
+                    this.shopList = data
+                })
             }
         }
         ,components:{

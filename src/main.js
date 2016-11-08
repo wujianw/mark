@@ -13,7 +13,6 @@ Vue.config.debug = true
 Vue.filter('gold', function (value) {
     return value.toFixed(2)
 })
-
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 

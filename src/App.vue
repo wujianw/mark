@@ -39,6 +39,18 @@
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("allArea")
             }
+            navigator.geolocation.getCurrentPosition(function(position){
+                let lat = position.coords.latitude,
+                    lon = position.coords.longitude
+                window.localStorage.lat = lat
+                window.localStorage.lon = lon
+                console.log(lat+','+lon)
+            },function(error){
+                console.log(error.code);
+                console.log(error.message);
+            })
+            console.log(window.localStorage.lat)
+            console.log(window.localStorage.lon)
         }
         ,components:{
             loading
