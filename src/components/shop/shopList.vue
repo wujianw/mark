@@ -23,7 +23,7 @@
             </ul>
         </div>
         <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
-        <div>
+        <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <shop-block v-for="item in shopList" :obj="item"></shop-block>
         </div>
     </div>
@@ -111,8 +111,8 @@
     export default {
         data() {
             return {
+                busy:false,
                 isActive:false,
-                shopList:null,
                 list:null,
                 shopSort:[
                     {sortrule:"intelligence",name:"智能排序"},
@@ -129,14 +129,15 @@
             if(!this.countyList || this.countyList.length == 0){
                 this.$store.dispatch("toggleArea")
             }
-            shop.postShopList(this.params).then(data => {
-                this.shopList = data
-            })
+//            shop.postShopList(this.params).then(data => {
+//                this.shopList = data
+//            })
         }
         ,computed: {
             ...mapGetters({
                 shopMenu:'shopMenu',
                 countyList:'countyList',
+                shopList:'shopList',
                 cityCode:'cityCode'
             }),
             nav() {
@@ -164,6 +165,8 @@
                     lat:window.localStorage.lat,
                     local:1,
                     keywords:'',
+                    limit:3,
+                    page:1,
                     areaCode:this.nav.areaCode.code,
                     consumePtype:this.nav.consumePtype.code,
                     cityCode:this.cityCode,
@@ -187,17 +190,23 @@
             }
             // 切换区域,分类,排序修改shopList
             ,toggleList(event) {
+                this.busy = true
                 let dataSet = event.target.dataset,
                     type = dataSet.type,
                     text = dataSet.text,
                     code = dataSet.code
                 this.params[type] = code
-                console.log(this.params)
-                shop.postShopList(this.params).then(data => {
+                this.$store.dispatch("shopList",{params:this.params,way:true}).then(data => {
                     this.nav[type].text = text
                     this.nav[type].code = code
                     this.isActive = false
-                    this.shopList = data
+                    this.busy = !data
+                })
+            }
+            ,more() {
+                this.busy = true
+                this.$store.dispatch("shopList",{params:this.params}).then(data => {
+                    this.busy = !data
                 })
             }
         }

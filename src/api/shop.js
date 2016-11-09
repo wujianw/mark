@@ -73,12 +73,14 @@ export default {
      */
     postShopList({
         lon=window.localStorage.lon,lat=window.localStorage.lat,
-        limit=30,page=0,sortrule='intelligence',
+        limit,page=1,sortrule='intelligence',
         local,cityCode,areaCode,consumePtype,keywords}={}) {
         let url,params
         url = '/api/open/shop/around.json'
         // url = '/api/open/shop/list.json'
+
         params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
+        console.log(params)
         return postData(url,params)
     },
     /*

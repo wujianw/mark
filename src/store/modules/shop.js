@@ -6,6 +6,7 @@ const state = {
     countyList:[],
     areaList:[],
     shopList:[],
+    shopPages:1,
     menu:[]
 }
 // mutations
@@ -21,6 +22,17 @@ const mutations = {
     // 切换城市
     [types.TOGGLE_FOCUS_AREA] (state,cityCode=state.location.currentCode) {
         state.countyList = state.areaList.filter(item => item.parentCode == cityCode)
+    },
+
+    // 附近商家列表处理
+    [types.FETCH_SHOP_LIST] (state,{data,way=false,more=true}) {
+        if(way) {
+            state.shopPages = 2
+            state.shopList = data
+        }else {
+            state.shopList.push(...data)
+            more && state.shopPages++
+        }
     }
 }
 

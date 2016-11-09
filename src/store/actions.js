@@ -63,3 +63,15 @@ export const allArea = ({commit}) => {
 export const toggleArea = ({commit},cityCode) => {
     return commit(types.TOGGLE_FOCUS_AREA,cityCode)
 }
+// 附近商家列表
+export const shopList = ({commit,state},{params,way}) => {
+   // console.log(state.shop.shopPages)
+    params.page = way ? 1 : state.shop.shopPages
+    return shop.postShopList(params).then(data => {
+        let more = data.length
+        commit(types.FETCH_SHOP_LIST,{data,way,more})
+        // console.log(JSON.stringify(data))
+        // console.log(data.length)
+        return Promise.resolve(more)
+    })
+}
