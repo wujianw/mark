@@ -30,3 +30,5 @@ export const TOGGLE_FOCUS_AREA = 'TOGGLE_FOCUS_AREA'
 
 // 商家列表
 export const FETCH_SHOP_LIST = 'FETCH_SHOP_LIST'
+
+

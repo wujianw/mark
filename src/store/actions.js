@@ -65,13 +65,10 @@ export const toggleArea = ({commit},cityCode) => {
 }
 // 附近商家列表
 export const shopList = ({commit,state},{params,way}) => {
-   // console.log(state.shop.shopPages)
-    params.page = way ? 1 : state.shop.shopPages
+    params.page = way ? 1 : state.shop.shopPages // 是否首页
     return shop.postShopList(params).then(data => {
-        let more = data.length
+        let more = data.length // 是否有更多，无限加载开关
         commit(types.FETCH_SHOP_LIST,{data,way,more})
-        // console.log(JSON.stringify(data))
-        // console.log(data.length)
         return Promise.resolve(more)
     })
 }

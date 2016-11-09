@@ -24,7 +24,7 @@
         </div>
         <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
         <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            <shop-block v-for="item in shopList" :obj="item"></shop-block>
+            <shop-block v-for="item in shopList" :obj="item" :key="shopList.merchant_id"></shop-block>
         </div>
     </div>
 </template>
@@ -129,9 +129,7 @@
             if(!this.countyList || this.countyList.length == 0){
                 this.$store.dispatch("toggleArea")
             }
-//            shop.postShopList(this.params).then(data => {
-//                this.shopList = data
-//            })
+//            this.more(true)
         }
         ,computed: {
             ...mapGetters({
@@ -159,13 +157,13 @@
                     }
                 }
             },
-            params() {
+            params() { // 数据请求参数
                 return {
                     lon:window.localStorage.lon,
                     lat:window.localStorage.lat,
                     local:1,
                     keywords:'',
-                    limit:3,
+                    limit:10,
                     page:1,
                     areaCode:this.nav.areaCode.code,
                     consumePtype:this.nav.consumePtype.code,
@@ -190,23 +188,22 @@
             }
             // 切换区域,分类,排序修改shopList
             ,toggleList(event) {
-                this.busy = true
                 let dataSet = event.target.dataset,
                     type = dataSet.type,
                     text = dataSet.text,
                     code = dataSet.code
                 this.params[type] = code
-                this.$store.dispatch("shopList",{params:this.params,way:true}).then(data => {
+                this.more(true).then(() => {
                     this.nav[type].text = text
                     this.nav[type].code = code
                     this.isActive = false
-                    this.busy = !data
                 })
             }
-            ,more() {
+            ,more(way) {
                 this.busy = true
-                this.$store.dispatch("shopList",{params:this.params}).then(data => {
+                return this.$store.dispatch("shopList",{params:this.params,way}).then(data => {
                     this.busy = !data
+                    return Promise.resolve()
                 })
             }
         }

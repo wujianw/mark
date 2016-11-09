@@ -1,7 +1,5 @@
 <template>
     <div class="enshrine-good-list-el">
-
-
         <div v-if="isGood">
             <block :isGood="isGood" v-for="item in goodsdata" :goodsdata="item.goodsImages">
                 <div class="good-details">
@@ -10,8 +8,6 @@
                 </div>
             </block>
         </div>
-
-
         <div v-else>
             <block :isGood="isGood" v-for="item in merchantdata" :goodsdata="item.background">
                 <div  class="shop-details">
@@ -20,8 +16,6 @@
                 </div>
             </block>
         </div>
-
-
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -79,13 +73,10 @@
                 isGood : false
             }
         }
-
         ,computed: {
             ...mapGetters({
                 getToken:'getToken'
             })
-
-
         }
         ,beforeRouteEnter (to, from, next) {
             next(vm => {
