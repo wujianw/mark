@@ -1,6 +1,6 @@
 <template>
     <div class="shop-block-el">
-        <router-link tag="div" :to="{name:'shopDetails'}" class="flex-space">
+        <router-link tag="div" :to="{name:'shopDetails',query:{shopId:obj.merchant_id}}" class="flex-space">
             <div class="flex-start content-wrap">
                 <div class="pic">
                     <img :src="imgUrl" alt="">
@@ -95,21 +95,7 @@
                 imgUrl:shopPic
             }
         }
-        ,computed:{
-//            imgUrl() {
-//            http://p-shop.jfb315.cn/htdocs/upload/shop/2016_05_08/1ad448a6-503b-47ed-b679-5bc246f0543c.jpg@226_146h
-//                let img = new Image()
-//                let url = this.obj.background+'@226_146h'
-//                img.src = url
-//                img.onerror = function () {
-//                    return '../../assets/img/default-shop.jpg'
-//                }
-//                img.onload = function () {
-//                    return url
-//                }
-//            }
-        },
-        created() {
+        ,created() {
             let self = this
             let img = new Image()
             img.src = this.obj.background+'@226_146h'
@@ -118,9 +104,6 @@
             }
         }
         ,filters:{
-            percentage(value){
-                return (value*100).toFixed(2)+"%"
-            },
             distance(value){
                 return (value/1000).toFixed(2)
             }
@@ -134,7 +117,8 @@
                         fraction:0,
                         score:0,
                         background:null,
-                        distance:'计算中...'
+                        distance:'计算中...',
+                        shopId:''
                     }
                 }
             }

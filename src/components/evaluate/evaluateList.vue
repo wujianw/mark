@@ -1,26 +1,25 @@
 <template>
     <ul class="evaluate-list-el">
-        <li v-for="n in 3" class="evaluate-block-el">
+        <li v-for="item in details"  class="evaluate-block-el">
             <div class="flex-start list-user-details">
                 <div class="head-img"></div>
                 <div class="user-details">
-                    <div class="user-name">姓名</div>
+                    <div class="user-name">{{item.memberName}}</div>
                     <div class="time-grade">
-                        <star :score="score"></star>
-                        <span class="time">2016-34-34</span>
+                        <star :score="item.score"></star>
+                        <span class="time">{{item.reviewTime}}</span>
                     </div>
                 </div>
             </div>
-            <p class="content">草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马草泥马</p>
-            <div class="flex-space evaluate-img">
-                <div class="img" v-for="n in 3"><img src="" alt=""></div>
+            <p class="content">{{item.content}}</p>
+            <div class="flex-space evaluate-img" v-if="item.reviewPic">
+                <div class="img" v-for="url in item.reviewPic.split(',')"><img :src="url" alt=""></div>
             </div>
-            <p class="shop-message">三大航飞机失控的风景和斯蒂芬黑色的减肥还是的很快就可</p>
+            <p v-if="item.listreply" class="shop-message">{{item.listreply}}</p>
         </li>
     </ul>
 </template>
 <style lang="scss" rel="stylesheet/scss">
-
     .evaluate-list-el{
         background:#fff;
         .evaluate-block-el{
@@ -94,11 +93,21 @@
 </style>
 <script type="text/babel">
     import star from "../star"
+    import member from "../../api/member"
     export default{
         data() {
             return {
-                score:3.1
+                details:null
             }
+        }
+        ,beforeRouteEnter (to, from, next) {
+            next(vm => {
+                let goodsId = to.query.goodsId || ''
+                let merchantId = to.query.merchantId || ''
+                member.getEvaluateList({goodsId,merchantId}).then(val => {
+                    vm.details = val
+                })
+            })
         }
         ,components: {
             star

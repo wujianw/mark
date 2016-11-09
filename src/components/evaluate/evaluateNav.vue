@@ -1,10 +1,10 @@
 <template>
     <div class="evaluate-nav-el">
         <nav class="flex-space evaluate-nav">
-            <router-link tag="p" :to="{name:'evaluateList'}" class="active">全部<span>(23)</span></router-link>
-            <router-link tag="p" :to="{name:'evaluateList'}" class="">晒图<span>(23)</span></router-link>
-            <router-link tag="p" :to="{name:'evaluateList'}" class="">低分<span>(23)</span></router-link>
-            <router-link tag="p" :to="{name:'evaluateList'}" class="">最新<span></span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="active">全部<span>(23)</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="">晒图<span>(23)</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="">低分<span>(23)</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="">最新<span></span></router-link>
         </nav>
         <router-view></router-view>
     </div>

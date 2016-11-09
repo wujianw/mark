@@ -1,9 +1,5 @@
 <template>
     <div class="good-review-el">
-
-        <!--v-for="item in details" :details="item"-->
-
-
         <ul >
             <li v-for="review in reviews" class="good-review-li">
                 <div class="flex-space">
@@ -16,10 +12,8 @@
                 <p class="content">{{review.content}}</p>
             </li>
         </ul>
-
-
         <div class="btn-wrap flex-center">
-            <router-link tag="span" :to="{name:'evaluateList'}">查看全部</router-link>
+            <router-link tag="span" :to="{name:'evaluateList',query:{goodsId,merchantId}}">查看全部</router-link>
         </div>
     </div>
 </template>
@@ -70,24 +64,10 @@
         }
         ,props:{
             reviews:{
-                type:Array,
-                default() {
-
-//                    return [
-//                        {
-//                            content: "少年阿飞少年阿飞少年阿少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年少年飞少年阿飞少年阿飞"
-//                            , memberName: "少年阿飞"
-//                            , score: 3.1
-//                        }
-//                        ,{
-//                            content: "少年阿飞少年阿飞少年阿飞少年阿飞少年阿飞"
-//                            , memberName: "少年阿飞"
-//                            , score:0.1
-//                        }
-//
-//                    ]
-                }
-            }
+                type:Array
+            },
+            goodsId:[String,Number],
+            merchantId:[String,Number]
         }
   }
 </script>

@@ -24,6 +24,7 @@ const getData = (url,params) => {
             MessageBox.alert(data)
             return Promise.reject()
         }
+        // console.log(JSON.stringify(data.data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
@@ -72,12 +73,25 @@ export default {
      */
     postShopList({
         lon=window.localStorage.lon,lat=window.localStorage.lat,
-        limit=40,page=0,sortrule='intelligence',
+        limit=30,page=0,sortrule='intelligence',
         local,cityCode,areaCode,consumePtype,keywords}={}) {
         let url,params
         url = '/api/open/shop/around.json'
         // url = '/api/open/shop/list.json'
         params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
         return postData(url,params)
+    },
+    /*
+     * 商户详情
+     */
+    getShopDetails({
+        lon=window.localStorage.lon,
+        lat=window.localStorage.lat,
+        token=window.localStorage.token,
+        shopId}={}) {
+        let url,params
+        url = '/api/open/shop/get.json'
+        params= {lon,lat,shopId,token}
+        return getData(url,{params})
     }
 }

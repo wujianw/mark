@@ -39,16 +39,21 @@
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("allArea")
             }
-            navigator.geolocation.getCurrentPosition(function(position){
-                let lat = position.coords.latitude,
-                    lon = position.coords.longitude
-                window.localStorage.lat = lat
-                window.localStorage.lon = lon
-                console.log(lat+','+lon)
-            },function(error){
-                console.log(error.code);
-                console.log(error.message);
-            })
+//            window.localStorage.lat = 30.267442999999997
+//            window.localStorage.lon = 120.152792
+            if(!window.localStorage.lat){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    let lat = position.coords.latitude,
+                        lon = position.coords.longitude
+                    window.localStorage.lat = lat
+                    window.localStorage.lon = lon
+                    console.log(lat+','+lon)
+                },function(error){
+                    MessageBox.alert("定位失败").then(()=>{
+                        // 去默认定位
+                    })
+                })
+            }
             console.log(window.localStorage.lat)
             console.log(window.localStorage.lon)
         }
@@ -72,7 +77,6 @@
             height:100%;
         }
     }
-
     .flex-center{display: flex;align-items: center;justify-content: center;}
     .flex-start{display: flex;align-items: center;justify-content: flex-start;}
     .flex-space{display: flex;align-items: center;justify-content: space-between;}

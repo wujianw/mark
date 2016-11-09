@@ -13,6 +13,9 @@ Vue.config.debug = true
 Vue.filter('gold', function (value) {
     return value.toFixed(2)
 })
+Vue.filter('percentage', function (value) {
+    return (value*100).toFixed(2)+"%"
+})
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 

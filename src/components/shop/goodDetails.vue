@@ -3,7 +3,6 @@
         <header class="hd">
             <div class="hd-pic">
                 <img :src="goods.goodsImages" alt=""/>
-                <!--<img src="" alt=""/>-->
             </div>
             <div class="hd-title">
                 <p>{{goods.goodsName}}</p>
@@ -34,7 +33,7 @@
                     <p>商品评论({{countreviewLen}})人评价</p>
                 </h3>
                 <div class="lump-content">
-                    <good-review :reviews="countreview"></good-review>
+                    <good-review :reviews="countreview" :goodsId="goods.id"></good-review>
                 </div>
             </section>
             <section class="lump">
@@ -48,11 +47,8 @@
                         <p>{{shop.address}}</p>
                         <p><i class="icon icon-position"></i>1.8km</p>
                     </div>
-                    <div>
-                        {{shop.mobile}}
-                    </div>
+                    <div>{{shop.mobile}}</div>
                 </div>
-
             </section>
             <div class="link-picword">
                 <p>向下拖动 查看详情</p>
@@ -66,9 +62,7 @@
                 <div class="iphone" :data-phone="shop.telephone"><i class="icon icon-iphone"></i><p>电话</p></div>
                 <div>
                     <p class="buy-btn">
-                        <router-link :to="{name:''}">
-                            立即购买
-                        </router-link>
+                        <router-link :to="{name:''}">立即购买</router-link>
                     </p>
                 </div>
             </div>
@@ -215,6 +209,7 @@
                     ,couponGmtEnd:""
                     ,buyerTips:""
                     ,stockNumber:0
+                    ,id:''
                 },
                 shop:{
                     name:""
@@ -231,7 +226,7 @@
                 shop.getGoodsDetails({goodsId}).then(val => {
                     vm.goods = val.goodsdata
                     vm.countreview = val.reviews.rows.slice(0,2)
-                    vm.countreviewLen = val.reviews.rows.length
+                    vm.countreviewLen = val.reviews.total
                     vm.shop = val.shop
                 })
             })

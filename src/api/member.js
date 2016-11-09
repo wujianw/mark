@@ -16,7 +16,7 @@ const postData = (url,params) => {
             MessageBox.alert(data.data)
             return Promise.reject()
         }
-        // console.log(JSON.stringify(data.data))
+        console.log(JSON.stringify(data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
@@ -50,6 +50,7 @@ export default {
             return Promise.reject()
         })
     }
+
     /**
      * 代金券列表
      * @params  token,start,rows
@@ -60,6 +61,7 @@ export default {
         params = {"token":token,"start":start,"rows":rows}
         return postData(url,params)
     }
+
     /**
      * 订单列表
      * @params  function
@@ -99,6 +101,7 @@ export default {
         params = {"token":token,"orderNum":orderNum}
         return postData(url,params)
     }
+
     /**
      * 获取会员退款原因模板
      * @params  function
@@ -108,6 +111,7 @@ export default {
         let url = '/api/open/refund/refundresaon.json'
         return postData(url)
     }
+
     /**
      * 提交退款申请
      * @params  function
@@ -120,6 +124,7 @@ export default {
         console.log(params)
         return postData(url,params)
     }
+
     /**
      * 取消退款
      * @params  function
@@ -157,10 +162,10 @@ export default {
      * 评论列表
      * @params
      */
-    ,getEvaluateList(merchantId=8,start=0,rows=10){
+    ,getEvaluateList({merchantId,goodsId,start=0,rows=10}={}){
         let url,params;
         url = '/api/open/review/data.json'
-        params = {"merchantId":merchantId,"start":start,"rows":rows}
+        params = {merchantId,start,rows,goodsId}
         return postData(url,params)
     }
 
@@ -173,7 +178,6 @@ export default {
         url = '/api/pri/wallet/index.json'
         params = {token}
         return postData(url,params)
-
     }
 
     /**

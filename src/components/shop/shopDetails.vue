@@ -1,17 +1,17 @@
 <template>
     <div class="shop-details-el">
         <header class="hd">
-            <img src="" alt="">
+            <img :src="info.background" alt="">
         </header>
         <section>
             <div class="title-wrap flex-space">
-                <h3>积分宝体验店</h3>
-                <div class="integral">10%</div>
+                <h3>{{info.merchant_name}}</h3>
+                <div class="integral">{{info.fraction | percentage}}</div>
             </div>
             <div class="position-wrap flex-space">
                 <div class="position">
                     <i class="icon icon-position"></i>
-                    <span>滨江区..0.0.0.0.0.</span>
+                    <span>{{info.address}}</span>
                 </div>
                 <div class="phone">
                     <i class="icon icon-benefit"></i>
@@ -60,53 +60,23 @@
                 <good-item></good-item>
             </ul>
         </section>
-        <div class="link-picword">
-            <p>向下拖动 查看详情</p>
-        </div>
+        <section class="review-wrap section" v-if="review.length != 0">
+            <div class="review title-wrap flex-space">
+                <div class="title">
+                    <span>商家评论({{reviewLen}})</span>
+                </div>
+            </div>
+            <div class="good-list">
+                <good-review :reviews="review" :merchantId="info.merchant_id"></good-review>
+            </div>
+        </section>
+
+        <!--<div class="link-picword">-->
+            <!--<p>向下拖动 查看详情</p>-->
+        <!--</div>-->
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
-    .coupon-list{
-        margin-left:66px;
-        .coupon-item{
-            height:90px;
-            border-bottom:1px solid #f2f2f2;
-            .bg{
-                width:120px;
-                background:url("../../assets/img/shop-coupon-bg.png") no-repeat;
-                background-size:100% 100%;
-                text-align: center;
-                line-height:76px;
-                font-size:22px;
-                font-family:"Microsoft Yahei";
-                color:#fff;
-                .gold{
-                    &:before{content:"￥";font-size:14px;}
-                }
-            }
-            .rule{
-                font-size:22px;
-                color:#afafaf;
-            }
-            .btn{
-                padding:0 24px;
-                span{
-                    display: inline-block;
-                    width:138px;
-                    border:1px solid #e85352;
-                    border-radius: .2em;
-                    text-align: center;
-                    line-height:50px;
-                    font-size:26px;
-                    color:#e85352;
-                }
-            }
-        }
-    }
-    .active-rule{
-        text-align:center;
-        p{line-height:66px;font-size:22px;color:#505050;}
-    }
     .shop-details-el{
         background:#fff;
         .hd{
@@ -156,6 +126,49 @@
                 i{font-size:40px;}
             }
         }
+        /* 优惠券 */
+        .coupon-list{
+            margin-left:66px;
+            .coupon-item{
+                height:90px;
+                border-bottom:1px solid #f2f2f2;
+                .bg{
+                    width:120px;
+                    background:url("../../assets/img/shop-coupon-bg.png") no-repeat;
+                    background-size:100% 100%;
+                    text-align: center;
+                    line-height:76px;
+                    font-size:22px;
+                    font-family:"Microsoft Yahei";
+                    color:#fff;
+                    .gold{
+                        &:before{content:"￥";font-size:14px;}
+                    }
+                }
+                .rule{
+                    font-size:22px;
+                    color:#afafaf;
+                }
+                .btn{
+                    padding:0 24px;
+                    span{
+                        display: inline-block;
+                        width:138px;
+                        border:1px solid #e85352;
+                        border-radius: .2em;
+                        text-align: center;
+                        line-height:50px;
+                        font-size:26px;
+                        color:#e85352;
+                    }
+                }
+            }
+        }
+        /* 活动规则 */
+        .active-rule{
+            text-align:center;
+            p{line-height:66px;font-size:22px;color:#505050;}
+        }
         /* section 通用样式 */
         .section{
             border-top:16px solid #f2f2f2;
@@ -191,6 +204,10 @@
         .coupon{
             i{color:#f8ac20;}
         }
+        .review-wrap{
+            margin-bottom:98px;
+        }
+
         .good{
             i{color:#e65150;}
         }
@@ -205,15 +222,33 @@
     }
 </style>
 <script type="text/babel">
+    import goodReview from './goodReview'
     import goodItem from "./goodItem"
+    import shop from "../../api/shop"
     export default{
         data(){
             return{
+                info:{
+                    merchant_name:'',
+                    fraction:0,
+                    merchant_id:''
 
+                },
+                review:[],
+                reviewLen:0
             }
         }
-        ,components:{
-            goodItem
+        ,beforeRouteEnter(to,from,next) {
+            let shopId = to.query.shopId
+            shop.getShopDetails({shopId}).then(data => {
+                console.log(data)
+                next(vm => {
+                    vm.info = data.info
+                    vm.review = data.reviews.datas.slice(0,2)
+                    vm.reviewLen = data.reviews.total
+                })
+            })
         }
+        ,components:{goodItem, goodReview}
     }
 </script>
