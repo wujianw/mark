@@ -39,8 +39,8 @@
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("allArea")
             }
-//            window.localStorage.lat = 30.267442999999997
-//            window.localStorage.lon = 120.152792
+            window.localStorage.lat = 30.267442999999997
+            window.localStorage.lon = 120.152792
             if(!window.localStorage.lat){
                 navigator.geolocation.getCurrentPosition(function(position){
                     let lat = position.coords.latitude,

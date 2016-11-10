@@ -47,21 +47,41 @@ export const shopMenu = ({commit}) => {
 
 // 获取所有区域
 export const allArea = ({commit}) => {
-    if(!window.localStorage.area) {
+    if(!window.localStorage.provinceList) {
         return shop.getArea().then(data => {
-            commit(types.FETCH_ALL_AREA,data)
-            let str = JSON.stringify(data)
-            window.localStorage.area = str
+            let provinceList = [],
+                cityAllList = [],
+                areaAllList = []
+            for(let item of data){
+                if(item.type == 2){
+                    provinceList.push(item)
+                }else if(item.type == 3){
+                    cityAllList.push(item)
+                }else if(item.type == 4){
+                    areaAllList.push(item)
+                }
+            }
+
+            commit(types.FETCH_ALL_AREA,{provinceList,cityAllList,areaAllList})
+            window.localStorage.provinceList = JSON.stringify(provinceList)
+            window.localStorage.cityAllList = JSON.stringify(cityAllList)
+            window.localStorage.areaAllList = JSON.stringify(areaAllList)
         })
     } else {
-        let data = JSON.parse(window.localStorage.area)
-        return commit(types.FETCH_ALL_AREA,data)
+        let provinceList = JSON.parse(window.localStorage.provinceList)
+        let cityAllList = JSON.parse(window.localStorage.cityAllList)
+        let areaAllList = JSON.parse(window.localStorage.areaAllList)
+        return commit(types.FETCH_ALL_AREA,{provinceList,cityAllList,areaAllList})
     }
 }
 
 // 切换城市
-export const toggleArea = ({commit},cityCode) => {
+export const toggleCity = ({commit},cityCode) => {
     return commit(types.TOGGLE_FOCUS_AREA,cityCode)
+}
+// 切换省
+export const toggleProvince = ({commit},provinceCode) => {
+    return commit(types.TOGGLE_FOCUS_CITY,provinceCode)
 }
 // 附近商家列表
 export const shopList = ({commit,state},{params,way}) => {

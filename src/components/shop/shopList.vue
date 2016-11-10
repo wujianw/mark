@@ -21,6 +21,12 @@
                     :data-text="item.currentName || item.menu_subtitle || item.name">
                 </li>
             </ul>
+            <ul class="menu-ul city-ul">
+                <li v-for="item in cityList" :data-text="item.currentName"></li>
+            </ul>
+            <ul class="menu-ul area-ul">
+                <li v-for="item in areaList" :data-text="item.currentName"></li>
+            </ul>
         </div>
         <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
         <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
@@ -64,6 +70,14 @@
                     &:after{content:attr(data-text);}
                 }
             }
+            .city-ul{
+                left:33%;
+                width:33%
+            }
+            .area-ul{
+                left:66%;
+                width:33%
+            }
             nav{
                 background:#fff;
                 text-align:center;
@@ -78,7 +92,7 @@
                     i{font-size:16px;}
                 }
             }
-            .active+.menu-ul{
+            .active~.menu-ul{
                 max-height:405px;
             }
             &+.shade.active{
@@ -100,14 +114,7 @@
     import shopBlock from './shopBlock'
     import shop from '../../api/shop'
     import { mapGetters } from 'vuex'
-//    wx.config({
-//        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//        appId: 'wx5a45a2b5222a07da', // 必填，公众号的唯一标识
-//        timestamp: , // 必填，生成签名的时间戳
-//        nonceStr: '', // 必填，生成签名的随机串
-//        signature: '',// 必填，签名，见附录1
-//        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-//    });
+
     export default {
         data() {
             return {
@@ -119,22 +126,51 @@
                     {sortrule:"distance",name:"距离最近"},
                     {sortrule:"ratio",name:"积分率最高"}
                 ],
-                nav:null
+                nav:null,
+                wxJson:{}
             }
         }
         ,created() {
             if(!this.shopMenu || this.shopMenu.length == 0){
                 this.$store.dispatch("shopMenu")
             }
-            if(!this.countyList || this.countyList.length == 0){
-                this.$store.dispatch("toggleArea")
+            if(!this.areaList || this.areaList.length == 0){
+                this.$store.dispatch("toggleCity")
+                this.$store.dispatch("toggleProvince")
             }
 //            this.more(true)
+//            let self = this
+//            let fullPath = window.location,
+//                url = '/wechatpay/uniform_orde.json?url='+fullPath
+//            self.$http.get(url).then(res =>{
+//                let data = JSON.parse(res.data)
+//                self.wxJson = data.data
+//            }).then(() => {
+//                wx.config({
+//                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//                    appId: self.wxJson.appid, // 必填，公众号的唯一标识
+//                    timestamp: self.wxJson.timestamp, // 必填，生成签名的时间戳
+//                    nonceStr: self.wxJson.noncestr, // 必填，生成签名的随机串
+//                    signature: self.wxJson.signature,// 必填，签名，见附录1
+//                    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+//                });
+//                wx.ready(function(){
+//                    wx.scanQRCode({
+//                        needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+//                        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+//                        success: function (res) {
+//                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+//                        }
+//                    });
+//                });
+//            })
         }
         ,computed: {
             ...mapGetters({
                 shopMenu:'shopMenu',
-                countyList:'countyList',
+                provinceList:'provinceList',
+                areaList:'areaList',
+                cityList:'cityList',
                 shopList:'shopList',
                 cityCode:'cityCode'
             }),
@@ -143,7 +179,7 @@
                     areaCode:{
                         text:"区县",
                         code:'',
-                        list:this.countyList
+                        list:this.provinceList
                     },
                     consumePtype:{
                         text:"分类",
@@ -193,11 +229,13 @@
                     text = dataSet.text,
                     code = dataSet.code
                 this.params[type] = code
-                this.more(true).then(() => {
-                    this.nav[type].text = text
-                    this.nav[type].code = code
-                    this.isActive = false
-                })
+                console.log(1212)
+
+//                this.more(true).then(() => {
+//                    this.nav[type].text = text
+//                    this.nav[type].code = code
+//                    this.isActive = false
+//                })
             }
             ,more(way) {
                 this.busy = true

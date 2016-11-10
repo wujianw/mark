@@ -24,6 +24,7 @@ export const FETCH_SHOP_MENU = 'FETCH_SHOP_MENU'
 
 // fetch all_area
 export const FETCH_ALL_AREA = 'FETCH_ALL_AREA'
+export const TOGGLE_FOCUS_CITY = 'TOGGLE_FOCUS_CITY'
 
 // toggle focus_area
 export const TOGGLE_FOCUS_AREA = 'TOGGLE_FOCUS_AREA'
