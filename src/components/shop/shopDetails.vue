@@ -18,7 +18,7 @@
                 </div>
             </div>
         </section>
-        <section class="sweep-pay-wrap section">
+        <section class="sweep-pay-wrap section" v-if="info.isCashpayment==1">
             <div class="sweep-pay title-wrap flex-space">
                 <div class="title">
                     <i class="icon icon-benefit"></i>
@@ -27,27 +27,28 @@
                 <span class="sweep-pay-link">我要买单</span>
             </div>
             <div class="active-rule">
-                <p>满就10减2元，最高减免50元</p>
+                <p>{{info.campaign.title}}</p>
             </div>
         </section>
-        <section class="coupon-wrap section">
+        <section class="coupon-wrap section" v-if="info.listBenefit">
             <div class="coupon title-wrap flex-space">
                 <div class="title">
                     <i class="icon icon-special"></i>
                     <span>商家优惠券</span>
                 </div>
             </div>
-            <div class="coupon-list">
-                <div class="coupon-item flex-space">
-                    <div class="bg">
-                        <p class="gold">20.0</p>
-                    </div>
-                    <div class="rule">满30使用</div>
-                    <div class="btn">
-                        <span>领取</span>
-                    </div>
-                </div>
-            </div>
+            <coupon-item v-for="item in info.listBenefit" :obj="item"></coupon-item>
+            <!--<div class="coupon-list">-->
+                <!--<div class="coupon-item flex-space">-->
+                    <!--<div class="bg">-->
+                        <!--<p class="gold">20.0</p>-->
+                    <!--</div>-->
+                    <!--<div class="rule">满30使用</div>-->
+                    <!--<div class="btn">-->
+                        <!--<span>领取</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </section>
         <section class="good-wrap section">
             <div class="good title-wrap flex-space">
@@ -70,10 +71,6 @@
                 <good-review :reviews="review" :merchantId="info.merchant_id"></good-review>
             </div>
         </section>
-
-        <!--<div class="link-picword">-->
-            <!--<p>向下拖动 查看详情</p>-->
-        <!--</div>-->
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -126,44 +123,6 @@
                 i{font-size:40px;}
             }
         }
-        /* 优惠券 */
-        .coupon-list{
-            margin-left:66px;
-            .coupon-item{
-                height:90px;
-                border-bottom:1px solid #f2f2f2;
-                .bg{
-                    width:120px;
-                    background:url("../../assets/img/shop-coupon-bg.png") no-repeat;
-                    background-size:100% 100%;
-                    text-align: center;
-                    line-height:76px;
-                    font-size:22px;
-                    font-family:"Microsoft Yahei";
-                    color:#fff;
-                    .gold{
-                        &:before{content:"￥";font-size:14px;}
-                    }
-                }
-                .rule{
-                    font-size:22px;
-                    color:#afafaf;
-                }
-                .btn{
-                    padding:0 24px;
-                    span{
-                        display: inline-block;
-                        width:138px;
-                        border:1px solid #e85352;
-                        border-radius: .2em;
-                        text-align: center;
-                        line-height:50px;
-                        font-size:26px;
-                        color:#e85352;
-                    }
-                }
-            }
-        }
         /* 活动规则 */
         .active-rule{
             text-align:center;
@@ -195,6 +154,9 @@
                     color:#fff;
                 }
             }
+            &:last-of-type{
+                margin-bottom:98px;
+            }
         }
         /* 到店买单 */
         .sweep-pay{
@@ -203,9 +165,6 @@
         /* 商家优惠券 */
         .coupon{
             i{color:#f8ac20;}
-        }
-        .review-wrap{
-            margin-bottom:98px;
         }
 
         .good{
@@ -224,6 +183,7 @@
 <script type="text/babel">
     import goodReview from './goodReview'
     import goodItem from "./goodItem"
+    import couponItem from "./couponItem"
     import shop from "../../api/shop"
     export default{
         data(){
@@ -231,11 +191,15 @@
                 info:{
                     merchant_name:'',
                     fraction:0,
-                    merchant_id:''
-
+                    merchant_id:'',
+                    isCashpayment:0,
+                    campaign:{
+                        title:''
+                    },
+                    listBenefit:[]
                 },
                 review:[],
-                reviewLen:0
+                reviewLen:0,
             }
         }
         ,beforeRouteEnter(to,from,next) {
@@ -246,9 +210,10 @@
                     vm.info = data.info
                     vm.review = data.reviews.datas.slice(0,2)
                     vm.reviewLen = data.reviews.total
+                    console.log(JSON.stringify(data.info.listBenefit))
                 })
             })
         }
-        ,components:{goodItem, goodReview}
+        ,components:{goodItem, goodReview,couponItem}
     }
 </script>

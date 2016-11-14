@@ -25,12 +25,12 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                // target: 'http://192.168.8.70/',
+                // target: 'http://192.168.8.76/',
                 target: 'http://jfb315.f3322.net:8086/',
                 changeOrigin: true
             },
             '/wechatpay': {
-                target: 'http://192.168.8.70:8080/',
+                target: 'http://jfb315.f3322.net:8086/',
                 changeOrigin: true
             },
             '/htdocs': {

@@ -61,7 +61,6 @@ export const allArea = ({commit}) => {
                     areaAllList.push(item)
                 }
             }
-
             commit(types.FETCH_ALL_AREA,{provinceList,cityAllList,areaAllList})
             window.localStorage.provinceList = JSON.stringify(provinceList)
             window.localStorage.cityAllList = JSON.stringify(cityAllList)
@@ -91,4 +90,13 @@ export const shopList = ({commit,state},{params,way}) => {
         commit(types.FETCH_SHOP_LIST,{data,way,more})
         return Promise.resolve(more)
     })
+}
+
+//获取养老金数据
+export const getAnnuityList =({commit,state},rows)=>{
+    return member.getAnnuityList({pageSize:rows,pageIndex:state.member.annuityStart}).then(data=>commit(types.FETCH_ANNUITY_LIST,{list:data,rows}))
+}
+//清除养老金缓存
+export const cleanAnnuityList=({commit})=>{
+    commit(types.CLEAN_ANNUITY_LIST)
 }

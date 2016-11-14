@@ -26,12 +26,14 @@ const mutations = {
         state.areaAllList = areaAllList
     },
     // 切换省获得城市
-    [types.TOGGLE_FOCUS_CITY] (state,provinceCode=state.location.provinceCode) {
-        state.cityList = state.cityAllList.filter(item => item.parentCode == provinceCode)
+    [types.TOGGLE_FOCUS_CITY] (state,provinceCode) {
+        state.cityList = provinceCode ? state.cityAllList.filter(item => item.parentCode == provinceCode) : []
+        state.location.provinceCode = provinceCode
     },
     // 切换城市获得区域
-    [types.TOGGLE_FOCUS_AREA] (state,cityCode=state.location.cityCode) {
-        state.areaList = state.areaAllList.filter(item => item.parentCode == cityCode)
+    [types.TOGGLE_FOCUS_AREA] (state,cityCode) {
+        state.areaList = cityCode ? state.areaAllList.filter(item => item.parentCode == cityCode) : []
+        state.location.cityCode = cityCode
     },
 
     // 附近商家列表处理

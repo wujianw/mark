@@ -13,10 +13,9 @@ const postData = (url,params) => {
     return Vue.http.post(url,params).then(res => {
         let data = JSON.parse(res.data)
         if(data.code != 0) {
-            MessageBox.alert(data.data)
             return Promise.reject()
         }
-        console.log(JSON.stringify(data))
+        // console.log(JSON.stringify(data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
@@ -79,7 +78,7 @@ export default {
     }
 
     /**
-     * 订单列表
+     * 订单详情
      * @params  function
      * @option  type 接口类型
      */
@@ -141,8 +140,8 @@ export default {
      * 查看退款详情
      * @params  token,refundOrderNum:退款编号
      */
-    ,getRefundDetails({token=store.getters.getToken,refundOrderNum}){
-        let url,params;
+    ,getRefundDetails({token=store.getters.getToken,refundOrderNum}={}){
+        let url,params
         url = '/api/pri/refund/refundschedule.json'
         params = {token,refundOrderNum}
         return postData(url,params)
@@ -154,8 +153,23 @@ export default {
     ,getCouponList(token=store.getters.getToken,start=0,rows=10){
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
-        params = {"token":token,"start":start,"rows":rows}
+        params = {token,start,rows}
         return postData(url,params)
+    }
+    /**
+     * 会员领取优惠券
+     * @params  shopId:接口参数 ,errorCb：失败回调
+     */
+    ,fetchCoupon({token=store.getters.getToken,campaignId}={}){
+        let url,params
+        url = '/api/benefit/benefitmember/draw.json'
+        params = {token,campaignId}
+        return Vue.http.post(url,params).then(res => {
+            let data = JSON.parse(res.data)
+            return Promise.resolve(data)
+        }).catch(res => {
+            return Promise.reject(res)
+        })
     }
 
     /**
@@ -163,7 +177,7 @@ export default {
      * @params
      */
     ,getEvaluateList({merchantId,goodsId,start=0,rows=10}={}){
-        let url,params;
+        let url,params
         url = '/api/open/review/data.json'
         params = {merchantId,start,rows,goodsId}
         return postData(url,params)
@@ -174,7 +188,7 @@ export default {
      * @params
      */
     ,getwelletHome(token=store.getters.getToken){
-        let url,params;
+        let url,params
         url = '/api/pri/wallet/index.json'
         params = {token}
         return postData(url,params)
@@ -231,9 +245,85 @@ export default {
      * @params
      */
     ,getMessage(token=store.getters.getToken){
-        let url,params;
+        let url,params
         url = '/api/usermessage/packetList.json'
-        params = {"token":token}
+        params = {token}
         return postData(url,params)
+    }
+    /*
+     *
+     * 二级消息列表
+     * @params
+     */
+    ,getUsermessage({token=store.getters.getToken,senderId,start=0,rows=10}={}){
+        let url,params
+        url = '/api/usermessage/data.json'
+        params = {token,senderId,start,rows}
+        return postData(url,params)
+    }
+    /*
+     *
+     * 删除消息
+     * @params
+     */
+    ,getDelete({token=store.getters.getToken,id}={}){
+        let url,params
+        url = '/api/usermessage/delete.json'
+        params = {token,id}
+        return postData(url,params)
+}
+    /**
+     * 养老金列表
+     * @params  token,start,rows
+     */
+    ,getAnnuityList({token=store.getters.getToken,startTime="2014-12-12",endTime="2016-10-31",pageSize=10,pageIndex=1}={}) {
+        let url,params
+        url = '/api/pri/member/old_age_persions.json'
+        params = {"token":token,"startTime":startTime,"endTime":endTime,"pageSize":pageSize,"pageIndex":pageIndex}
+        return postData(url,params)
+    }
+    /**
+     * 扫码支付
+     * @params  token,start,rows
+     */
+    ,confirmScanbill({token=store.getters.getToken,merchantId="8",campaignId="42",orderAmount=10,paidAmount=10,disconuntAmount=10,noDisAmount=10,disAmount=10}={}){
+        let url,params
+        url = '/api/pri/scancode/creatOrder.htm'
+        params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
+        return postData(url,params)
+    }
+    //绑定
+    ,changecard({token=store.getters.getToken,blockNum="22",authCode=""}={}){
+        let url,params;
+        url = '/api/pri/member/bind_card.json'
+        params = {"token":token,"newCId":blockNum,"aCode":authCode}
+        console.log(params)
+        return Vue.http.post(url,params).then(res => {
+            let data = JSON.parse(res.data)
+            if(data.code != 0) {
+                return Promise.reject(data.message)
+            }
+            console.log(data.data)
+            return Promise.resolve(data.data)
+        }).catch(res => {
+            return Promise.reject(res)
+        })
+    }
+    //绑定认证
+    ,activate({token=store.getters.getToken,name="22",idCard="",areaCode="",email=""}={}){
+        let url,params;
+        url = '/api/pri/member/name_auth.json'
+        params = {"token":token,"name":name,"idCard":idCard,"areaCode":areaCode,"email":email}
+        console.log(params)
+        return Vue.http.post(url,params).then(res => {
+            let data = JSON.parse(res.data)
+            if(data.code != 0) {
+                return Promise.reject(data.message)
+            }
+            console.log(data.data)
+            return Promise.resolve(data.message)
+        }).catch(res => {
+            return Promise.reject(res)
+        })
     }
 }

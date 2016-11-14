@@ -98,6 +98,16 @@ const success = resolve => require(['./components/order/success'],resolve);
 // 确认支付
 const verifyPay = resolve => require(['./components/order/verifyPay'],resolve);
 
+//消息列表1级
+const messageList = resolve => require(['./components/messages/messageList'],resolve);
+
+//消息列表2级
+const shopAllMessage = resolve => require(['./components/messages/shopAllMessage'],resolve);
+
+//消息详情3级
+const messageDetails = resolve => require(['./components/messages/messageDetails'],resolve);
+
+
 
 // 已登入重定向
 const loginRedirect = (to, from, next) => {
@@ -137,7 +147,10 @@ export const routes = [
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
 
-            ,{ path:'/nearbyHot',name: 'nearbyHot',component: nearbyHot }
+            ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot }
+            ,{ path: '/messageList', name: 'messageList', component: messageList }
+            ,{ path: '/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
+            ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails }
         ]
     }
 
@@ -164,7 +177,7 @@ export const routes = [
             {path: 'list/:type', name: 'orders', component: orders}
         ]
     }
-    ,{ path: '/user/details', name: 'orderDetails', component: orderDetails, query:{orderId:""} }
+    ,{ path: '/user/details', name: 'orderDetails', component: orderDetails }
 
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
 
@@ -198,4 +211,5 @@ export const routes = [
     ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
     ,{ path: '/success', name: 'success', component: success }
     ,{ path: '/verifyPay', name: 'verifyPay', component: verifyPay }
+
 ]

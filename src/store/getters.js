@@ -22,8 +22,13 @@ export const cityList = state => {return state.shop.cityList}
 export const areaList = state => {return state.shop.areaList}
 
 // 获取当前城市区县数据
-export const countyList = state => {return state.shop.countyList}
+export const provinceCode = state => {return state.shop.location.provinceCode}
 export const cityCode = state => {return state.shop.location.cityCode}
 
 //附近商家列表
 export const shopList = state => {return state.shop.shopList}
+
+// 我的养老金数据
+export const annuityList =state=>{return state.member.annuityList}
+export const annuity= state => {return state.member.annuity}
+export const total= state => {return state.member.total}

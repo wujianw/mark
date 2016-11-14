@@ -1,94 +1,40 @@
 <template>
-    <div>
-
-        <div class="flex-start message-list">
-
-
-            <div class="img"></div>
-            <div class="lint">99+</div>
-
+    <div class="message">
+        <router-link :to="{name:'shopAllMessage',query:{senderId:item.senderId}}" v-for="item in details" :details="item" class="flex-start message-list">
+            <div class="message-logo">
+                <img :src="item.groupLogo">
+            </div>
+            <div class="lint">{{item.unMessageNum}}</div>
             <div class="count">
                 <div class="flex-space title-time">
-
-                    <div class="title">系统消息</div>
-
-                    <div class="time">2012-12-12</div>
-
+                    <div class="title">{{item.uName}}</div>
+                    <div class="time">{{item.msgPushDate}}</div>
                 </div>
-
-                <div class="message">曾经沧海难为水,除却巫山不是云</div>
-
+                <div class="message">{{item.msgTitle}}</div>
 
             </div>
-
-        </div>
-
-        <div class="flex-start message-list">
-
-
-            <div class="img"></div>
-            <div class="lint">99+</div>
-
-            <div class="count">
-                <div class="flex-space title-time">
-
-                    <div class="title">系统消息</div>
-
-                    <div class="time">2012-12-12</div>
-
-                </div>
-
-                <div class="message">曾经沧海难为水,除却巫山不是云</div>
-
-
-            </div>
-
-        </div>
-
-
-        <div class="flex-start message-list">
-
-
-            <div class="img"></div>
-            <div class="lint">99+</div>
-
-            <div class="count">
-                <div class="flex-space title-time">
-
-                    <div class="title">系统消息</div>
-
-                    <div class="time">2012-12-12</div>
-
-                </div>
-
-                <div class="message">曾经沧海难为水,除却巫山不是云</div>
-
-
-            </div>
-
-        </div>
-
-
-
-
-
+        </router-link>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
 
+    .message{
+        padding-top: 18px;
+    }
     .message-list{
+
 
         height: 120px;
         background: #fff;
         border-bottom: 1px solid #f2f2f2;
         padding-left: 22px;
-        .img{
+        .message-logo{
 
             height: 76px;
             width: 76px;
             background: grey;
             border-radius:5px;
-
+            img{width:100%;height:100%; border-radius:5px;}
 
         }
         .lint{
@@ -127,11 +73,33 @@
 
     }
 
+
+
 </style>
 <script type="text/babel">
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     export default{
         data(){
-            return {}
+            return {
+                details:[]
+            }
+        }
+        ,computed: {
+            ...mapGetters({
+                getToken:'getToken'
+            })
+
+
+        }
+        ,beforeRouteEnter (to,from,next) {
+            next(vm => {
+                member.getMessage().then(val => {
+                    vm.details = val
+                })
+            })
+
+
         }
         , components: {}
     }

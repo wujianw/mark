@@ -1,35 +1,42 @@
 <template>
     <div class="shop-list-el">
-        <div class="position-wrap flex-center">
-            <div class="position flex-center">
-                <i class="icon icon-position"></i>
-                <span>新东方国际炒菜中心</span>
-                <i class="icon icon-arrow-right"></i>
-            </div>
-        </div>
-        <div class="nav-warp">
-            <nav class="flex-space" :class="isActive ? 'active' : ''">
-                <div v-for="item in nav" class="nav-sort flex-center" @click="showSelect(item.list)">
-                    <span>{{item.text}}</span>
-                    <i class="icon" :class="isActive ? 'icon-pull-down' : 'icon-pull-down-after'"></i>
+        <div class="shop-select-nav">
+            <div class="position-wrap flex-center">
+                <div class="position flex-center">
+                    <i class="icon icon-position"></i>
+                    <span>新东方国际炒菜中心</span>
+                    <i class="icon icon-arrow-right"></i>
                 </div>
-            </nav>
-            <ul class="menu-ul" @click="toggleList">
-                <li v-for="item in list"
-                    :data-type="item.currentCode ? 'areaCode' : item.menu_code ? 'consumePtype' : 'sortrule'"
-                    :data-code="item.currentCode || item.menu_code || item.sortrule"
-                    :data-text="item.currentName || item.menu_subtitle || item.name">
-                </li>
-            </ul>
-            <ul class="menu-ul city-ul">
-                <li v-for="item in cityList" :data-text="item.currentName"></li>
-            </ul>
-            <ul class="menu-ul area-ul">
-                <li v-for="item in areaList" :data-text="item.currentName"></li>
-            </ul>
+            </div>
+            <div class="nav-warp">
+                <nav class="flex-space" :class="isActive ? 'active' : ''">
+                    <div v-for="item in nav" class="nav-sort flex-center" @click="showSelect(item.list)">
+                        <span>{{item.text}}</span>
+                        <i class="icon" :class="isActive ? 'icon-pull-down' : 'icon-pull-down-after'"></i>
+                    </div>
+                </nav>
+                <ul class="menu-ul" @click="toggleList">
+                    <li v-for="item in list"
+                        :data-type="item.currentCode ? 'provinceCode' : item.menu_code ? 'consumePtype' : 'sortrule'"
+                        :data-code="item.currentCode || item.menu_code || item.sortrule"
+                        :data-text="item.currentName || item.menu_subtitle || item.name">
+                    </li>
+                </ul>
+                <ul class="menu-ul city-ul" :class="{active: showCity}" @click="toggleCity">
+                    <li v-for="item in cityList" :data-code="item.currentCode" :data-text="item.currentName"></li>
+                </ul>
+                <ul class="menu-ul area-ul" :class="{active: showArea}" @click="toggleList">
+                    <li data-type="areaCode" data-code="" :data-text="cityName"></li>
+                    <li v-for="item in areaList"
+                        data-type="areaCode"
+                        :data-code="item.currentCode"
+                        :data-text="item.currentName" :key="item.currentCode">
+                    </li>
+                </ul>
+            </div>
+            <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
         </div>
-        <div class="shade" :class="isActive ? 'active' : ''" @click="showShade"></div>
-        <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <div class="shop-block-wrap" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <shop-block v-for="item in shopList" :obj="item" :key="shopList.merchant_id"></shop-block>
         </div>
     </div>
@@ -37,7 +44,18 @@
 <style lang="scss" rel="stylesheet/scss">
     .shop-list-el{
         margin-bottom:98px;
-        .position-wrap{height:72px;}
+        .shop-select-nav{
+            position:fixed;
+            z-index:4;
+            width:750px;
+        }
+        .shop-block-wrap{
+            padding-top:154px;
+        }
+        .position-wrap{
+            height:72px;
+            background: #fff;
+        }
         .position{
             padding:0 .5em;
             border-radius:18px;
@@ -62,7 +80,9 @@
                 font-size:24px;
                 color:#505050;
                 overflow: auto;
-                transition: height .3s;
+                /*transform: translate(0,50px);*/
+                transition: max-height .3s;
+                -webkit-tap-highlight-color:transparent;//隐藏点击闪动
                 li{
                     padding:0 24px;
                     border-bottom:1px solid #f2f2f2;
@@ -71,12 +91,26 @@
                 }
             }
             .city-ul{
-                left:33%;
-                width:33%
+                left:150%;
+                width:33%;
+                height:0;
+                &::-webkit-scrollbar{width:0;}
+                transition: height .3s, left .3s;
             }
             .area-ul{
+                left:150%;
+                width:33%;
+                height:0;
+                &::-webkit-scrollbar{width:0;}
+                transition: height .3s, left .3s;
+            }
+            .active.city-ul{
+                left:33%;
+                height:405px;
+            }
+            .active.area-ul{
                 left:66%;
-                width:33%
+                height:405px;
             }
             nav{
                 background:#fff;
@@ -88,6 +122,7 @@
                     border-right:1px solid #e5e5e5;
                     font-size:28px;
                     color:#505050;
+                    -webkit-tap-highlight-color:transparent;
                     &:last-of-type{border:none;}
                     i{font-size:16px;}
                 }
@@ -102,7 +137,7 @@
         .shade{
             display: none;
             position:fixed;
-            z-index: 4;
+            z-index: 3;
             width:750px;
             top:0;
             bottom:0;
@@ -126,7 +161,10 @@
                     {sortrule:"distance",name:"距离最近"},
                     {sortrule:"ratio",name:"积分率最高"}
                 ],
+                showArea:false,
+                showCity:false,
                 nav:null,
+                cityName:'',
                 wxJson:{}
             }
         }
@@ -134,15 +172,24 @@
             if(!this.shopMenu || this.shopMenu.length == 0){
                 this.$store.dispatch("shopMenu")
             }
+            // 初始化区县数据
             if(!this.areaList || this.areaList.length == 0){
-                this.$store.dispatch("toggleCity")
-                this.$store.dispatch("toggleProvince")
+                this.$store.dispatch("allArea").then(() => {
+//                    this.$store.dispatch("toggleCity",this.cityCode)
+//                    this.$store.dispatch("toggleProvince",this.provinceCode)
+                })
             }
-//            this.more(true)
+            if(!this.areaList || this.areaList.length == 0){
+                this.$store.dispatch("toggleCity",this.cityCode)
+                this.$store.dispatch("toggleProvince",this.provinceCode)
+            }
+            this.more(true)
 //            let self = this
-//            let fullPath = window.location,
-//                url = '/wechatpay/uniform_orde.json?url='+fullPath
-//            self.$http.get(url).then(res =>{
+//            let fullPath = window.location+'',
+//                url = '/wechatpay/get_signature.json',
+//                params = {url:fullPath,appid:'wx920bc19a7fbb9923'}
+//            console.log(params)
+//            self.$http.get(url,{params}).then(res =>{
 //                let data = JSON.parse(res.data)
 //                self.wxJson = data.data
 //            }).then(() => {
@@ -172,7 +219,8 @@
                 areaList:'areaList',
                 cityList:'cityList',
                 shopList:'shopList',
-                cityCode:'cityCode'
+                cityCode:'cityCode',
+                provinceCode:'provinceCode'
             }),
             nav() {
                 return {
@@ -216,6 +264,8 @@
                 }else if(this.isActive && this.list == data){
                     this.isActive = false
                 }
+                this.showCity = false
+                this.showArea = false
                 this.list = data
             }
             // 遮罩关闭
@@ -228,14 +278,30 @@
                     type = dataSet.type,
                     text = dataSet.text,
                     code = dataSet.code
-                this.params[type] = code
-                console.log(1212)
-
-//                this.more(true).then(() => {
-//                    this.nav[type].text = text
-//                    this.nav[type].code = code
-//                    this.isActive = false
-//                })
+                if(type == "provinceCode"){//选择省市区
+                    this.$store.dispatch("toggleProvince",code).then(()=>{
+                        this.showCity = true
+                        this.showArea = false
+                    })
+                }else {
+                    this.params[type] = code
+                    this.more(true).then(() => {
+                        this.showArea = false
+                        this.showCity = false
+                        this.nav[type].text = text
+                        this.nav[type].code = code
+                        this.isActive = false
+                    })
+                }
+            }
+            ,toggleCity(){
+                let dataSet = event.target.dataset,
+                    text = dataSet.text,
+                    code = dataSet.code
+                this.$store.dispatch("toggleCity",code).then(()=>{
+                    this.cityName = text
+                    this.showArea = true
+                })
             }
             ,more(way) {
                 this.busy = true

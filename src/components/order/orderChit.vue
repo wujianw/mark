@@ -1,20 +1,20 @@
 <template>
     <div class="order-el">
         <header class="flex-space" :data-status="state.name">
-            <div class="title flex-space" :data-shop="obj.merchantName">
+            <div class="title flex-space" :data-shop="orderDetails.merchantName">
                 <div class="hd-logo"></div>
             </div>
         </header>
         <router-link tag="main" :to="to">
             <div class="flex-start">
-                <div class="good-pic"><img :src="orderDetails.goodsImages" alt=""></div>
+                <div class="good-pic"><img :src="imgUrl" alt=""></div>
                 <div class="good-details">
                     <p>{{orderDetails.goodsName}}</p>
                     <p class="date">{{orderDetails.couponGmtEnd}}</p>
                     <p>&#215;{{orderDetails.buyNumber}}</p>
                 </div>
             </div>
-            <p class="total">合计:<span>{{obj.orderAmount}}</span></p>
+            <p class="total">合计：<span>{{orderDetails.paidAmount}}</span></p>
         </router-link>
         <footer class="flex-space">
             <router-link class="go-next" tag="p" :to="state.to">{{state.btn}}</router-link>
@@ -107,28 +107,43 @@
     /*
      * @params {obj:{}}
      */
+    import shopPic from "../../assets/img/default-shop.jpg"
     export default {
         data() {
             return {
-                to:{
+                to: {
                     name:'orderDetails',
                     query:{
                         orderId:this.obj.id
                     }
                 },
-                orderDetails:{
-                    goodsName:this.obj.orderDetails[0].goodsName
-                    ,goodsId:this.obj.orderDetails[0].goodsId
-                    ,activityEndTime:this.obj.orderDetails[0].activityEndTime
-                    ,buyNumber:this.obj.orderDetails[0].buyNumber
-                    ,goodsImages:this.obj.orderDetails[0].goodsImages
-                    ,couponGmtEnd:this.obj.orderDetails[0].couponGmtEnd
-                }
+                imgUrl: shopPic
+            }
+        }
+        ,created() {
+            let self = this,
+                url = this.orderDetails.goodsImages
+            let img = new Image()
+            img.src = url+'@226_146h'
+            img.onload = function () {
+                self.imgUrl = url+'@226_146h'
             }
         }
         ,computed:{
             state() {
                 return this.show(this.obj.state,this.obj.comment)
+            },
+            orderDetails(){
+                return {
+                    merchantName:this.obj.merchantName
+                    ,goodsName:this.obj.orderDetails[0].goodsName
+                    ,goodsId:this.obj.orderDetails[0].goodsId
+                    ,activityEndTime:this.obj.orderDetails[0].activityEndTime
+                    ,buyNumber:this.obj.orderDetails[0].buyNumber
+                    ,goodsImages:this.obj.orderDetails[0].goodsImages
+                    ,couponGmtEnd:this.obj.orderDetails[0].couponGmtEnd
+                    ,paidAmount:this.obj.orderAmount
+                }
             }
         }
         ,methods:{
@@ -140,7 +155,7 @@
                         name:""
                     }
                 }
-                switch(state){
+                switch(state.toLocaleLowerCase()){
                     case "created" :
                         obj.name = "待支付"
                         obj.btn = "付款"

@@ -1,21 +1,26 @@
 <template>
     <div>
         <div ref="more" v-infinite-scroll="pushData" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            <order v-for="item in lists" :obj="item" :key="item.id"></order>
+            <template v-if="isChit">
+                <order-chit v-for="item in chitOrder" :obj="item"></order-chit>
+            </template>
+            <template v-else>
+                <order-scan v-for="item in scanOrder" :obj="item"></order-scan>
+            </template>
         </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
 </style>
 <script type="text/babel">
-    import order from './order'
+    import orderChit from './orderChit'
+    import orderScan from './orderScan'
     import member from '../../api/member'
     import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
-                lists:null
-                ,busy:true //无限加载开关 true:关闭
+                busy:true //无限加载开关 true:关闭
             }
         }
         ,computed: {
@@ -26,11 +31,12 @@
                 scanOrderChange:'scanOrderChange',
                 chit:'chit',
                 scan:'scan'
-            })
+            }),
+            isChit() {
+                return this.$route.params.type == 'chit'
+            }
         }
-        ,components:{
-            order
-        }
+        ,components:{ orderScan,orderChit }
         ,created(){
             this.fetchData()
         }
@@ -74,10 +80,8 @@
             },
             mold(off) {
                 if(off){
-                    this.lists = this.chitOrder
                     this.busy = this.chit
                 }else{
-                    this.lists = this.scanOrder
                     this.busy = this.scan
                 }
             }
