@@ -27,6 +27,7 @@
             member.getChit().then(val => {
                 next(vm => {
                     vm.lists = val.rows
+                    console.log(JSON.stringify(val.rows))
                 })
             }).catch(res => {
                 next(false)

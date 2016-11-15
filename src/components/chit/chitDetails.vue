@@ -76,7 +76,7 @@
                 let self = vm
                 var child = self.$refs.qrcode
                 const qrcode = new QRCode(child, {
-                    text: to.query.codeContent,
+                    text: 'jfb-voucher:'+ to.query.codeContent,
                     correctLevel : QRCode.CorrectLevel.H
                 })
             })

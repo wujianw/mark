@@ -27,7 +27,6 @@
 </template>
 <style lang="scss" rel="stylesheet/scss">
 .verify-pay-el{
-
     .success{height:280px;position:relative;background:#fff;}
     .verify-hd-pic{
         margin-left:195px;

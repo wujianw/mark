@@ -34,21 +34,20 @@
 </style>
 <script type="text/babel">
     export default{
-        props:{
-            code:String,
-            name:String,
-            date:String,
-            to:{
-                type:Object,
-                default() {
-                    return {
-                        name:"chitDetails",
-                        query:{
-                            codeContent:'http://www.jfb315.com'
-                        }
+        data() {
+            return {
+                to:{
+                    name:"chitDetails",
+                    query:{
+                        codeContent:this.code
                     }
                 }
             }
+        },
+        props:{
+            code:String,
+            name:String,
+            date:String
         }
     }
 </script>

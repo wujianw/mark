@@ -82,10 +82,16 @@ export default {
      * @params  function
      * @option  type 接口类型
      */
-    ,postOrderDetails({token=store.getters.getToken,orderId}={}) {
+    ,postChitOrderDetails({token=store.getters.getToken,orderId}={}) {
         let url,params;
         url = '/api/pri/order/detail.json'
         params = {token,orderId}
+        return postData(url,params)
+    }
+    ,postScanOrderDetails({token=store.getters.getToken,cashOrderId}={}) {
+        let url,params;
+        url = '/api/pri/scancode/ cashOrderDetail.json'
+        params = {token,cashOrderId}
         return postData(url,params)
     }
 

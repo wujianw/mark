@@ -1,7 +1,8 @@
 <template>
     <div class="order-details-el">
         <good-block v-if="good" :good="good"></good-block>
-        <div class="ticket-block-wrap">
+        <submit class="submit" value="付款" :dis="!1" @commit="payWay"></submit>
+        <div class="ticket-block-wrap" v-if="!!coupons.length">
             <div class="ticket-block-el">
                 <div class="flex-space ticket-wrap">
                     <div class="ticket" :data-ticket-type="details.goodsName">
@@ -15,16 +16,16 @@
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
         </div>
-        <!--<template v-if="state=='created'">-->
+        <template v-if="state=='created'">
         <div class="details-block" >
-            <link-list :title="title"></link-list>
+            <link-list :title="title" :to="{name:'shopDetails',query:{shopId:details.shopId}}"></link-list>
             <div class="flex-space details-wrap shop">
                 <div class="shop-details">
                     <p class="shop-name">{{details.merchantName}}</p>
                     <p class="shop-address">{{details.merchantAddress}}</p>
                     <p><i class="icon icon-orders"></i>定位。。。。</p>
                 </div>
-                <div class="iphone flex-space"><i class="icon icon-orders"></i></div>
+                <a class="iphone flex-space" :href="'tel:'+details.tel"><i class="icon icon-tel"></i></a>
             </div>
         </div>
         <div v-if="details.couponUseDesc && details.buyerTips" class="details-block">
@@ -35,7 +36,7 @@
                 <div class="flex-center go-details"><p class="">查看图文详情</p></div>
             </div>
         </div>
-        <!--</template>-->
+        </template>
         <div class="details-block">
             <div class="details-title">订单信息</div>
             <div class="details-wrap order">
@@ -58,6 +59,7 @@
         .ticket-block-wrap{
             border-top:18px solid #f2f2f2;
         }
+        .submit{margin:30px 20px;}
         .details-block{
             border-top:18px solid #f2f2f2;
             .link-li{
@@ -128,24 +130,21 @@
     import linkList from './../linkList'
     import ticketBlock from './ticketBlock'
     import member from '../../api/member'
+    import submit from '../submit'
     import MessageBox from '../../msgbox';
     export default{
         data(){
             return {
                 title:'商家信息'
-                ,to:{
-                    name:'applyRefund',
-                    query:{
-                        orderNum:'1212111212'
-                    }
-                }
                 ,coupons:[]
                 ,details:{
                     couponGmtEnd:"",
                     goodsName:"",
                     couponUseDesc:"",
                     buyerTips:"",
-                    merchantName:""
+                    merchantName:"",
+                    shopId:"",
+                    tel:''
                 }
                 ,order:{
                     orderNum:"",
@@ -169,7 +168,7 @@
             }
         }
         ,beforeRouteEnter(to,from,next){
-            member.postOrderDetails({orderId:to.query.orderId}).then(data => {
+            member.postChitOrderDetails({orderId:to.query.orderId}).then(data => {
                 next(vm => {
                     vm.initialize(data)
                 })
@@ -187,7 +186,9 @@
                     merchantName:data.merchantName,
                     couponUseDesc: data.orderDetails[0].couponUseDesc,
                     buyerTips: data.orderDetails[0].buyerTips,
-                    merchantAddress: data.merchantAddress
+                    merchantAddress: data.merchantAddress,
+                    shopId:data.merchantId,
+                    tel:data.merchantTelePhone
                 }
                 vm.isHasRefuning = data.isHasRefuning // 0-展示申请退款按钮   1-展示取消退款按钮  2-不展示申请退款按钮和取消退款按钮
                 //订单信息
@@ -205,7 +206,10 @@
                 vm.state = data.state
                 vm.good = {
                     to:{
-                        name:""
+                        name:"goodDetails",
+                        query:{
+                            goodsId:data.orderDetails[0].goodsId
+                        },
                     },
                     goodsTitle: data.orderDetails[0].goodsTitle,
                     salesPrice: data.orderDetails[0].salesPrice,
@@ -221,7 +225,7 @@
                 if(self.isHasRefuning == 1){
                     MessageBox.confirm("确定取消退款？").then(() => {
                         self.$store.dispatch("refundClose",orderNum).then(() => {
-                            member.postOrderDetails({orderId}).then(data => {
+                            member.postChitOrderDetails({orderId}).then(data => {
                                 self.initialize(data)
                             })
                         }).catch(() => {
@@ -233,8 +237,13 @@
                 } else {
                     this.$router.push({name:'applyRefund',query:{orderNum,orderId}}) //申请退款画面
                 }
+            },
+
+            //去支付画面
+            payWay() {
+console.log(121212)
             }
         }
-        ,components: { goodBlock,linkList,ticketBlock }
+        ,components: { goodBlock,linkList,ticketBlock,submit }
     }
 </script>

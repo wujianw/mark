@@ -35,3 +35,7 @@ export const total= state => {return state.member.total}
 
 // 评论数量
 export const evaluateCount = state => {return state.shop.evaluate}
+
+
+export const goodDetails = state => {return state.shop.goods}
+export const goodDetailsShop = state => {return state.shop.shop}

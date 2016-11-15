@@ -44,7 +44,12 @@ const ordersNav = resolve => require(['./components/order/ordersNav'], resolve)
 const orders = resolve => require(['./components/order/orders'], resolve)
 
 //订单详情 {query:{orderName},params:{type}}
-const orderDetails = resolve => require(['./components/order/orderDetails'], resolve)
+const orderChitDetails = resolve => require(['./components/order/orderChitDetails'], resolve)
+const orderScanDetails = resolve => require(['./components/order/orderScanDetails'], resolve)
+// 创建订单
+const createOrder = resolve => require(['./components/shop/createOrder'], resolve)
+
+
 const goEvaluate = resolve => require(['./components/order/goEvaluate'], resolve)
 
 // 申请退款
@@ -181,7 +186,13 @@ export const routes = [
     ,{ path: '/user/coupon', name: 'coupon', component: coupon }
     ,{ path: '/user/getCoupon', name: 'getCoupon', component: getCoupon }
 
-    ,{ path: '/user/details', name: 'orderDetails', component: orderDetails }
+    // 订单详情
+    ,{ path: '/user/details/chit', name: 'orderChitDetails', component: orderChitDetails }
+    ,{ path: '/user/details/scan', name: 'orderScanDetails', component: orderScanDetails }
+    // 创建订单
+    ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder }
+
+
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
 

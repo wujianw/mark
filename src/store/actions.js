@@ -98,10 +98,22 @@ export const evaluateCount = ({commit},data) => {
 }
 
 //获取养老金数据
-export const getAnnuityList =({commit,state},rows)=>{
+export const getAnnuityList = ({commit,state},rows)=>{
     return member.getAnnuityList({pageSize:rows,pageIndex:state.member.annuityStart}).then(data=>commit(types.FETCH_ANNUITY_LIST,{list:data,rows}))
 }
 //清除养老金缓存
-export const cleanAnnuityList=({commit})=>{
+export const cleanAnnuityList = ({commit})=>{
     commit(types.CLEAN_ANNUITY_LIST)
+}
+
+// 当前商品详情数据，用于创建订单
+export  const goodDetails = ({commit},{goodsId}) => {
+    return shop.getGoodsDetails({goodsId}).then(data => {
+        commit(types.FETCH_GOOD_DETAILS,data)
+        let obj = {
+            countreview:data.reviews.rows.slice(0,2),
+            vcountreviewLen:data.reviews.total
+        }
+        return Promise.resolve(obj)
+    })
 }

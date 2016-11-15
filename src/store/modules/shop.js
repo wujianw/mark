@@ -12,12 +12,34 @@ const state = {
     shopList:[],
     shopPages:1,
     menu:[],
-    evaluate:{
+    evaluate:{ // 评论条数
         countAll:0,
         countIsReply:0,
         countNoReply:0,
         countDownScore:0
+    },
+    goods:{// 商品详情数据
+        goodsImages:null
+        ,goodsName:""
+        ,goodsTitle:""
+        ,buyPension:""
+        ,buyPrice:""
+        ,marketPrice:""
+        ,virtualBuy:""
+        ,canBuyNum:""
+        ,couponUseDesc:""
+        ,couponGmtStart:""
+        ,couponGmtEnd:""
+        ,buyerTips:""
+        ,stockNumber:0
+        ,id:''
+    },
+    shop:{// 商家名称数据
+        name:""
+        ,address:""
+        ,telephone:""
     }
+
 }
 // mutations
 const mutations = {
@@ -58,6 +80,11 @@ const mutations = {
         state.evaluate.countIsReply = data.countisreply
         state.evaluate.countNoReply = data.countnoreply
         state.evaluate.countDownScore = data.countdownscore
+    },
+
+    [types.FETCH_GOOD_DETAILS] (state,data) {
+        state.goods = data.goodsdata
+        state.shop = data.shop
     }
 }
 

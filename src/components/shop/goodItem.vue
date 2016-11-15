@@ -1,5 +1,5 @@
 <template>
-    <router-link tag="li" :to="{name:'goodDetails',query:{goodsId:obj.id}}" class="good-list-el flex-space">
+    <router-link tag="li" :to="to" class="good-list-el flex-space">
         <div class="flex-start">
             <div class="good-pic"><img :src="obj.goodsImages" alt=""></div>
             <div class="good-details">
@@ -7,7 +7,7 @@
                 <p class="gold">{{obj.salesPrice}}<span>{{obj.marketPrice}}</span></p>
             </div>
         </div>
-        <p class="btn">购买</p>
+        <p class="btn" v-if="show">购买</p>
     </router-link>
 </template>
 <script type="text/babel">
@@ -20,11 +20,35 @@
             return {
 
             }
-        }
-        ,props:{
+        },
+        computed:{
+            to() {
+                if(this.isRoute){
+                    return {
+                        name:'',
+                        query:this.$route.query
+                    }
+                }
+                let id = this.obj.id
+                return {
+                    name:'goodDetails',
+                    query:{goodsId:id}
+                }
+            }
+        },
+        props:{
             obj:{
                 type:Object
+            },
+            show:{
+                type:Boolean,
+                default:true
+            },
+            isRoute:{
+                type:Boolean,
+                default:false
             }
+
         }
     }
 </script>

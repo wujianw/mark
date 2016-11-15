@@ -14,6 +14,7 @@
 <style lang="scss" rel="stylesheet/scss">
     .good-block-el{
         font-family:"Microsoft Yahei";
+        border-bottom:1px solid #f2f2f2;
         .good-pic{
             width:160px;
             height:160px;

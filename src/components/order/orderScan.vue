@@ -111,7 +111,7 @@
         data() {
             return {
                 to: {
-                    name:'orderDetails',
+                    name:'orderScanDetails',
                     query:{
                         orderId:this.obj.id
                     }
@@ -121,7 +121,7 @@
         }
         ,computed:{
             state() {
-                return this.show(this.obj.state,this.obj.isCommented)
+                return this.show(this.obj.state)
             },
             orderDetails(){
                 return {
@@ -133,7 +133,7 @@
             }
         }
         ,methods:{
-            show(state,comment){
+            show(state){
                 let obj = {
                     name:"",
                     btn:"",
@@ -149,45 +149,13 @@
                             name:""
                         }
                         break
-                    case "deliveryed" :
-                        obj.name =  "待消费"
-                        obj.btn =  "查看券码"
-                        obj.to = {
-                            name:'orderDetails',
-                            query:{
-                                orderId:this.obj.id
-                            }
-                        }
-                        break
-                    case "refunding" :
-                        obj.name =  "退款中"
+                    case "finished" :
+                        obj.name =  "已完成"
                         obj.btn =  "查看详情"
                         obj.to = {
-                            name:'orderDetails',
+                            name:'orderScanDetails',
                             query:{
                                 orderId:this.obj.id
-                            }
-                        }
-                        break
-                    case "finished" :
-                        if(comment){
-                            obj.name =  "已完成"
-                            obj.btn =  "查看详情"
-                            obj.to = {
-                                name:'orderDetails',
-                                query:{
-                                    orderId:this.obj.id
-                                }
-                            }
-                        }else {
-                            obj.name =  "待评价"
-                            obj.btn =  "评价"
-                            obj.to = {
-                                name:"goEvaluate",
-                                query:{
-                                    orderNo:this.obj.orderNum,
-                                    goodsId:this.orderDetails.goodsId
-                                }
                             }
                         }
                         break

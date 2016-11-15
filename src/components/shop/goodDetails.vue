@@ -62,7 +62,7 @@
                 <div class="iphone" :data-phone="shop.telephone"><i class="icon icon-iphone"></i><p>电话</p></div>
                 <div>
                     <p class="buy-btn">
-                        <router-link :to="{name:''}">立即购买</router-link>
+                        <router-link :to="{name:'createOrder',query:{goodId:goods.id}}">立即购买</router-link>
                     </p>
                 </div>
             </div>
@@ -191,43 +191,29 @@
 <script type="text/babel">
     import goodReview from './goodReview'
     import shop from "../../api/shop"
-    import { mapGetters } from 'vuex'
+    import { mapGetters,Store } from 'vuex'
+    import store from '../../store'
     export default{
         data(){
             return{
-                goods:{
-                    goodsImages:null
-                    ,goodsName:""
-                    ,goodsTitle:""
-                    ,buyPension:""
-                    ,buyPrice:""
-                    ,marketPrice:""
-                    ,virtualBuy:""
-                    ,canBuyNum:""
-                    ,couponUseDesc:""
-                    ,couponGmtStart:""
-                    ,couponGmtEnd:""
-                    ,buyerTips:""
-                    ,stockNumber:0
-                    ,id:''
-                },
-                shop:{
-                    name:""
-                    ,address:""
-                    ,telephone:""
-                },
-                countreviewLen:0,
-                countreview:[]
+                countreviewLen:0,// 评论长度
+                countreview:[] // 评论数量
             }
+        },
+        computed:{
+            ...mapGetters({
+                goods:'goodDetails',
+                shop:'goodDetailsShop'
+            })
         }
         ,beforeRouteEnter (to, from, next) {
             let goodsId = to.query.goodsId
-            next(vm => {
-                shop.getGoodsDetails({goodsId}).then(val => {
-                    vm.goods = val.goodsdata
-                    vm.countreview = val.reviews.rows.slice(0,2)
-                    vm.countreviewLen = val.reviews.total
-                    vm.shop = val.shop
+            console.log(goodsId)
+            store.dispatch('goodDetails',{goodsId}).then(obj => {
+                console.log(obj)
+                next(vm => {
+                    vm.countreview = obj.countreview
+                    vm.countreviewLen = obj.countreviewLen
                 })
             })
         }

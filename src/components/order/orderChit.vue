@@ -17,7 +17,7 @@
             <p class="total">合计：<span>{{orderDetails.paidAmount}}</span></p>
         </router-link>
         <footer class="flex-space">
-            <router-link class="go-next" tag="p" :to="state.to">{{state.btn}}</router-link>
+            <router-link class="go-next" :to="state.to">{{state.btn}}</router-link>
         </footer>
     </div>
 </template>
@@ -112,7 +112,7 @@
         data() {
             return {
                 to: {
-                    name:'orderDetails',
+                    name:'orderChitDetails',
                     query:{
                         orderId:this.obj.id
                     }
@@ -167,7 +167,7 @@
                         obj.name =  "待消费"
                         obj.btn =  "查看券码"
                         obj.to = {
-                            name:'orderDetails',
+                            name:'orderChitDetails',
                             query:{
                                 orderId:this.obj.id
                             }
@@ -177,7 +177,7 @@
                         obj.name =  "退款中"
                         obj.btn =  "查看详情"
                         obj.to = {
-                            name:'orderDetails',
+                            name:'orderChitDetails',
                             query:{
                                 orderId:this.obj.id
                             }
@@ -188,7 +188,7 @@
                             obj.name =  "已完成"
                             obj.btn =  "查看详情"
                             obj.to = {
-                                name:'orderDetails',
+                                name:'orderChitDetails',
                                 query:{
                                     orderId:this.obj.id
                                 }

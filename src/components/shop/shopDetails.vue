@@ -197,13 +197,11 @@
         ,beforeRouteEnter(to,from,next) {
             let shopId = to.query.shopId
             shop.getShopDetails({shopId}).then(data => {
-                console.log(data)
                 next(vm => {
                     vm.info = data.info
                     vm.review = data.reviews.datas.slice(0,2)
                     vm.reviewLen = data.reviews.total
                     vm.goods = data.goods
-
                     vm.tel = data.info.tel || data.info.mobile_number
                     console.log(JSON.stringify(data.goods))
                 })
