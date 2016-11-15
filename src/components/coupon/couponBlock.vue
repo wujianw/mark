@@ -1,19 +1,18 @@
 <template>
-    <div class="coupon-block-el flex-space">
+    <router-link tag="div" :to="{name:'shopDetails',query:{shopId:details.merchantId}}" class="coupon-block-el flex-space">
         <div class="coupon-content">
             <h3>{{details.activeName}}</h3>
             <div>
                 <p>满{{details.campaginAmount | gold}}元可用</p>
-                <!--<p>限手机尾号{{details.mobile | mobiles}}的手机可用</p>-->
                 <p>{{details.startDate}}至{{details.endDate}}</p>
-                <p v-if="details.campType=1">仅限{{details.merchantName}}使用</p>
+                <p>仅限{{details.merchantName}}使用</p>
             </div>
         </div>
         <div class="pic-icon flex-start" :class="details.type==1 ? '' : 'pic-all'">
             <div class="gold">{{details.discntAmount}}</div>
-            <div class="explain" v-if="details.type==1">进店使用</div>
+            <div class="explain">进店使用</div>
         </div>
-    </div>
+    </router-link>
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .coupon-block-el{
@@ -69,10 +68,8 @@
                 type:Object,
                 default() {
                    return {
-
+                       merchantId:'',
                        title:"积分宝体验店",
-//                       mobile:"13002780721",
-                       campType: 1,
                        campaginAmount:0.00,
                        startDate:"2016-02-02",
                        endDate:"2016-02-02",

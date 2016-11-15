@@ -2,7 +2,7 @@
     <div class="verify-pay-el">
         <div class="success flex-start">
             <div class="verify-hd-pic">
-                <img src="../../../static/img/hd-pic.png" alt="">
+                <img src="../../assets/img/shop-pic.png" alt="">
             </div>
             <header class="success-hd">
                 <p class="verify-money">&yen125.00</p>
@@ -12,7 +12,7 @@
         <div class="pay-way">
             <radio id="wx" name="check" :check="true">
                 <div class="way flex-start wx">
-                    <img src="" alt="">
+                    <img src="../../assets/img/wx.png" alt="">
                     <div class="message">
                         <h4>微信支付</h4>
                         <p>推荐安装微信5.0及以上版本的用户使用</p>
@@ -80,9 +80,6 @@
                 this.$router.push({name:'success'})
             }
         }
-        ,components: {
-            submit,
-            radio
-        }
+        ,components: { submit, radio }
     }
 </script>

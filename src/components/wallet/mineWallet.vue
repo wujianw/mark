@@ -80,7 +80,7 @@
                         title:"现金红包",
                         icon:{
                             color:'#fe7d5b',
-                            iconClass:'icon-password'
+                            iconClass:'icon-red-pack'
                         },
                         to: {name: 'redMoney' },
                         details:0
@@ -89,9 +89,9 @@
                         title:"积分",
                         icon:{
                             color:'#fdb600',
-                            iconClass:'icon-password'
+                            iconClass:'icon-integral'
                         },
-                        to: {name: 'loadMobile' },
+                        to: {name:"" },
                         details:0
                     }
                 },
@@ -99,7 +99,7 @@
                     title:"支付设置",
                     icon:{
                         color:'#4cc99a',
-                        iconClass:'icon-password'
+                        iconClass:'icon-setting'
                     },
                     to: {name: 'walletSet' },
                 },

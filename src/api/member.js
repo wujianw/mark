@@ -150,10 +150,22 @@ export default {
      * 优惠券请求
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
-    ,getCouponList(token=store.getters.getToken,start=0,rows=10){
+    ,getCouponList({token,start=0,rows=10,shopId=''}={}){
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
-        params = {token,start,rows}
+        params = {token,start,rows,shopId}
+        console.log(params)
+        return postData(url,params)
+    }
+    /**
+     * 优惠券请求
+     * @params  shopId:接口参数 ,errorCb：失败回调
+     */
+    ,getAllCoupon(){
+        let url,params
+        url = '/api/benefit/benefitcampaign/data.json'
+        params = {campType:1}
+        console.log(params)
         return postData(url,params)
     }
     /**

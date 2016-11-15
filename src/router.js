@@ -8,8 +8,8 @@ const loadUser = resolve => require(['./components/login/load_user'], resolve)
 const findPassword = resolve => require(['./components/login/findPassword'], resolve)
 const setPassword = resolve => require(['./components/login/setPassword'], resolve)
 //优惠券列表
-const coupon = resolve => require(['./components/coupon/coupon'], resolve)
-const couponList = resolve => require(['./components/coupon/couponList'], resolve)
+const coupon = resolve => require(['./components/coupon/couponList'], resolve)
+const getCoupon = resolve => require(['./components/coupon/getCoupon'], resolve)
 
 //我的收藏
 const enshrine = resolve => require(['./components/enshrine/enshrine'], resolve)
@@ -177,10 +177,12 @@ export const routes = [
             {path: 'list/:type', name: 'orders', component: orders}
         ]
     }
+    // 优惠券
+    ,{ path: '/user/coupon', name: 'coupon', component: coupon }
+    ,{ path: '/user/getCoupon', name: 'getCoupon', component: getCoupon }
+
     ,{ path: '/user/details', name: 'orderDetails', component: orderDetails }
-
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
-
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
 
     ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
@@ -192,13 +194,7 @@ export const routes = [
 
     ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
     ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
-    ,{
-        path: '/user/coupon', name: 'coupon', component: coupon,
-        children:[
-            //通用红包 & 商家优惠券
-            {path: 'list/:type',name: 'couponList',component: couponList}
-        ]
-    }
+
     ,{ path: '/agreement', name: 'agreement', component: agreement }
     ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
     ,{ path: '/mineWallet',  name: 'mineWallet', component: mineWallet }

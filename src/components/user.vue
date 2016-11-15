@@ -148,7 +148,7 @@
                                 iconClass:'icon-coupon',
                                 color:'#5a9add'
                             },
-                            to: { name: 'couponList',params:{type:"all"}}
+                            to: { name: 'coupon' }
                         },
                         enshrine: {
                             title:"我的收藏",

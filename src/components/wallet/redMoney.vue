@@ -6,8 +6,8 @@
                 <p class="money">{{blance}}<span>元</span> </p>
             </div>
             <div class="go-next flex-space">
-                <router-link tag="p" :to="{name:''}">去逛逛</router-link>
-                <router-link tag="p" :to="{name:''}">去充值</router-link>
+                <router-link tag="p" :to="{name:'nearbyHot'}">去逛逛</router-link>
+                <router-link tag="p" :to="{name:'recharge'}">去充值</router-link>
             </div>
         </header>
         <h3 class="title-details">最近30天红包明细</h3>

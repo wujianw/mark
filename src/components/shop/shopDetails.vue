@@ -13,9 +13,9 @@
                     <i class="icon icon-position"></i>
                     <span>{{info.address}}</span>
                 </div>
-                <div class="phone">
-                    <i class="icon icon-benefit"></i>
-                </div>
+                <a class="phone" :href="'tel:'+ tel">
+                    <i class="icon icon-tel"></i>
+                </a>
             </div>
         </section>
         <section class="sweep-pay-wrap section" v-if="info.isCashpayment==1">
@@ -38,27 +38,16 @@
                 </div>
             </div>
             <coupon-item v-for="item in info.listBenefit" :obj="item"></coupon-item>
-            <!--<div class="coupon-list">-->
-                <!--<div class="coupon-item flex-space">-->
-                    <!--<div class="bg">-->
-                        <!--<p class="gold">20.0</p>-->
-                    <!--</div>-->
-                    <!--<div class="rule">满30使用</div>-->
-                    <!--<div class="btn">-->
-                        <!--<span>领取</span>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
         </section>
-        <section class="good-wrap section">
+        <section class="good-wrap section" v-if="goods.length">
             <div class="good title-wrap flex-space">
                 <div class="title">
                     <i class="icon icon-special"></i>
-                    <span>商家E店</span>
+                    <span>代金券</span>
                 </div>
             </div>
             <ul class="good-list">
-                <good-item></good-item>
+                <good-item v-for="item in goods" :obj="item"></good-item>
             </ul>
         </section>
         <section class="review-wrap section" v-if="review.length != 0">
@@ -188,7 +177,9 @@
     export default{
         data(){
             return{
+                tel:'',
                 info:{
+                    background:'',
                     merchant_name:'',
                     fraction:0,
                     merchant_id:'',
@@ -196,8 +187,9 @@
                     campaign:{
                         title:''
                     },
-                    listBenefit:[]
+                    listBenefit:null
                 },
+                goods:[],
                 review:[],
                 reviewLen:0,
             }
@@ -210,7 +202,10 @@
                     vm.info = data.info
                     vm.review = data.reviews.datas.slice(0,2)
                     vm.reviewLen = data.reviews.total
-                    console.log(JSON.stringify(data.info.listBenefit))
+                    vm.goods = data.goods
+
+                    vm.tel = data.info.tel || data.info.mobile_number
+                    console.log(JSON.stringify(data.goods))
                 })
             })
         }

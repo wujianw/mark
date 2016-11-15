@@ -1,10 +1,10 @@
 <template>
-    <router-link tag="li" :to="to" class="good-list-el flex-space">
+    <router-link tag="li" :to="{name:'goodDetails',query:{goodsId:obj.id}}" class="good-list-el flex-space">
         <div class="flex-start">
-            <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
+            <div class="good-pic"><img :src="obj.goodsImages" alt=""></div>
             <div class="good-details">
-                <p class="title">商品名称</p>
-                <p class="gold">100<span>150</span></p>
+                <p class="title">{{obj.goodsName}}</p>
+                <p class="gold">{{obj.salesPrice}}<span>{{obj.marketPrice}}</span></p>
             </div>
         </div>
         <p class="btn">购买</p>
@@ -18,19 +18,19 @@
     export default{
         data(){
             return {
-                to:{
-                    name:'goodDetails',
-                    query:{goodsId:467}
-                }
+
             }
         }
         ,props:{
-
+            obj:{
+                type:Object
+            }
         }
     }
 </script>
 <style lang="scss" rel="stylesheet/scss">
     .good-list-el{
+        border-bottom:1px solid #f2f2f2;
         height:176px;
         .good-pic{
             width:144px;
