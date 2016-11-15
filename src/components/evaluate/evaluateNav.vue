@@ -1,9 +1,10 @@
 <template>
     <div class="evaluate-nav-el">
         <nav class="flex-space evaluate-nav">
-            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="active">全部<span>(23)</span></router-link>
-            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="">晒图<span>(23)</span></router-link>
-            <router-link tag="p" :to="{name:'evaluateList',query:{}}" class="">低分<span>(23)</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',params:{mode:0},query:{goodsId,merchantId}}" replace active-class="active">全部<span>({{evaluate.countAll}})</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',params:{mode:1},query:{goodsId,merchantId}}" replace active-class="active">已回复<span>({{evaluate.countIsReply}})</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',params:{mode:2},query:{goodsId,merchantId}}" replace active-class="active">未回复<span>({{evaluate.countNoReply}})</span></router-link>
+            <router-link tag="p" :to="{name:'evaluateList',params:{mode:3},query:{goodsId,merchantId}}" replace active-class="active">低分<span>({{evaluate.countDownScore}})</span></router-link>
         </nav>
         <router-view></router-view>
     </div>
@@ -32,11 +33,22 @@
 
 </style>
 <script type="text/babel">
+    import { mapGetters } from 'vuex'
     export default{
         data() {
-            return {}
-        }
-        ,components: {
+            return {
+                goodsId:''
+                ,merchantId:''
+            }
+        },
+        computed:{
+            ...mapGetters({
+                evaluate:'evaluateCount',
+            })
+        },
+        created() {
+            this.goodsId = this.$route.query.goodsId || ''
+            this.merchantId = this.$route.query.merchantId || ''
         }
     }
 </script>

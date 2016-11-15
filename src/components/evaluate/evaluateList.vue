@@ -1,8 +1,10 @@
 <template>
-    <ul class="evaluate-list-el">
-        <li v-for="item in details"  class="evaluate-block-el">
+    <ul class="evaluate-list-el" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <li v-for="item in details"  class="evaluate-block-el" :key="item.id">
             <div class="flex-start list-user-details">
-                <div class="head-img"></div>
+                <div class="head-img">
+                    <img src="../../assets/img/evaluate-hd.png" alt="">
+                </div>
                 <div class="user-details">
                     <div class="user-name">{{item.memberName}}</div>
                     <div class="time-grade">
@@ -34,7 +36,6 @@
                 height:75px;
                 width: 75px;
                 border-radius:50%;
-                background: grey;
             }
             .user-details{
                 padding-left: 42px;
@@ -97,17 +98,60 @@
     export default{
         data() {
             return {
+                busy:true,
+                start:0,
                 details:null
             }
         }
-        ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                let goodsId = to.query.goodsId || ''
-                let merchantId = to.query.merchantId || ''
-                member.getEvaluateList({goodsId,merchantId}).then(val => {
-                    vm.details = val
+        ,created() {
+            this.toggleMode()
+        }
+        ,watch:{
+            $route() {
+                this.toggleMode()
+            }
+        }
+        ,methods: {
+            // 切换导航获取数据
+            toggleMode(rows=20) {
+                let self = this
+                self.busy = true
+                let query = self.$route.query,
+                    goodsId = query.goodsId || '',
+                    merchantId = query.merchantId || '',
+                    mode = self.$route.params.mode
+                if(mode == 0){
+                    self.$store.dispatch("evaluateCount",{
+                        countAll:0,
+                        countIsReply:0,
+                        countNoReply:0,
+                        countDownScore:0
+                    })
+                }
+                member.getEvaluateList({goodsId,merchantId,mode,rows}).then(val => {
+                    self.details = val
+                    self.start = rows
+                    self.busy = val.length < rows
+                    if(mode == 0) {
+                        self.$store.dispatch("evaluateCount",val[0])
+                    }
                 })
-            })
+            },
+            // 无限加载获取数据
+            more(rows=20) {
+                let self = this
+                self.busy = true
+                let query = self.$route.query,
+                    goodsId = query.goodsId || '',
+                    merchantId = query.merchantId || '',
+                    mode = self.$route.params.mode,
+                    start = self.start
+                member.getEvaluateList({goodsId,merchantId,mode,start,rows}).then(val => {
+                    self.start += rows
+                    self.busy = val.length < rows
+                    self.details.push(...val)
+                })
+            }
         }
         ,components: {
             star

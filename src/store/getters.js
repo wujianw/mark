@@ -32,3 +32,6 @@ export const shopList = state => {return state.shop.shopList}
 export const annuityList =state=>{return state.member.annuityList}
 export const annuity= state => {return state.member.annuity}
 export const total= state => {return state.member.total}
+
+// 评论数量
+export const evaluateCount = state => {return state.shop.evaluate}

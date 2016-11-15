@@ -13,7 +13,7 @@
             </li>
         </ul>
         <div class="btn-wrap flex-center">
-            <router-link tag="span" :to="{name:'evaluateList',query:{goodsId,merchantId}}">查看全部</router-link>
+            <router-link tag="span" :to="{name:'evaluateList',params:{mode:0},query:{goodsId,merchantId}}">查看全部</router-link>
         </div>
     </div>
 </template>
@@ -66,8 +66,14 @@
             reviews:{
                 type:Array
             },
-            goodsId:[String,Number],
-            merchantId:[String,Number]
+            goodsId:{
+                type:[String,Number],
+                default:''
+            },
+            merchantId:{
+                type:[String,Number],
+                default:''
+            }
         }
   }
 </script>

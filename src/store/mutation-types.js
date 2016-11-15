@@ -32,7 +32,11 @@ export const TOGGLE_FOCUS_AREA = 'TOGGLE_FOCUS_AREA'
 // 商家列表
 export const FETCH_SHOP_LIST = 'FETCH_SHOP_LIST'
 
+// 养老金
 export const FETCH_ANNUITY_LIST='FETCH_ANNUITY_LIST'
 export const CLEAN_ANNUITY_LIST='CLEAN_ANNUITY_LIST'
+
+// 评论数量
+export const EVALUATE_COUNT='EVALUATE_COUNT'
 
 

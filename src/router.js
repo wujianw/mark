@@ -167,7 +167,7 @@ export const routes = [
     ,{ path: '/evaluate', name: 'evaluate', component: evaluateNav,
         children:[
             //
-            {path: 'list', name: 'evaluateList', component: evaluateList}
+            {path: 'list/:mode', name: 'evaluateList', component: evaluateList}
         ]
     }
     // 全部订单

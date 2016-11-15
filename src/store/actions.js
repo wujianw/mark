@@ -92,6 +92,11 @@ export const shopList = ({commit,state},{params,way}) => {
     })
 }
 
+// 评论数量修改
+export const evaluateCount = ({commit},data) => {
+    commit(types.EVALUATE_COUNT,data)
+}
+
 //获取养老金数据
 export const getAnnuityList =({commit,state},rows)=>{
     return member.getAnnuityList({pageSize:rows,pageIndex:state.member.annuityStart}).then(data=>commit(types.FETCH_ANNUITY_LIST,{list:data,rows}))

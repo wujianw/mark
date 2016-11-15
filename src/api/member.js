@@ -188,10 +188,10 @@ export default {
      * 评论列表
      * @params
      */
-    ,getEvaluateList({merchantId,goodsId,start=0,rows=10}={}){
+    ,getEvaluateList({merchantId,goodsId,start=0,rows=10,mode=0}={}){
         let url,params
         url = '/api/open/review/data.json'
-        params = {merchantId,start,rows,goodsId}
+        params = {merchantId,start,rows,goodsId,mode}
         return postData(url,params)
     }
 

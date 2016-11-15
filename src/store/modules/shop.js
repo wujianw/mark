@@ -11,7 +11,13 @@ const state = {
     areaList:[],// 区
     shopList:[],
     shopPages:1,
-    menu:[]
+    menu:[],
+    evaluate:{
+        countAll:0,
+        countIsReply:0,
+        countNoReply:0,
+        countDownScore:0
+    }
 }
 // mutations
 const mutations = {
@@ -45,6 +51,13 @@ const mutations = {
             state.shopList.push(...data)
             more && state.shopPages++
         }
+    },
+
+    [types.EVALUATE_COUNT] (state,data) {
+        state.evaluate.countAll = data.countall
+        state.evaluate.countIsReply = data.countisreply
+        state.evaluate.countNoReply = data.countnoreply
+        state.evaluate.countDownScore = data.countdownscore
     }
 }
 
