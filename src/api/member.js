@@ -250,10 +250,23 @@ export default {
      * 我的收藏 含店铺收藏列表  商品收藏列表
      * @params
      */
-    ,getMembercollect(token=store.getters.getToken){
+    ,getMemberCollect(token=store.getters.getToken){
         let url,params;
         url = '/api/pri/membercollect/mycollect.json'
         params = {"token":token}
+        return postData(url,params)
+
+    }
+    /**
+     *
+     * 取消收藏
+     * @params collectType => 0：商品、1：商户
+     * @params collectIds => 商品ID或商户ID，以逗号隔开
+     */
+    ,getCloseCollect({token=store.getters.getToken,collectType,collectIds}={}){
+        let url,params;
+        url = '/api/pri/membercollect/uncollects.json'
+        params = {token,collectType,collectIds}
         return postData(url,params)
 
     }

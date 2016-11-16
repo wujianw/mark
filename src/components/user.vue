@@ -140,7 +140,7 @@
                                 iconClass:'icon-chit',
                                 color:'#e6696a'
                             },
-                            to: { name: 'chitList',query:{token:1}}
+                            to: { name: 'chitList' }
                         },
                         coupon: {
                             title:"优惠券",

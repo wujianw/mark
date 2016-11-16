@@ -1,11 +1,11 @@
 <template>
     <div class="chit-details-el flex-start">
         <div class="flex-center title-wrap">
-            <div class="title">{{title}}</div>
+            <div class="title">{{name}}</div>
             <div class="date">{{date}}</div>
         </div>
         <div class="flex-start pic" >
-            <p class="num">{{num}}</p>
+            <p class="num">{{code}}</p>
             <div class="img-wrap" ref="qrcode"></div>
         </div>
     </div>
@@ -66,17 +66,24 @@
     export default{
         data(){
             return{
-                date:'2016-10-20 10:20',
-                title:'代金券名称',
-                num:"12121212",
+                date:'',
+                name:'',
+                code:'',
+                qrcode:null
             }
         }
         ,beforeRouteEnter (to, from, next) {
+            let code = to.query.code,
+                name = to.query.name,
+                date = to.query.date
             next(vm => {
-                let self = vm
-                var child = self.$refs.qrcode
-                const qrcode = new QRCode(child, {
-                    text: 'jfb-voucher:'+ to.query.codeContent,
+                let self = vm,
+                    child = self.$refs.qrcode
+                self.name = name
+                self.code = code
+                self.date = date
+                self.qrcode = new QRCode(child, {
+                    text: 'jfb-voucher:'+ code,
                     correctLevel : QRCode.CorrectLevel.H
                 })
             })

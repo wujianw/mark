@@ -69,6 +69,7 @@
         background: #f2f2f2;
     }
     #app{
+        overflow-x:hidden;
         min-height:100%;
         .view-top{
             height:100%;

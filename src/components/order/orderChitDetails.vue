@@ -1,7 +1,7 @@
 <template>
     <div class="order-details-el">
         <good-block v-if="good" :good="good"></good-block>
-        <submit class="submit" value="付款" :dis="!1" @commit="payWay"></submit>
+        <submit v-if="state == 'created'" class="submit" value="付款" :dis="!1" @commit="payWay"></submit>
         <div class="ticket-block-wrap" v-if="!!coupons.length">
             <div class="ticket-block-el">
                 <div class="flex-space ticket-wrap">
@@ -16,7 +16,7 @@
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
         </div>
-        <template v-if="state=='created'">
+        <template v-if="state == 'created'">
         <div class="details-block" >
             <link-list :title="title" :to="{name:'shopDetails',query:{shopId:details.shopId}}"></link-list>
             <div class="flex-space details-wrap shop">

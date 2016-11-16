@@ -66,7 +66,9 @@
                         state.to = {
                             name:"chitDetails",
                             query:{
-                                codeContent:'http://www.jfb315.com'
+                                code:this.obj.code,
+                                date:this.obj.useEndDateTime,
+                                name:this.obj.name
                             }
                         }
                         break

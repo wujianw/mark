@@ -203,7 +203,6 @@
                     vm.reviewLen = data.reviews.total
                     vm.goods = data.goods
                     vm.tel = data.info.tel || data.info.mobile_number
-                    console.log(JSON.stringify(data.goods))
                 })
             })
         }
