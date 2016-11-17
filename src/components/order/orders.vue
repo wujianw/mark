@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div ref="more" v-infinite-scroll="pushData" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <div v-infinite-scroll="pushData" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <template v-if="isChit">
                 <order-chit v-for="item in chitOrder" :obj="item"></order-chit>
             </template>

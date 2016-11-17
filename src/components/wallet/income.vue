@@ -1,132 +1,105 @@
 <template>
-    <div>
-        <div class="income-head">
+    <div class="income-el">
+        <header class="income-head">
             <div class="flex-space time-selected">
                 <p class="income-time">
                     日期选择<date-picker class="" :date="startTime" :option="option" :limit="limitStart"></date-picker>
-                    <!--<span class="income-time-set">2016-07-06</span>-->
                     到&nbsp<date-picker class="" :date="endTime" :option="option" :limit="limitEnd"></date-picker>
                 </p>
-                <router-link class="go-next-seach" tag="p" :to="{name:''}">搜索</router-link>
+                <button class="search-btn" @click="toggleType()">搜索</button>
             </div>
-            <div class="flex-space type-selected">
-                <router-link class="go-next-selected" tag="p" :to="{name:''}">全部</router-link>
-                <router-link class="go-next-normal" tag="p" :to="{name:''}">收入</router-link>
-                <router-link class="go-next-normal" tag="p" :to="{name:''}">支出</router-link>
+            <div class="flex-space type-wrap">
+                <button class="type-btn" @click="toggleType({type:''})" :class="[type==''?'active':'']">全部</button>
+                <button class="type-btn" @click="toggleType({type:'earn'})" :class="[type=='earn'?'active':'']">收入</button>
+                <button class="type-btn" @click="toggleType({type:'expense'})" :class="[type=='expense'?'active':'']">支出</button>
             </div>
-        </div>
-        <div class="income-table-title"><span>7</span>天收支明细</div>
-        <div v-for="item in rows" :rows="item" class="flex-space income-cell">
-            <div class="income-table-details" >
-                <p class="income-table-name">{{item.transCodeName}}</p>
-                <p class="income-table-time">{{item.gmtCreated}}</p>
-            </div>
-            <div :class="item.tradeType==0 ? 'activeClass':'errorClass'"> {{item.tradeType==0?'-':'+'}}{{item.transAmount}}</div>
-        </div>
+        </header>
+        <h3 class="list-title">收支明细</h3>
+        <ul v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            <li v-for="item in rows" class="flex-space income-li">
+                <div class="details">
+                    <p class="name">{{item.transCodeName}}</p>
+                    <p class="time">{{item.gmtCreated}}</p>
+                </div>
+                <div :class="item.tradeType==0 ? 'activeClass':'errorClass'"> {{item.tradeType ==0 ? '-':'+'}}{{item.transAmount}}</div>
+            </li>
+            <li class="no-more" :class="{'show':noMore}"></li>
+        </ul>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
-
-    .income-head{
-        box-sizing: border-box;
-        padding-top: 18px ;
-        height:167px;
-        background: #f2f2f2;
-        font-size: 26px;
-    }
-
-    .time-selected{
-        background: white;
-        height: 78px;
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-    .type-selected{
-
-        background: white;
-        margin-top: 1px;
-        height: 78px;
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-    .go-next-selected{
-
-        height: 60px;
-        width: 220px;
-        background: #e85453;
-        border-radius:5px;
-        line-height:55px;
-        text-align:center ;
-        color: white;
-    }
-    .go-next-normal{
-
-        height: 60px;
-        width: 220px;
-        background: white;
-        border-radius:5px;
-        line-height:55px;
-        text-align:center ;
-        color: #e85453;
-        border:1px solid #e85453;
-    }
-
-    .go-next-seach{
-
-        height: 60px;
-        width: 124px;
-        background: #e85453;
-        border-radius:5px;
-        line-height:55px;
-        text-align:center ;
-        color: white;
-    }
-    .income-time-set{
-        color: #e85453;
-    }
-
-    .income-table-title{
-        margin-top:18px ;
-        padding-left: 22px;
-        padding-top:13px;
-        height: 52px;
-        background: white;
-        font-size: 26px;
-        box-sizing: border-box;
-        color: #807f7f;
-
-
-    }
-    .income-cell {
-        background: white;
-        padding-left: 14px;
-        padding-right: 14px;
-        height:72px ;
-        border-top: 1px solid #f2f2f2;
-
-
-        .income-table-details {
-
-        }
-        .income-table-name{
-
+    .income-el{
+        padding-top:18px;
+        header{
+            background: #fff;
             font-size: 26px;
+        }
+        .search-btn{
+            height: 60px;
+            width: 124px;
+            background: #e85453;
+            border:none;
+            border-radius:5px;
+            line-height:55px;
+            font-size:26px;
+            color: #fff;
+        }
+        .time-selected{
+            background: white;
+            height: 128px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        /* 类型选择方式 ---全部，收入，支出 */
+        .type-wrap{
+            height: 90px;
+            padding:0 24px;
+            border:1px solid #f2f2f2;
+        }
+        .type-btn{
+            height: 60px;
+            width: 220px;
+            border-radius:5px;
+            background: #fff;
+            line-height:55px;
+            text-align:center;
+            font-size: 26px;
+            color: #e85453;
+            border:1px solid #e85453;
+        }
+        .type-btn.active{
+            background: #e85453;
+            color: #fff;
+        }
+        /* 数据列表 */
+        .list-title{
+            margin-top:18px ;
+            padding-left:26px;
+            line-height: 78px;
+            background: #fff;
+            font-size: 30px;
+            color: #807f7f;
+        }
+    }
+    ul{background: #fff;}
+    .income-li {
+        padding:0 14px;
+        height:100px;
+        border-top: 1px solid #f2f2f2;
+        font-size: 26px;
+        .name{
+            padding:8px 0;
             color: #505050;
         }
-        .income-table-time{
-
-            margin-top: 8px;
+        .time{
+            padding:8px 0;
             font-size: 20px;
             color: #afafaf;
-
         }
-
         .errorClass{
-            font-size: 26px;
             color: #e85453;
         }
         .activeClass{
-            font-size: 26px;
             color: #7c7c7c;
         }
     }
@@ -139,14 +112,19 @@
     export default {
         data() {
             return {
+                noMore:false,
+                busy:false,
                 rows:[],
                 isActive: true,
+                start:0,
+                type:'',//earn收入，expense支出
                 startTime: {
-                    time: getBeforeDate(8)
+                    time: getBeforeDate(7)
                 },
                 endTime: {
-                    time: getBeforeDate(1)
+                    time: getBeforeDate(0)
                 },
+
                 option: {
                     type: 'day',
                     week: ['一', '二', '三', '四', '五', '六', '日'],
@@ -171,9 +149,11 @@
                     }
                 }
             }
-        }
-
-        ,computed: {
+        },
+        created() {
+//            this.fetchData()
+        },
+        computed: {
             ...mapGetters({
                 getToken:'getToken'
             }),
@@ -190,14 +170,34 @@
                     to: getBeforeDate(1)
                 }]
             }
-        }
-        ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                member.getincome(vm.getToken).then(val => {
-                    vm.blance = val.blance
-                    vm.rows = val.rows
+        },
+        methods:{
+            //start,rows,type
+            fetchData({start = this.start,rows=10,type=this.type}={}) {
+                let self = this
+                let startdate = self.startTime.time,
+                    enddate = self.endTime.time
+                member.getincome({startdate,enddate,rows,start,type}).then(val => {
+                    self.start += rows
+                    self.noMore = val.rows.length != rows
+                    self.rows.push(...val.rows)
+                    self.busy = val.rows.length != rows
+                }).catch(()=>{
+                    self.busy = true
                 })
-            })
+            },
+            more() {
+                this.busy = true
+                this.fetchData()
+            },
+            toggleType({type=this.type}={}) {
+                this.noMore = false
+                this.type = type
+                this.rows = []
+                this.start = 0
+                this.busy = false
+            }
+
         },
         components:{datePicker}
     }

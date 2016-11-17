@@ -38,19 +38,19 @@
 
 //            window.localStorage.lat = 30.267442999999997
 //            window.localStorage.lon = 120.152792
-            if(!window.localStorage.lat){
-                navigator.geolocation.getCurrentPosition(function(position){
-                    let lat = position.coords.latitude,
-                        lon = position.coords.longitude
-                    window.localStorage.lat = lat
-                    window.localStorage.lon = lon
-                    console.log(lat+','+lon)
-                },function(error){
-                    MessageBox.alert("定位失败").then(()=>{
-                        // 去默认定位
-                    })
-                })
-            }
+//            if(!window.localStorage.lat){
+//                navigator.geolocation.getCurrentPosition(function(position){
+//                    let lat = position.coords.latitude,
+//                        lon = position.coords.longitude
+//                    window.localStorage.lat = lat
+//                    window.localStorage.lon = lon
+//                    console.log(lat+','+lon)
+//                },function(error){
+//                    MessageBox.alert("定位失败").then(()=>{
+//                        // 去默认定位
+//                    })
+//                })
+//            }
             console.log(window.localStorage.lat)
             console.log(window.localStorage.lon)
         }
@@ -69,11 +69,24 @@
         background: #f2f2f2;
     }
     #app{
-        overflow-x:hidden;
+        /*overflow:hidden;*/
         min-height:100%;
         .view-top{
             height:100%;
         }
+    }
+    .no-more{
+        display:none;
+        border-top:1px solid #f2f2f2;
+        background: #fff;
+        text-align: center;
+        font:20px "Microsoft Yahei";
+        color:#505050;
+        transition: opacity 1s;
+        &:before{content:"暂无更多";line-height:78px;}
+    }
+    .no-more.show{
+        display: block;
     }
     .flex-center{display: flex;align-items: center;justify-content: center;}
     .flex-start{display: flex;align-items: center;justify-content: flex-start;}

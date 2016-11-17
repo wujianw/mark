@@ -221,17 +221,10 @@ export default {
      * rows   每页几条记录
      * start 记录起始条数
      */
-    ,getincome(token=store.getters.getToken,startdate='2015-05-01',enddate='2016-10-01',start=0,rows=10,type=''){
+    ,getincome({token=store.getters.getToken,startdate,enddate,start,rows,type}={}){
         let url,params;
         url = '/api/pri/wallet/cashdetail.json'
-        params = {
-            "token":token,
-            "startdate":startdate,
-            "enddate":enddate,
-            "start":start,
-            "rows":rows,
-            "type":type,
-        }
+        params = {token,startdate,enddate,start,rows,type}
         return postData(url,params)
     }
     /**
