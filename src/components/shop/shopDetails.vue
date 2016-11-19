@@ -27,7 +27,7 @@
                 <span class="sweep-pay-link">我要买单</span>
             </div>
             <div class="active-rule">
-                <p>{{info.campaign.title}}</p>
+                <!--<p>{{info.campaign.title}}</p>-->
             </div>
         </section>
         <section class="coupon-wrap section" v-if="info.listBenefit">

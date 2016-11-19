@@ -121,7 +121,14 @@ const loginRedirect = (to, from, next) => {
     }
     next()
 }
+//
+const scrollTop = (to, from, next) => {
+    document.body.scrollTop = 0
+    next()
+}
+
 export const routes = [
+    { path: '/',beforeEnter:scrollTop},
     {
         path: '/login',name: 'login',component:login,
         children:[
@@ -191,7 +198,9 @@ export const routes = [
     ,{ path: '/user/details/scan', name: 'orderScanDetails', component: orderScanDetails }
     // 创建订单
     ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder }
-
+    // 扫码买单
+    ,{ path: '/user/scanBillPay', name: 'scanBillPay', component: scanBillPay }
+    ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
 
     ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
     ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
@@ -214,8 +223,7 @@ export const routes = [
     ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
     ,{ path: '/income' , name: 'income' , component: income }
     ,{ path: '/recharge' , name: 'recharge' , component: recharge }
-    ,{ path: '/scanBillPay', name: 'scanBillPay', component: scanBillPay }
-    ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
+
     ,{ path: '/success', name: 'success', component: success }
     ,{ path: '/verifyPay', name: 'verifyPay', component: verifyPay }
 

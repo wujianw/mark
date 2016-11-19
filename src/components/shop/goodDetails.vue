@@ -30,7 +30,7 @@
         <main>
             <section class="lump">
                 <h3>
-                    <p>商品评论({{countreviewLen}})人评价</p>
+                    <p>商品评论({{countreviewLen || 0}})人评价</p>
                 </h3>
                 <div class="lump-content">
                     <good-review :reviews="countreview" :goodsId="goods.id"></good-review>
@@ -200,7 +200,6 @@
         ,beforeRouteEnter (to, from, next) {
             let goodsId = to.query.goodsId
             store.dispatch('goodDetails',{goodsId}).then(obj => {
-                console.log(obj)
                 next(vm => {
                     vm.countreview = obj.countreview
                     vm.countreviewLen = obj.countreviewLen

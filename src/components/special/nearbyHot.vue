@@ -3,24 +3,25 @@
         <header class="index-header">
             <index-header  :prefix="prefix"></index-header>
         </header>
-        <div class="nearby-hot-top">
-            <img src="../../../static/img/special-bg.png" alt="">
-        </div>
+        <!--<div class="nearby-hot-top">-->
+            <!--<img src="../../../static/img/special-bg.png" alt="">-->
+        <!--</div>-->
+        <slider class="nearby-hot-top"></slider>
         <div class="hot-area flex-right-left">
-            <router-link tag="div" :to="{name:'specialGoods'}" class="">
+            <router-link tag="div" :to="{name:'specialGoods',query:{type:18}}" class="">
                 <img src="" alt="">
             </router-link>
             <div class="">
-                <div class="hot-area-sm">
+                <router-link tag="div" class="hot-area-sm" :to="{name:'specialGoods',query:{type:19}}">
                     <img src="" alt="">
-                </div>
+                </router-link>
                 <div class="hot-area-sm flex-right-left">
-                    <div>
+                    <router-link tag="div" :to="{name:'specialGoods',query:{type:20}}">
                         <img src="" alt="">
-                    </div>
-                    <div>
+                    </router-link>
+                    <router-link tag="div" :to="{name:'specialGoods',query:{type:21}}">
                         <img src="" alt="">
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -34,42 +35,40 @@
         </div>
     </div>
 </template>
-
 <script type="text/babel">
     import member from "../../api/member"
     import { mapGetters } from 'vuex'
-
-    import indexHeader from "./indexHeader.vue"
+    import indexHeader from "./indexHeader"
+    import slider from "./slider"
     import goodItem from './indexGoodItem'
     export default {
         data() {
             return {
                 prefix:"杭州市-滨区",
-                busy :false,
-                params:{
-                    cityId:330100,
-                    areaId:'',
-                    type:'',
-                    lon:120.223790,
-                    lat:30.192777,
-                    start:0,
-                    rows:2,
-                    goodsName:''
-                },
-
+                busy :false
             }
         } ,
         computed: {
             ...mapGetters({
-                specialGoods:'specialGoods'
-
-            })
+                specialGoods:'specialGoods',
+                geography:'geography'
+            }),
+            params() {
+                return {
+                    type:'',// 特卖类型 特卖类别（18,19,20,21）
+                    lon:this.geography.longitude,
+                    lat:this.geography.latitude,
+                    start:0,
+                    rows:1,
+                    goodsName:''// 模糊查询用
+                }
+            }
         }
         ,methods:{
             more(){
                 this.busy = true
-                this.$store.dispatch("specialGoods",{params:this.params}).then(data => {
-                    this.busy = !data
+                this.$store.dispatch("specialData",{params:this.params}).then(more => {
+                    this.busy = !more
                 })
             }
 
@@ -77,7 +76,8 @@
 
         ,components:{
             indexHeader,
-            goodItem
+            goodItem,
+            slider
         }
 
     }

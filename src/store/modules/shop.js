@@ -59,8 +59,8 @@ const mutations = {
     // 特卖商品列表
     [types.SPECIAL_GOODS] (state,{data,first,rows}){
         if(first){
-            state.start=rows+1
-            state.specialGoods=data
+            state.start = rows + 1
+            state.specialGoods = data
         }else {
             state.specialGoods.push(...data)
             state.start+=rows

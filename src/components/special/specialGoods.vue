@@ -13,42 +13,48 @@
   </div>
 </template>
 <script type="text/babel">
-    import member from "../../api/member"
-    import { mapGetters } from 'vuex'
+
     /*
      * 特产区商品列表组件
      * @params
      */
+    import shop from "../../api/shop"
     import goodItem from "./favorGoodItem"
+    import { mapGetters } from 'vuex'
     export default{
         data() {
             return {
                 busy :false,
-                params:{
-                    cityId:330100,
-                    areaId:'',
-                    type:'',
-                    lon:120.223790,
-                    lat:30.192777,
-                    start:0,
-                    rows:2,
+                start:0,
+                specialGoods:[]
+            }
+        }
+        ,computed:{
+            ...mapGetters({
+                geography:'geography'
+            }),
+            params() {
+                return {
+                    type:this.$route.query.type,
+                    lon:this.geography.longitude,
+                    lat:this.geography.latitude,
+                    start:this.start,
                     goodsName:''
                 }
-
             }
-        },
-        computed: {
-            ...mapGetters({
-                specialGoods:'specialGoods'
-            })
         }
         ,methods:{
+            fetchData(rows=10) {
+                let params = Object.assign({rows},this.params)
+                shop.getSpecialGoods(params).then(data => {
+                    let goods = data.goods
+                    this.specialGoods.push(...goods)
+                    this.busy = goods.length != rows
+                })
+            },
             more(){
                 this.busy = true
-                this.$store.dispatch("specialGoods",{params:this.params}).then(data => {
-                   console.log(JSON.stringify(data))
-                    this.busy = !data
-                })
+                this.fetchData()
             }
         }
         ,components:{

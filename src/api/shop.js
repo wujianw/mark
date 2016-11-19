@@ -109,17 +109,18 @@ export default {
 
     /*
      * 附近特卖商品列表
-     * cityId:城市,areaId:区县
+     * cityId:城市,areaId:区县  -----附近特卖暂时不传
      * type:特卖类型 特卖类别（18,19,20,21），不传为特卖首页商品列表,
      * lon:经度,lat:纬度,
      * start,rows,
      * goodsName :模糊查找,
      * @params
      */
-    ,getSpecialGoods({cityId=330100,areaId='',type='',lon=120.223790,lat=30.192777,start=0,rows=1,goodsName=''}={}){
+    ,getSpecialGoods({cityId="",areaId='',type='',lon,lat,start=0,rows,goodsName=''}={}){
         let url,params;
         url = '/api/open/goods/special.json'
         params = { cityId,areaId,type,lon,lat,start,rows,goodsName }
+        console.log(params)
         return postData(url,params)
     }
 }

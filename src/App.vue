@@ -36,8 +36,8 @@
                 })
             })
 
-            window.localStorage.lat = 30.267442999999997
-            window.localStorage.lon = 120.152792
+//            window.localStorage.lat = 30.267442999999997
+//            window.localStorage.lon = 120.152792
         }
         ,components:{
             loading

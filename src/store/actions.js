@@ -114,8 +114,12 @@ export  const goodDetails = ({commit},{goodsId}) => {
     })
 }
 
-// 附近特卖商品列表
-export const specialGoods = ({commit,state},{params,first}) => {
+
+/*
+ * 附近特卖商品列表
+ * @params   first 是否重置
+ */
+export const specialData = ({commit,state},{params,first}) => {
     params.start = first ? 0 : state.shop.start
     return shop.getSpecialGoods(params).then(data => {
         let more = data.goods.length
