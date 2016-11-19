@@ -148,7 +148,7 @@ export const routes = [
             // 附近商家
             ,{ path: '/shopList' , name: 'shopList' , component: shopList }
             // 特价商品列表
-            ,{ path: '/shopList/specialGoods' , name: 'specialGoods' , component: specialGoods }
+            ,{ path: '/nearbyHot/specialGoods' , name: 'specialGoods' , component: specialGoods }
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
 

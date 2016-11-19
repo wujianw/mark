@@ -26,21 +26,55 @@
         </div>
         <div class="nearby-list-wrap" >
             <h3>附近特卖</h3>
-            <div class="nearby-list">
-                <good-item v-for="n in 30"></good-item>
+            <div  v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+                <div class="nearby-list">
+                    <good-item v-for="good in specialGoods" :good="good"></good-item>
+                </div>
             </div>
         </div>
     </div>
 </template>
-<script>
+
+<script type="text/babel">
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
+
     import indexHeader from "./indexHeader.vue"
     import goodItem from './indexGoodItem'
     export default {
-        data () {
+        data() {
             return {
-                prefix:"杭州市-滨江区",
+                prefix:"杭州市-滨区",
+                busy :false,
+                params:{
+                    cityId:330100,
+                    areaId:'',
+                    type:'',
+                    lon:120.223790,
+                    lat:30.192777,
+                    start:0,
+                    rows:2,
+                    goodsName:''
+                },
+
             }
+        } ,
+        computed: {
+            ...mapGetters({
+                specialGoods:'specialGoods'
+
+            })
         }
+        ,methods:{
+            more(){
+                this.busy = true
+                this.$store.dispatch("specialGoods",{params:this.params}).then(data => {
+                    this.busy = !data
+                })
+            }
+
+        }
+
         ,components:{
             indexHeader,
             goodItem
@@ -76,7 +110,7 @@
             color: #505050;
         }
         .nearby-list{
-            padding-bottom:105px;
+            margin-bottom:105px;
             background:#fff;
         }
     }

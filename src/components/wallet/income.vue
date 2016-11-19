@@ -167,13 +167,13 @@
                 return [{
                     type: 'fromto',
                     from: this.startTime.time,
-                    to: getBeforeDate(1)
+                    to: getBeforeDate(0)
                 }]
             }
         },
         methods:{
             //start,rows,type
-            fetchData({start = this.start,rows=10,type=this.type}={}) {
+            fetchData({start = this.start,rows = 10,type = this.type}={}) {
                 let self = this
                 let startdate = self.startTime.time,
                     enddate = self.endTime.time

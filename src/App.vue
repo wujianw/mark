@@ -28,7 +28,7 @@
                 next((response) => {
                     if(!response.ok){
                         //if(response.status == 400) response.statusText ="登入超时，请重新登入"
-                        MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
+//                        MessageBox.alert(response.statusText || "系统繁忙，请稍后再试！")
 //                        console.log("失败")
                     }
                     self.showLoading = false
@@ -36,23 +36,8 @@
                 })
             })
 
-//            window.localStorage.lat = 30.267442999999997
-//            window.localStorage.lon = 120.152792
-//            if(!window.localStorage.lat){
-//                navigator.geolocation.getCurrentPosition(function(position){
-//                    let lat = position.coords.latitude,
-//                        lon = position.coords.longitude
-//                    window.localStorage.lat = lat
-//                    window.localStorage.lon = lon
-//                    console.log(lat+','+lon)
-//                },function(error){
-//                    MessageBox.alert("定位失败").then(()=>{
-//                        // 去默认定位
-//                    })
-//                })
-//            }
-            console.log(window.localStorage.lat)
-            console.log(window.localStorage.lon)
+            window.localStorage.lat = 30.267442999999997
+            window.localStorage.lon = 120.152792
         }
         ,components:{
             loading
@@ -75,6 +60,8 @@
             height:100%;
         }
     }
+
+    /* 无限加载结束时显示---暂无更多 */
     .no-more{
         display:none;
         border-top:1px solid #f2f2f2;
@@ -87,6 +74,16 @@
     }
     .no-more.show{
         display: block;
+    }
+
+    /* -----内容------   结构样式 */
+    .link-picword{
+        margin-bottom:88px;
+        text-align:center;font:26px/78px "微软雅黑";color:#505050;background:#e3e3e3;
+        background:linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 40px) top left,
+        linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 40px) bottom right,
+        linear-gradient(0deg,#e3e3e3 38px,#e3e3e3 1px,#e3e3e3 40px) center;
+        background-size: 266px 100%;background-repeat:no-repeat;
     }
     .flex-center{display: flex;align-items: center;justify-content: center;}
     .flex-start{display: flex;align-items: center;justify-content: flex-start;}

@@ -52,25 +52,13 @@ const mutations = {
         state.scan = list.length != rows
         state.scanOrder.push(...list)
     },
-    //重新刷新 chit&    养老金
+    //重新刷新 chit
     [types.UPDATE] (state) {
         state.chitOrderChange = true
     },
     // 退款 ----原因模板
     [types.REFUND_REASON] (state,data) {
         state.refundReason = data
-    },
-    // 获取养老金数据
-    [types.FETCH_ANNUITY_LIST] (state,{list,rows}) {
-        state.annuityStart++
-        state.annuityList.push(...list.data)
-        state.annuity = list.data.length != rows
-    },
-    // 获取清空养老金数据
-    [types.CLEAN_ANNUITY_LIST] (state) {
-        state.total=0
-        state.annuityStart=1
-        state.annuityList=[]
     }
 }
 

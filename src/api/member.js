@@ -15,7 +15,7 @@ const postData = (url,params) => {
         if(data.code != 0) {
             return Promise.reject()
         }
-        // console.log(JSON.stringify(data))
+        console.log(JSON.stringify(data))
         return Promise.resolve(data.data)
     }).catch(res => {
         return Promise.reject()
@@ -156,22 +156,20 @@ export default {
      * 优惠券请求
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
-    ,getCouponList({token,start=0,rows=10,shopId=''}={}){
+    ,getCouponList({token=store.getters.getToken,start,rows}={}){
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
-        params = {token,start,rows,shopId}
-        console.log(params)
+        params = {token,start,rows}
         return postData(url,params)
     }
     /**
-     * 优惠券请求
+     * 所有可领取代金券列表
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
-    ,getAllCoupon(){
+    ,getAllCoupon({start=0,rows=10}={}){
         let url,params
-        url = '/api/benefit/benefitcampaign/data.json'
-        params = {campType:1}
-        console.log(params)
+        url = '/api/open/benefitcampaign/data.json'
+        params = {campType:1,start,rows}
         return postData(url,params)
     }
     /**
@@ -300,10 +298,11 @@ export default {
      * 养老金列表
      * @params  token,start,rows
      */
-    ,getAnnuityList({token=store.getters.getToken,startTime="2014-12-12",endTime="2016-10-31",pageSize=10,pageIndex=1}={}) {
+    ,getAnnuityList({token=store.getters.getToken,startTime,endTime,pageSize,pageIndex}={}) {
         let url,params
         url = '/api/pri/member/old_age_persions.json'
-        params = {"token":token,"startTime":startTime,"endTime":endTime,"pageSize":pageSize,"pageIndex":pageIndex}
+        params = {token,startTime,endTime,pageSize,pageIndex}
+        console.log(params)
         return postData(url,params)
     }
     /**

@@ -1,19 +1,19 @@
 <template>
-    <router-link tag="li" :to="{name:''}"  class="unit" >
+    <router-link tag="li" :to="{name:'goodDetails' ,query:{goodsId:good.id}}"  class="unit" >
         <div class="good-pic">
             <img :src="good.goodsImages" alt="">
         </div>
         <div class="good-info">
             <div class="shop-name-wrap flex-space">
                 <h3><i></i>{{good.goodsName}}</h3>
-                <message-mark>
-                    <span class="mark">7折</span>
-                </message-mark>
+                <!--<message-mark>-->
+                    <!--<span class="mark">7折</span>-->
+                <!--</message-mark>-->
             </div>
             <p class="title">{{good.goodsTitle}}</p>
             <div class="information flex-space">
                 <p>{{good.salesPrice}}</p>
-                <p>1.8km</p>
+                <p>{{good.distance}}m</p>
             </div>
         </div>
     </router-link>
@@ -79,7 +79,7 @@
     export default{
         data(){
             return{
-
+                cao:1
             }
         }
         ,components:{

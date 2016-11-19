@@ -1,31 +1,30 @@
 <template>
-    <router-link tag="li" :to="to" class="special-index-good-el flex-space">
+    <router-link tag="li" :to="{name:'goodDetails' ,query:{goodsId:good.id}}" class="special-index-good-el flex-space">
         <div class="flex-start">
-            <div class="good-pic"><img src="../../../static/img/good-pic.jpg" alt=""></div>
+            <div class="good-pic"><img :src="good.goodsImages" alt=""></div>
             <div class="good-details">
-                <p class="shop-name"><i class="icon icon-shop"></i>商家名称</p>
-                <p class="title">商品名称</p>
-                <p class="gold">100<span>150</span></p>
+                <p class="shop-name"><i class="icon icon-shop"></i>{{good.merchantName}}</p>
+                <p class="title">{{good.goodsName}}</p>
+                <p class="gold">{{good.salesPrice}}<span>{{good.marketPrice}}</span></p>
             </div>
         </div>
-        <mark class="position">1.8km</mark>
+        <mark class="position">{{good.distance}}m</mark>
     </router-link>
 </template>
 <script type="text/babel">
     /*
      * 商品组件  --- 用于：特产区首页
-     * @params 
+     * @params
      */
     export default{
         data(){
             return {
-                to:{
-                    name:'goodDetails'
-                }
+
+
             }
         }
         ,props:{
-
+            good:Object
         }
     }
 </script>

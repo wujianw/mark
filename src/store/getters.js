@@ -26,16 +26,18 @@ export const provinceCode = state => {return state.shop.location.provinceCode}
 export const cityCode = state => {return state.shop.location.cityCode}
 
 //附近商家列表
-export const shopList = state => {return state.shop.shopList}
-
-// 我的养老金数据
-export const annuityList =state=>{return state.member.annuityList}
-export const annuity= state => {return state.member.annuity}
-export const total= state => {return state.member.total}
+export const shopList = state => { return state.shop.shopList }
 
 // 评论数量
-export const evaluateCount = state => {return state.shop.evaluate}
+export const evaluateCount = state => { return state.shop.evaluate }
+
+export const goodDetails = state => { return state.shop.goods }
+export const goodDetailsShop = state => { return state.shop.shop }
+
+// 谭绍飞---- 特卖商品
+export const specialGoods = state => {return state.shop.specialGoods}
+
+// 获取经纬度
+export const geography = state => {return state.shop.geography}
 
 
-export const goodDetails = state => {return state.shop.goods}
-export const goodDetailsShop = state => {return state.shop.shop}

@@ -4,6 +4,13 @@ const state = {
         cityCode:'330100',
         provinceCode:'330000'
     },
+    geography:{
+        longitude:window.localStorage.lon,// 经度
+        latitude:window.localStorage.lat// 纬度
+    },
+
+    specialGoods:[], //特卖商品
+    start:0,
     provinceList:[],// 所有省
     cityAllList:[],// 所有市
     areaAllList:[],//所有区
@@ -43,6 +50,22 @@ const state = {
 }
 // mutations
 const mutations = {
+
+    // 获取经纬度
+    [types.INSET_GEOGRAPHY]  (state,{longitude,latitude}) {
+        state.geography.latitude = latitude
+        state.geography.longitude = longitude
+    },
+    // 特卖商品列表
+    [types.SPECIAL_GOODS] (state,{data,first,rows}){
+        if(first){
+            state.start=rows+1
+            state.specialGoods=data
+        }else {
+            state.specialGoods.push(...data)
+            state.start+=rows
+        }
+    },
     // 获取商家分类菜单
     [types.FETCH_SHOP_MENU] (state,menu) {
         state.menu = menu
@@ -75,6 +98,7 @@ const mutations = {
         }
     },
 
+    // 评价条数统计
     [types.EVALUATE_COUNT] (state,data) {
         state.evaluate.countAll = data.countall
         state.evaluate.countIsReply = data.countisreply

@@ -32,12 +32,22 @@ const getData = (url,params) => {
 }
 export default {
     /*
+     *转成百度经纬度
+     */
+    getLonLat({gcjLon,gcjLat}={}){
+        let url = '/api/open/geopoint/gcj2bd.json',
+            params = { gcjLon, gcjLat }
+        return postData(url,params)
+    },
+
+    /*
      * 商品详情
      */
     getGoodsDetails({token=store.getters.getToken,goodsId}={}){
         let url,params;
         url = '/api/open/goods/get.json'
         params = {token,goodsId}
+        console.log(params)
         return postData(url,params)
     },
     /*
@@ -82,7 +92,7 @@ export default {
         params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
         console.log(params)
         return postData(url,params)
-    },
+},
     /*
      * 商户详情
      */
@@ -95,5 +105,21 @@ export default {
         url = '/api/open/shop/get.json'
         params= {lon,lat,shopId,token}
         return getData(url,{params})
+    }
+
+    /*
+     * 附近特卖商品列表
+     * cityId:城市,areaId:区县
+     * type:特卖类型 特卖类别（18,19,20,21），不传为特卖首页商品列表,
+     * lon:经度,lat:纬度,
+     * start,rows,
+     * goodsName :模糊查找,
+     * @params
+     */
+    ,getSpecialGoods({cityId=330100,areaId='',type='',lon=120.223790,lat=30.192777,start=0,rows=1,goodsName=''}={}){
+        let url,params;
+        url = '/api/open/goods/special.json'
+        params = { cityId,areaId,type,lon,lat,start,rows,goodsName }
+        return postData(url,params)
     }
 }

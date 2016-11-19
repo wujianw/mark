@@ -5,12 +5,16 @@
 </style>
 <template>
   <div class="special-good-el">
-    <ul class="main-unit-wrap clearfloat">
-        <good-item v-for="good in goods" :good="good"></good-item>
-    </ul>
+      <div  v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+          <ul class="main-unit-wrap clearfloat">
+              <good-item v-for="good in specialGoods" :good="good"></good-item>
+          </ul>
+      </div>
   </div>
 </template>
-<script>
+<script type="text/babel">
+    import member from "../../api/member"
+    import { mapGetters } from 'vuex'
     /*
      * 特产区商品列表组件
      * @params
@@ -19,11 +23,32 @@
     export default{
         data() {
             return {
-                goods : [
-                    {goodsName:"dfdfsf",goodsTitle:"好聚好散东方红",goodsImages:"",salesPrice:"12.0",virtualBuy:""}
-                    ,{goodsName:"adgag按揭",goodsTitle:"宽松的咖啡苦涩的减肥",goodsImages:"",salesPrice:"1213.2",virtualBuy:""}
-                    ,{goodsName:"阿凡达发",goodsTitle:"宽松的咖啡苦涩的减肥",goodsImages:"",salesPrice:"5856.00",virtualBuy:""}
-                ]
+                busy :false,
+                params:{
+                    cityId:330100,
+                    areaId:'',
+                    type:'',
+                    lon:120.223790,
+                    lat:30.192777,
+                    start:0,
+                    rows:2,
+                    goodsName:''
+                }
+
+            }
+        },
+        computed: {
+            ...mapGetters({
+                specialGoods:'specialGoods'
+            })
+        }
+        ,methods:{
+            more(){
+                this.busy = true
+                this.$store.dispatch("specialGoods",{params:this.params}).then(data => {
+                   console.log(JSON.stringify(data))
+                    this.busy = !data
+                })
             }
         }
         ,components:{

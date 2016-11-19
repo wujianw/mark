@@ -58,26 +58,8 @@
 </style>
 <script type="text/babel">
     export default{
-        filters:{
-            mobiles(value) {
-                return value.slice(-4,value.length)
-            }
-        }
-        ,props:{
-            details:{
-                type:Object,
-                default() {
-                   return {
-                       merchantId:'',
-                       title:"积分宝体验店",
-                       campaginAmount:0.00,
-                       startDate:"2016-02-02",
-                       endDate:"2016-02-02",
-                       discntAmount: "",
-                       date: ""
-                   }
-                }
-            }
+        props:{
+            details:Object
         }
     }
 </script>

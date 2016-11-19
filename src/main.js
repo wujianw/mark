@@ -9,7 +9,8 @@ import App from './App'
 import { routes } from './router'
 import store from './store'
 //开启debug模式
-Vue.config.debug = true
+const debug = process.env.NODE_ENV != 'production'
+Vue.config.debug = debug
 Vue.filter('gold', function (value) {
     return value.toFixed(2)
 })
@@ -32,6 +33,8 @@ const router = new VueRouter({
     //     }
     // }
 })
+
+
 //无限加载指令
 import infiniteScroll from 'vue-infinite-scroll';
 Vue.use(infiniteScroll)

@@ -1,6 +1,6 @@
 <template>
-    <div class="coupon-list-el">
-        <div class="coupon-list">
+    <div class="coupon-list-el" >
+        <div class="coupon-list" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <coupon-block v-for="item in details" :details="item"></coupon-block>
             <router-link :to="{name:'getCoupon'}" class="flex-center get-coupon">去免费领券</router-link>
         </div>
@@ -26,20 +26,23 @@
     export default{
         data() {
             return{
+                busy:false,
+                start:0,
                 details:[]
             }
         }
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
+        ,created() {
+            document.title = "我的优惠券"
         }
-        ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                member.getCouponList({token:vm.getToken}).then(val => {
-                    vm.details = val
+        ,methods:{
+            more(rows=10) {
+                this.busy = true
+                member.getCouponList({start:this.start,rows}).then(val => {
+                    this.start += rows
+                    this.details.push(...val)
+                    this.busy = val.length != rows
                 })
-            })
+            }
         }
         ,components:{
             couponBlock

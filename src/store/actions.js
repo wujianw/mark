@@ -9,6 +9,11 @@ export const login = ({commit},option) => {
         data => commit(types.LOGIN_FAILURE,data)
     )
 }
+//地理位置
+export const fetchGeography = ({commit},{longitude,latitude}) => {
+    commit(types.INSET_GEOGRAPHY,{longitude,latitude})
+    return Promise.resolve()
+}
 
 //全部订单列表处理，获取&更新
 export const fetchOrder = ({commit},{type,rows}) => {
@@ -97,15 +102,6 @@ export const evaluateCount = ({commit},data) => {
     commit(types.EVALUATE_COUNT,data)
 }
 
-//获取养老金数据
-export const getAnnuityList = ({commit,state},rows)=>{
-    return member.getAnnuityList({pageSize:rows,pageIndex:state.member.annuityStart}).then(data=>commit(types.FETCH_ANNUITY_LIST,{list:data,rows}))
-}
-//清除养老金缓存
-export const cleanAnnuityList = ({commit})=>{
-    commit(types.CLEAN_ANNUITY_LIST)
-}
-
 // 当前商品详情数据，用于创建订单
 export  const goodDetails = ({commit},{goodsId}) => {
     return shop.getGoodsDetails({goodsId}).then(data => {
@@ -117,3 +113,14 @@ export  const goodDetails = ({commit},{goodsId}) => {
         return Promise.resolve(obj)
     })
 }
+
+// 附近特卖商品列表
+export const specialGoods = ({commit,state},{params,first}) => {
+    params.start = first ? 0 : state.shop.start
+    return shop.getSpecialGoods(params).then(data => {
+        let more = data.goods.length
+        commit(types.SPECIAL_GOODS,{data:data.goods,first,rows:params.rows})
+        return Promise.resolve(more)
+    })
+}
+

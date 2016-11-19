@@ -174,15 +174,6 @@
         .buy-btn a{display:inline-block;background:#e85350;height:88px;line-height:88px;font-size:40px;color:#fff;width:376px;text-align:center;}
         .iphone{font:20px/1.2 "Microsoft YaHei";padding:0 26px;border-right:1px solid #d9d9d9;text-align:center;}
         i.icon-iphone{font-size:38px;}
-
-        /* 图文详情 */
-        .link-picword{
-            margin-bottom:88px;
-            text-align:center;font:20px/78px "微软雅黑";color:#505050;background:#e3e3e3;
-            background:linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 39px) top left,
-            linear-gradient(0deg,#e3e3e3 38px,#a4a4a4 1px,#e3e3e3 39px) bottom right,
-            linear-gradient(0deg,#e3e3e3 38px,#e3e3e3 1px,#e3e3e3 39px) center;
-            background-size: 266px 100%;background-repeat:no-repeat;}
         #picWord {margin-bottom:88px;}
         #picWord img{max-width:100%;}
     }
@@ -208,7 +199,6 @@
         }
         ,beforeRouteEnter (to, from, next) {
             let goodsId = to.query.goodsId
-            console.log(goodsId)
             store.dispatch('goodDetails',{goodsId}).then(obj => {
                 console.log(obj)
                 next(vm => {

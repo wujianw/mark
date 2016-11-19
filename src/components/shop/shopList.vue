@@ -148,6 +148,7 @@
 <script type="text/babel">
     import shopBlock from './shopBlock'
     import shop from '../../api/shop'
+    import WX from '../../api/wx'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -169,66 +170,70 @@
             }
         }
         ,created() {
+            document.title = "附近商家"
             if(!this.shopMenu || this.shopMenu.length == 0){
                 this.$store.dispatch("shopMenu")
             }
             // 初始化区县数据
             if(!this.areaList || this.areaList.length == 0){
-                this.$store.dispatch("allArea").then(() => {
-//                    this.$store.dispatch("toggleCity",this.cityCode)
-//                    this.$store.dispatch("toggleProvince",this.provinceCode)
-                })
+                this.$store.dispatch("allArea")
             }
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("toggleCity",this.cityCode)
                 this.$store.dispatch("toggleProvince",this.provinceCode)
             }
-            this.more(true)
+            let self = this
+            if(this.geography.latitude == ''){
+                WX.getSignature().then(() => {
+                    WX.getLocation(self.getGeography)
+                })
+            }
+
+//            this.more(true)
 //            let self = this
 //            let fullPath = window.location.href.split("#")[0],
 //                url = '/wechatpay/get_signature.json',
-//                params = {url:fullPath,appid:'wx920bc19a7fbb9923'}
-//            console.log(params)
+//                params = {url:fullPath,appid:'wx5a45a2b5222a07da'}
+//                console.log(params)
 //            self.$http.get(url,{params}).then(res =>{
 //                let data = JSON.parse(res.data)
 //                self.wxJson = data.data
 //            }).then(() => {
+//                if(this.geography.latitude != ''){
+//                    self.more(true)
+//                    return false
+//                }  // 获取成功后不在获取
 //                wx.config({
-//                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//                    appId: self.wxJson.appid, // 必填，公众号的唯一标识
-//                    timestamp: self.wxJson.timestamp, // 必填，生成签名的时间戳
-//                    nonceStr: self.wxJson.noncestr, // 必填，生成签名的随机串
-//                    signature: self.wxJson.signature,// 必填，签名，见附录1
-//                    jsApiList: ['scanQRCode','getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+//                    debug: true,
+//                    appId: self.wxJson.appid,
+//                    timestamp: self.wxJson.timestamp,
+//                    nonceStr: self.wxJson.noncestr,
+//                    signature: self.wxJson.signature,
+//                    jsApiList: ['getLocation']
 //                });
 //                wx.error(function() {
-//                    console.log(11421212)
-//                    wx.config({
-//                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//                        appId: self.wxJson.appid, // 必填，公众号的唯一标识
-//                        timestamp: self.wxJson.timestamp, // 必填，生成签名的时间戳
-//                        nonceStr: self.wxJson.noncestr, // 必填，生成签名的随机串
-//                        signature: self.wxJson.signature,// 必填，签名，见附录1
-//                        jsApiList: ['scanQRCode','getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-//                    });
+//
 //                })
 //                wx.ready(function(){
-////                    wx.scanQRCode({
-////                        needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-////                        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-////                        success: function (res) {
-////                            console.log(12121)
-////                            var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-////                        }
-////                    });
 //                    wx.getLocation({
-//                        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+//                        type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
 //                        success: function (res) {
-//                            console.log("wgs84")
-//                            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-//                            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-//                            var speed = res.speed; // 速度，以米/每秒计
-//                            var accuracy = res.accuracy; // 位置精度
+//                            let latitude = res.latitude, // 纬度，浮点数，范围为90 ~ -90
+//                                longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
+//                            let params = {
+//                                    gcjLon:latitude,
+//                                    gcjLat:longitude
+//                                }
+//                            shop.getLonLat(params).then(() => {
+//                                self.$store.dispatch('fetchGeography',{longitude:data.bdlon,latitude:data.bdlat}).then(() => {
+//                                    self.more(true)
+//                                })
+//                            }).catch(() => {
+//                                console.log(latitude+","+longitude)
+//                                self.$store.dispatch('fetchGeography',{longitude,latitude}).then(() => {
+//                                    self.more(true)
+//                                })
+//                            })
 //                        }
 //                    });
 //                });
@@ -243,7 +248,8 @@
                 cityList:'cityList',
                 shopList:'shopList',
                 cityCode:'cityCode',
-                provinceCode:'provinceCode'
+                provinceCode:'provinceCode',
+                geography:'geography'
             }),
             nav() {
                 return {
@@ -266,8 +272,8 @@
             },
             params() { // 数据请求参数
                 return {
-                    lon:window.localStorage.lon,
-                    lat:window.localStorage.lat,
+                    lon:this.geography.longitude,
+                    lat:this.geography.latitude,
                     local:1,
                     keywords:'',
                     limit:10,
@@ -280,8 +286,22 @@
             }
         }
         ,methods:{
+            getGeography({latitude,longitude}={}) {
+                let self = this
+                let params = { gcjLon:latitude,gcjLat:longitude }
+                shop.getLonLat(params).then(data => {
+                    self.$store.dispatch('fetchGeography',{longitude:data.bdlon,latitude:data.bdlat}).then(() => {
+                        self.more(true)
+                    })
+                }).catch(() => {
+                    console.log(latitude+","+longitude)
+                    self.$store.dispatch('fetchGeography',{longitude,latitude}).then(() => {
+                        self.more(true)
+                    })
+                })
+            }
             // 区域,分类,排序 选着展示切换
-            showSelect(data) {
+            ,showSelect(data) {
                 if(!this.isActive){
                     this.isActive = true
                 }else if(this.isActive && this.list == data){

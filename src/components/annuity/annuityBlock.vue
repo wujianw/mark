@@ -2,13 +2,13 @@
     <div>
         <div class="annuity-block-el flex-space">
             <div>
-                <div class="shop-name">积分宝体验店</div>
-                <div class="condition-gold">10.00</div>
-                <div class="condition-date">2016-05-07 10:00</div>
+                <div class="shop-name">{{oName}}</div>
+                <div class="condition-gold">{{dealMny}}</div>
+                <div class="condition-date">{{dealtime}}</div>
             </div>
             <div>
-                <div class="annuity-gold">+1.00</div>
-                <div class="integral-rate">5%</div>
+                <div class="annuity-gold">{{point}}</div>
+                <div class="integral-rate">{{ratio}}</div>
             </div>
         </div>
     </div>
@@ -63,6 +63,13 @@
     export default {
         data() {
             return {}
+        }
+        ,props:{
+            dealMny:String,
+            point:String,
+            ratio:String,
+            dealtime:String,
+            oName:String
         }
     }
 </script>
