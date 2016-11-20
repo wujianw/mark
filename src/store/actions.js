@@ -10,8 +10,8 @@ export const login = ({commit},option) => {
     )
 }
 //地理位置
-export const fetchGeography = ({commit},{longitude,latitude}) => {
-    commit(types.INSET_GEOGRAPHY,{longitude,latitude})
+export const fetchGeography = ({commit},{latitude,longitude}) => {
+    commit(types.INSET_GEOGRAPHY,{latitude,longitude})
     return Promise.resolve()
 }
 

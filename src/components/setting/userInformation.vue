@@ -42,7 +42,7 @@
                         icon:{
                             iconClass:'icon-nickname'
                         },
-                        to: {name: 'loadMobile' },
+                        to: {name: 'activation' },
                         details:'去认证'
                     }
                     ,block:{

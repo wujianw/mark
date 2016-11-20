@@ -4,8 +4,10 @@ import * as types from '../mutation-types'
 // shape: [{ id, quantity }]
 const state = {
     member: {
-        token:window.localStorage.token
-        // token:'token'
+        token:window.localStorage.token,
+        mAuth_flag:window.localStorage.mAuth_flag,
+        mIdentityId:window.localStorage.mIdentityId,
+        mName:window.localStorage.mName
     },
     chitOrder: [],
     chitOrderChange:true,

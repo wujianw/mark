@@ -24,7 +24,7 @@
                     <i class="icon icon-benefit"></i>
                     <span>到店买单</span>
                 </div>
-                <span class="sweep-pay-link">我要买单</span>
+                <router-link :to="{name:'scanBill',query:{shopName:info.merchant_name,shopId:info.merchant_id}}" class="sweep-pay-link" >我要买单</router-link>
             </div>
             <div class="active-rule">
                 <!--<p>{{info.campaign.title}}</p>-->

@@ -3,7 +3,7 @@ export default {
     getSignature() {
         let fullPath = window.location.href.split("#")[0],
             url = '/wechatpay/get_signature.json',
-            params = {url:fullPath,appid:'wx5a45a2b5222a07da'},
+            params = {url:fullPath,appid:'wx32df88fb43e04fbf'},
             wxJson = null
         console.log(params)
         return Vue.http.get(url,{params}).then(res =>{

@@ -40,4 +40,4 @@ export const specialGoods = state => {return state.shop.specialGoods}
 // 获取经纬度
 export const geography = state => {return state.shop.geography}
 
-
+export const mAuth_flag=state=>{return state.member.member.mAuth_flag}

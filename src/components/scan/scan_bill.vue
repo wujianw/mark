@@ -2,24 +2,24 @@
     <div>
         <div class="scan-bill-el">
             <div>
-                <h3 class="title">积分宝体验店</h3>
+                <h3 class="title">{{shopName}}</h3>
                 <div class="">
                     <h4 class="message">询问营业员确定消费金额后输入</h4>
                     <div class="gold-input flex-start">
-                        <div><input type="text" v-model="shouldGetValue" placeholder="0.00" ref="shouldGetRef"></div>
+                        <div><input type="number" v-model="shouldGetValue"  placeholder="0.00" ref="shouldGetRef"></div>
                     </div>
-                    <div class="btn-dialog flex-start" @click="inputnofavourable" v-show="toinputshow">输入不享受优惠金额</div>
-                    <div class="flex-space afterinputnofavourable" @click="inputnofavourable" v-show="modifyshow">
-                        <span style="padding-left: 12px">不享受优惠的金额为:  ￥{{nofavourable}}</span>
+                    <div class="btn-dialog flex-start" @click="dialog" v-show="!noFavourable"><i class="icon icon-import"></i>输入不享受优惠金额</div>
+                    <div class="flex-space afterinputnofavourable" @click="dialog" v-show="noFavourable">
+                        <span style="padding-left: 12px">不享受优惠的金额为:  ￥{{noFavourable}}</span>
                         <button style="background: #e85352;border:none;color: #fff ; padding:0 20px;font-size:24px; line-height:74px">修改</button>
                     </div>
                     <div class="favor-wrap">
                         <h4 class="favor">优惠活动</h4>
-                        <div class="signedin" v-show="signedin">
-                            <p>每满100立减5元，最高减免50元</p>
+                        <div class="login" v-if="token">
+                            <p>每满{{data.campaginAmount}}立减{{data.discntAmount}}元，最高减免{{data.maxDiscntAmount}}元</p>
                             <p>酒水部分不参与优惠，请输入不享受优惠金额</p>
                         </div>
-                        <div class="unsignedin" v-show="unsignedin">
+                        <div class="logout" v-else>
                             <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
                         </div>
                     </div>
@@ -40,14 +40,15 @@
                 </div>
             </div>
         </div>
-        <div class="flex-center popup" v-show="popupshow">
-            <div class="popupbtn " >
-                <h3 class="flex-center btntittle">输入不享受优惠金额</h3>
-                <div style="padding: 0 24px">
-                    <input class="btninput" type="text" placeholder="￥ 0.00" v-model="nofavourable_edit">
+        <div class="flex-center popup" v-show="popupShow">
+            <div class="popup-btn" >
+                <h3>输入不享受优惠金额</h3>
+                <div class="input-wrap">
+                    <input type="number" placeholder="￥ 0.00" v-model="noFavourable_edit">
                 </div>
-                <div class="flex-space btnconfirm">
-                    <div class="btnconfirmleft" @click="cancelClick">取消</div><div class="btnconfirmright" @click="okClick">确认</div>
+                <div class="flex-space btn-wrap">
+                    <button class="btn-left" @click="cancelClick">取消</button>
+                    <button class="btn-right" @click="okClick">确认</button>
                 </div>
             </div>
         </div>
@@ -60,19 +61,14 @@
     export default {
         data () {
             return {
-                toinputshow:true,
-                popupshow:false,
-                modifyshow:false,
-                nofavourable:null,
-                nofavourable_edit:null,
+                shopName:this.$route.query.shopName,
+                merchantId:this.$route.query.merchantId,
+                popupShow:false,         // 切换不享受金额输入框
+                noFavourable:null,       // 不享受金额----输入框确定以后的值
+                noFavourable_edit:null,  // 不享受金额----输入框
 
-                realPay:"实付金额：",
-                shouldGet:"将获养老金：",
                 realPayValue:"0.00",
                 shouldGetValue:"",
-                total:"消费总额",
-                second:"￥",
-                merchantId:"8",//商户ID
                 campaignId:"",//活动ID
                 orderAmount:"100",//订单总金额
                 paidAmount:"100",//实付总金额
@@ -80,26 +76,13 @@
                 noDisAmount:"100",//不参加折扣的金额
                 disAmount:"0", //参加折扣的金额
 
-                token:"",
-                signedin:false,
-                unsignedin:true,
-            }
-        }
-        ,components:{
-            submit
-        }
-        ,beforeRouteEnter(to,from,next){
-            next(vm=>{
-                if(vm.token==""||vm.token==undefined||vm.token==null){
-                    console.log(vm.token+"1")
-                    vm.unsignedin=true
-                    vm.signedin=false
-                }else{
-                    console.log(vm.token+"2")
-                    vm.unsignedin=false
-                    vm.signedin=true
+                data:{
+                    merchantId:null,
+                    campaginAmount:0,//单笔消费金额
+                    discntAmount:0,//消费满额后的减免金额
+                    maxDiscntAmount:0,// 最高减免金额
                 }
-            })
+            }
         }
         ,computed: {
             ...mapGetters({
@@ -108,12 +91,8 @@
         }
         ,methods:{
             submitScanBill(){
-                let self=this
-                if (self.merchantId==""||self.campaignId==""||self.orderAmount==""||self.paidAmount==""||self.disconuntAmount==""||self.noDisAmount==""
-                    ||self.disAmount==""){
-                    alert("金额不能为空")
-                }
-                let params = {
+                let self = this
+                member.confirmScanbill({
                     "merchantId":self.merchantId,
                     "campaignId":self.campaignId,
                     "orderAmount":self.orderAmount,
@@ -121,103 +100,104 @@
                     "disconuntAmount":self.disconuntAmount,
                     "noDisAmount":self.noDisAmount,
                     "disAmount":self.disAmount
-                }
-                member.confirmScanbill(params).then(val => {
+                }).then(val => {
+                    val.token=self.token
                     this.$router.push({name:'scanBillPay',query:val})
-                    console.log(val)
-                    console.log("fuck")
                 }).catch(res => {
-                    console.log("failed")
+                        console.log("failed")
                 })
             }
-            ,mold() {
-                this.total=total
-            }
-            ,inputnofavourable(){
-                this.nofavourable_edit=this.nofavourable
-                let self=this
-                console.log(self.$refs.shouldGetRef)
-                if(this.shouldGetValue==""||this.shouldGetValue==0){
-                    self.$refs.shouldGetRef.focus();
-                    return
-                }
-                this.popupshow=true
-            }
-            ,cancelClick(){
-                this.popupshow=false
-            }
-            ,okClick(){
-                this.popupshow=false
-                this.nofavourable=this.nofavourable_edit
-                if(this.nofavourable==0){
-                    this.toinputshow=true
-                    this.modifyshow=false
+            /*
+            *  弹框显示 输入不享受优惠金额
+            * */
+            ,dialog(){
+                let self = this
+                if(!self.shouldGetValue){// 需要修改限制条件
+                    self.$refs.shouldGetRef.focus()
                 }else{
-                    this.toinputshow=false
-                    this.modifyshow=true
+                    self.popupShow = true
                 }
             }
+            /*
+             *  弹框取消 金额不变
+             * */
+            ,cancelClick(){
+                this.popupShow = false
+                this.noFavourable_edit = this.noFavourable
+            }
+            /*
+             *  弹框取消 金额改变
+             * */
+            ,okClick(){
+                this.popupShow = false
+                this.noFavourable = this.noFavourable_edit
+            }
+
+            /*
+            *  未登入按钮 去登入画面
+            * */
             ,btn_login(){
                 this.$router.push({name:'loadMobile'})
             }
         }
+        ,components:{ submit }
     }
 </script>
-<style lang="scss" rel="stylesheet/scss" scoped>
-    .show{
-        display: none;
-    }
+<style lang="scss" rel="stylesheet/scss">
+    $placeholderColor:#e8e8e8;
+    /* 弹框 ----样式 */
     .popup{
         position:fixed;
         z-index:5;
-        width: 750px;
-        height: 100%;
         top:0;
+        bottom:0;
+        width: 750px;
         background: rgba(102,104,109,.8);
-        .popupbtn{
-            border-radius: 12px;
-            width: 540px;
+        .popup-btn{
+            width:72%;
+            border-radius:.4em;
             background: #fff;
-            padding: 32px 0 0;
         }
-    }
-    .btntittle{
-        color: #373737;
-        font-size: 34px;
-        margin-bottom: 32px;
-    }
-    .btninput{
-        width: 490px;
-        height: 80px;
-        border: 1px solid #d1d1d1;
-        border-radius: 8px;
-        font-size: 36px;
-        padding-left: 24px;
-        margin-bottom: 24px;
-    }
-    .btnconfirm{
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        line-height:102px;
-        background: #e85352;
-        width: 540px;
-        .btnconfirmleft{
-            flex-grow: 1;
-            border-bottom-left-radius: 8px;
+        h3{
             text-align: center;
-            color: #fff;
-            font-size: 43px;
-            border-right: 1px solid #fff;
+            font:34px/94px "Microsoft Yahei";
+            color: #373737;
         }
-        .btnconfirmright{
-            border-left: 1px solid #fff;
-            flex-grow: 1;
-            border-bottom-right-radius: 8px;
-            text-align: center;
-            color: #fff;
-            font-size: 43px;
+        .input-wrap{
+            padding: 0 24px;
+            input{
+                width:calc(100% - 48px);
+                padding:0 24px;
+                height: 80px;
+                border: 1px solid #d1d1d1;
+                border-radius: 8px;
+                font-size: 36px;
+                &::-webkit-input-placeholder {
+                    color:$placeholderColor;
+                    font-family:"Microsoft Yahei";
+                }
+            }
+        }
+        .btn-wrap{
+            padding-top:24px;
+            button{
+                flex-grow: 1;
+                border:none;
+                background: #e85352;
+                line-height:102px;
+                font-size: 43px;
+                color: #fff;
+            }
+            .btn-left{
+                border-right: 1px solid #fff;
+            }
+            .btn-right{
+                border-left: 1px solid #fff;
+
+            }
         }
     }
+
     .afterinputnofavourable{
         line-height: 74px;
         background:#f2f2f2;
@@ -254,15 +234,9 @@
             background:#f2f2f2;
             font-size:24px;
             color:#e85352;
-            &:before{
-                content:"+";
+            i{
                 margin:0 10px;
-                width:30px;
-                border-radius: 50%;
-                background:#e85352;
-                line-height: 30px;
-                text-align:center;
-                color:#fff;
+                font-size:30px;
             }
         }
         /* 询问营业员确定消费金额后输入 */
@@ -278,20 +252,33 @@
         .favor-wrap{
             border-bottom:34px solid #f2f2f2;
             line-height:52px;
-            .favor{padding-left:24px;border-bottom:1px solid #f2f2f2;line-height:66px;background:#fff;font-size:26px;color:#807f7f;}
-            p{padding:0 24px;}
-            .unsignedin{
-                p{
-                    padding-top:20px;font-size:26px;color:#807f7f;
-                    .btn_login{
-                        text-decoration: underline;
-                        color: #e85352;
-                    }
+            font-size:26px;
+            color:#807f7f;
+            .favor{
+                padding-left:24px;
+                border-bottom:1px solid #f2f2f2;
+                background:#fff;
+                line-height:66px;
+                font-size:26px;
+            }
+            p{
+                padding:0 24px;
+            }
+            .logout p{
+                .btn_login{
+                    text-decoration: underline;
+                    color: #e85352;
                 }
             }
-            .signedin{
-                p:first-of-type{padding-top:20px;font-size:26px;color:#373737;}
-                p:last-of-type{font-size:24px;color:#afafaf;}
+            .login p{
+                &:first-of-type{
+                    font-size:26px;
+                    color:#373737;
+                }
+                &:last-of-type{
+                    font-size:24px;
+                    color:#afafaf;
+                }
             }
         }
         /* 实付&养老金 */

@@ -154,7 +154,7 @@
     export default {
         data() {
             return {
-                busy:false,
+                busy:true,
                 isActive:false,
                 list:null,
                 shopSort:[
@@ -190,7 +190,6 @@
             }
 
 //            this.more(true)
-//            let self = this
 //            let fullPath = window.location.href.split("#")[0],
 //                url = '/wechatpay/get_signature.json',
 //                params = {url:fullPath,appid:'wx5a45a2b5222a07da'}
@@ -200,6 +199,7 @@
 //                self.wxJson = data.data
 //            }).then(() => {
 //                if(this.geography.latitude != ''){
+//
 //                    self.more(true)
 //                    return false
 //                }  // 获取成功后不在获取
@@ -290,7 +290,7 @@
                 let self = this
                 let params = { gcjLon:latitude,gcjLat:longitude }
                 shop.getLonLat(params).then(data => {
-                    self.$store.dispatch('fetchGeography',{longitude:data.bdlon,latitude:data.bdlat}).then(() => {
+                    self.$store.dispatch('fetchGeography',{latitude:data.bdlat,longitude:data.bdlon}).then(() => {
                         self.more(true)
                     })
                 }).catch(() => {

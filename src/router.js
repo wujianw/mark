@@ -17,7 +17,7 @@ const enshrineList = resolve => require(['./components/enshrine/enshrineList'], 
 
 //footer-view 组件
 const footerView = resolve => require(['./components/footerNav'], resolve)
-    // 会员中心 --
+// 会员中心
 const user = resolve => require(['./components/user'], resolve)
 
 // 附近商家
@@ -39,6 +39,10 @@ const password = resolve => require(['./components/login/password'], resolve)
 //绑定
 const bound = resolve => require(['./components/setting/bound'], resolve)
 
+//实名认证
+const activation = resolve => require(['./components/setting/activation'], resolve)
+
+
 //订单列表 {query:{token,goodId},params:{type}}
 const ordersNav = resolve => require(['./components/order/ordersNav'], resolve)
 const orders = resolve => require(['./components/order/orders'], resolve)
@@ -48,8 +52,7 @@ const orderChitDetails = resolve => require(['./components/order/orderChitDetail
 const orderScanDetails = resolve => require(['./components/order/orderScanDetails'], resolve)
 // 创建订单
 const createOrder = resolve => require(['./components/shop/createOrder'], resolve)
-
-
+// 去评论
 const goEvaluate = resolve => require(['./components/order/goEvaluate'], resolve)
 
 // 申请退款
@@ -158,15 +161,19 @@ export const routes = [
             ,{ path: '/nearbyHot/specialGoods' , name: 'specialGoods' , component: specialGoods }
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
-
+            //特卖专区
             ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot }
+            // 消息模块
             ,{ path: '/messageList', name: 'messageList', component: messageList }
             ,{ path: '/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
             ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails }
         ]
     }
 
-    ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
+
+
+
+    // 我的收藏
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,
         children:[
@@ -175,7 +182,10 @@ export const routes = [
         ]
     }
 
+    // 商品详情模块
+    ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
 
+    // 商家&商品评论详情模块
     ,{ path: '/evaluate', name: 'evaluate', component: evaluateNav,
         children:[
             //
@@ -189,42 +199,53 @@ export const routes = [
             {path: 'list/:type', name: 'orders', component: orders}
         ]
     }
-    // 优惠券
+    // 我的优惠券
     ,{ path: '/user/coupon', name: 'coupon', component: coupon }
     ,{ path: '/user/getCoupon', name: 'getCoupon', component: getCoupon }
 
-    // 订单详情
+    // 我的订单详情 ----代金券&扫码
     ,{ path: '/user/details/chit', name: 'orderChitDetails', component: orderChitDetails }
     ,{ path: '/user/details/scan', name: 'orderScanDetails', component: orderScanDetails }
+
     // 创建订单
     ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder }
+
     // 扫码买单
     ,{ path: '/user/scanBillPay', name: 'scanBillPay', component: scanBillPay }
     ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
 
-    ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
-    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
-
-    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
-
-    ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation }
-    ,{ path: '/user/password' , name: 'password' , component: password }
-    ,{ path: '/user/bound' , name: 'bound' , component: bound }
-
-
-    ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
-    ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
-
-    ,{ path: '/agreement', name: 'agreement', component: agreement }
-    ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
-    ,{ path: '/mineWallet',  name: 'mineWallet', component: mineWallet }
-    ,{ path: '/user/annuityList',  name: 'annuityList', component: annuityList }
-    ,{ path: '/walletSet' , name: 'walletSet' , component: walletSet }
-    ,{ path: '/redMoney' , name: 'redMoney' , component: redMoney }
-    ,{ path: '/income' , name: 'income' , component: income }
-    ,{ path: '/recharge' , name: 'recharge' , component: recharge }
-
+    // 普通支付模块
     ,{ path: '/success', name: 'success', component: success }
     ,{ path: '/verifyPay', name: 'verifyPay', component: verifyPay }
 
+    //去评论
+    ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
+
+    // 退款模块
+    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
+    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
+
+    // 我的代金券模块
+    ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
+    ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
+
+    // 个人信息模块
+    ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation }
+    ,{ path: '/user/password' , name: 'password' , component: password }
+    ,{ path: '/user/bound' , name: 'bound' , component: bound }
+    ,{ path: '/user/activation' , name: 'activation' , component: activation }
+
+    // 相关协议模块
+    ,{ path: '/agreement', name: 'agreement', component: agreement }
+    ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
+
+    // 我的钱包模块
+    ,{ path: '/user/mineWallet',  name: 'mineWallet', component: mineWallet }
+    ,{ path: '/user/walletSet' , name: 'walletSet' , component: walletSet }
+    ,{ path: '/user/redMoney' , name: 'redMoney' , component: redMoney }
+    ,{ path: '/user/income' , name: 'income' , component: income }
+    ,{ path: '/user/recharge' , name: 'recharge' , component: recharge }
+
+    // 我的养老金模块
+    ,{ path: '/user/annuityList',  name: 'annuityList', component: annuityList }
 ]

@@ -5,8 +5,10 @@ const state = {
         provinceCode:'330000'
     },
     geography:{
-        longitude:window.localStorage.lon,// 经度
-        latitude:window.localStorage.lat// 纬度
+        // longitude:window.localStorage.lon,// 经度
+        // latitude:window.localStorage.lat// 纬度
+        longitude:'',// 纬度
+        latitude:''// 纬度
     },
 
     specialGoods:[], //特卖商品
@@ -52,7 +54,7 @@ const state = {
 const mutations = {
 
     // 获取经纬度
-    [types.INSET_GEOGRAPHY]  (state,{longitude,latitude}) {
+    [types.INSET_GEOGRAPHY]  (state,{latitude,longitude}) {
         state.geography.latitude = latitude
         state.geography.longitude = longitude
     },

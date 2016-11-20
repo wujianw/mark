@@ -1,7 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 // var __webpack_public_path__ = "http://localhost:63342/mark/dist/"
-var __webpack_public_path__ = "http://jfb315.f3322.net:9090/"
+var __webpack_public_path__ = "http://wx.ttj315.com:9090/"
 module.exports = {
     build: {
         env: require('./prod.env'),
@@ -25,17 +25,13 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                target: 'http://192.168.8.70:8080/',
+                // target: 'http://192.168.8.70:8080/',
                 // target: 'http://192.168.8.123/',
-                // target: 'http://jfb315.f3322.net:8086/',
+                target: 'http://wx.ttj315.com/',
                 changeOrigin: true
             },
             '/wechatpay': {
-                target: 'http://jfb315.f3322.net:8086/',
-                changeOrigin: true
-            },
-            '/htdocs': {
-                target: 'http://jfb315.f3322.net:9090/',
+                target: 'http://wx.ttj315.com/',
                 changeOrigin: true
             }
         },
