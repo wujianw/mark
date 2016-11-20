@@ -36,8 +36,8 @@
             params() {
                 return {
                     type:this.$route.query.type,
-                    lon:this.geography.longitude,
-                    lat:this.geography.latitude,
+                    lon:this.geography.longitude || window.localStorage.lon || '',
+                    lat:this.geography.latitude || window.localStorage.lat || '',
                     start:this.start,
                     goodsName:''
                 }

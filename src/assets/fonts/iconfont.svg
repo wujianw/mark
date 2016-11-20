@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Mon Nov 14 13:13:52 2016
+Created by FontForge 20120731 at Sun Nov 20 15:33:18 2016
  By admin
 </metadata>
 <defs>
@@ -19,7 +19,7 @@ Created by FontForge 20120731 at Mon Nov 14 13:13:52 2016
     bbox="-0.227273 -128 1800.06 908"
     underline-thickness="0"
     underline-position="0"
-    unicode-range="U+0078-E658"
+    unicode-range="U+0078-E659"
   />
 <missing-glyph 
  />
@@ -243,5 +243,8 @@ d="M512 896q-139 0 -257 -68.5t-186.5 -186.5t-68.5 -257t68.5 -257t186.5 -186.5t25
     <glyph glyph-name="yen" unicode="&#xe658;" 
 d="M889 864h-754q-43 0 -73 -30t-30 -73v-754q0 -43 30 -73t73 -30h754q43 0 73 30t30 73v754q0 43 -30 73t-73 30v0zM776 247h-244v-208q0 -12 -8.5 -20t-20 -8t-20 8t-8.5 20v208h-244q-12 0 -20 8t-8 19.5t8 20t20 8.5h244v139h-244v0q-12 0 -20.5 8t-8.5 20t8.5 20
 t20.5 8h234l-223 210q-11 8 -11 22q0 12 8.5 20t19.5 8q12 0 20 -8l224 -210l225 210q8 7 18 7q11 0 19.5 -8.5t8.5 -19.5q0 -13 -9 -21l-224 -210h235q12 0 20.5 -8t8.5 -20t-8.5 -20t-20.5 -8h-244v-139h244q12 0 20.5 -8t8.5 -20t-8.5 -20t-20.5 -8z" />
+    <glyph glyph-name="email" unicode="&#xe659;" horiz-adv-x="1206" 
+d="M1080 -128h-953q-52 0 -89.5 37.5t-37.5 90.5v768q0 53 37 90.5t90 37.5h953q52 0 89.5 -37.5t37.5 -90.5v-128v0q0 -11 -7 -20t-17 -11q-51 -20 -564 -317q-7 -4 -16 -4t-17 5l-349 224q-15 10 -15 27q0 9 5 17q10 15 27 15q9 0 17 -5l333 -214q448 259 539 303v108
+q0 26 -18.5 45t-44.5 19h-953q-26 0 -44.5 -19t-18.5 -45v-768q0 -26 18.5 -45t44.5 -19h953q26 0 44.5 19t18.5 45v384v0q0 13 9.5 22.5t22.5 9.5t22.5 -9.5t9.5 -22.5v-384q0 -53 -37.5 -90.5t-89.5 -37.5z" />
   </font>
 </defs></svg>

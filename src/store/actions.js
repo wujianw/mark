@@ -90,6 +90,7 @@ export const toggleProvince = ({commit},provinceCode) => {
 // 附近商家列表
 export const shopList = ({commit,state},{params,way}) => {
     params.page = way ? 1 : state.shop.shopPages // 是否首页
+    console.log(params)
     return shop.postShopList(params).then(data => {
         let more = data.length // 是否有更多，无限加载开关
         commit(types.FETCH_SHOP_LIST,{data,way,more})

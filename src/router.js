@@ -170,9 +170,6 @@ export const routes = [
         ]
     }
 
-
-
-
     // 我的收藏
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,

@@ -54,12 +54,13 @@
                 geography:'geography'
             }),
             params() {
+                console.log("longitude:"+this.geography.longitude)
                 return {
                     type:'',// 特卖类型 特卖类别（18,19,20,21）
-                    lon:this.geography.longitude,
-                    lat:this.geography.latitude,
+                    lon:this.geography.longitude || window.localStorage.lon || '',
+                    lat:this.geography.latitude || window.localStorage.lat || '',
                     start:0,
-                    rows:1,
+                    rows:10,
                     goodsName:''// 模糊查询用
                 }
             }

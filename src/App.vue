@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view class="view-top"></router-view>
+        <router-view class="view-top" v-if="showView"></router-view>
         <loading v-show="showLoading"></loading>
     </div>
 </template>
@@ -9,19 +9,23 @@
     import Vue from 'vue'
     import MessageBox from './msgbox'
     import { mapGetters } from 'vuex'
+    import WX from './api/wx'
+    import shop from './api/shop'
     export default {
         data() {
             return {
                 showLoading: false,
-                showModal: false
+                showModal: false,
+                showView:false
             }
         }
         ,computed: {
             ...mapGetters({
-                areaList:"areaList"
+                areaList:"areaList",
+                geography:"geography"
             })
         }
-        ,created() {
+        ,created:function() {
             let self = this
             Vue.http.interceptors.push((request, next) =>  {
                 self.showLoading = true
@@ -36,8 +40,55 @@
                 })
             })
 
-            window.localStorage.lat = 30.267442999999997
-            window.localStorage.lon = 120.152792
+            // 初始化获取经纬度
+            if(this.geography.latitude == ''){
+                WX.getSignature()
+                    .then(wxJson => {
+                        wx.config({
+                            debug: false,
+                            appId: wxJson.appid,
+                            timestamp: wxJson.timestamp,
+                            nonceStr: wxJson.noncestr,
+                            signature: wxJson.signature,
+                            jsApiList: ['getLocation']
+                        })
+                        let latitude,longitude
+                        wx.error(function() {
+
+                        })
+                        wx.ready(function(){
+                            wx.getLocation({
+                                type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
+                                success:function(res) {
+                                    latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
+                                    longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
+                                    self.getGeography({latitude,longitude})
+                                }
+                            })
+                        })
+                    })
+                self.showView = true
+            }
+            if(process.env.NODE_ENV != 'production'){
+                window.localStorage.lat = 30.267442999999997
+                window.localStorage.lon = 120.152792
+            }
+            return true
+        }
+        ,methods:{
+            getGeography({latitude,longitude}={}) {
+                let self = this
+                let params = { gcjLon:latitude,gcjLat:longitude }
+                shop.getLonLat(params).then(data => {
+                    let latitude = data.bdlat,
+                        longitude = data.bdlon
+                    window.localStorage.lon = longitude // 经度
+                    window.localStorage.lat = latitude // 纬度
+                    self.$store.dispatch('fetchGeography',{latitude,longitude}).then(() => {
+                        self.showView = true
+                    })
+                })
+            }
         }
         ,components:{
             loading

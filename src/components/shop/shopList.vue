@@ -169,8 +169,10 @@
                 wxJson:{}
             }
         }
-        ,created() {
+        ,mounted() {
             document.title = "附近商家"
+            let self = this
+            self.more(true)
             if(!this.shopMenu || this.shopMenu.length == 0){
                 this.$store.dispatch("shopMenu")
             }
@@ -181,12 +183,6 @@
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("toggleCity",this.cityCode)
                 this.$store.dispatch("toggleProvince",this.provinceCode)
-            }
-            let self = this
-            if(this.geography.latitude == ''){
-                WX.getSignature().then(() => {
-                    WX.getLocation(self.getGeography)
-                })
             }
 
 //            this.more(true)
@@ -272,8 +268,8 @@
             },
             params() { // 数据请求参数
                 return {
-                    lon:this.geography.longitude,
-                    lat:this.geography.latitude,
+                    lat:this.geography.longitude || window.localStorage.lon || '',
+                    lon:this.geography.latitude || window.localStorage.lat || '',
                     local:1,
                     keywords:'',
                     limit:10,
@@ -286,22 +282,8 @@
             }
         }
         ,methods:{
-            getGeography({latitude,longitude}={}) {
-                let self = this
-                let params = { gcjLon:latitude,gcjLat:longitude }
-                shop.getLonLat(params).then(data => {
-                    self.$store.dispatch('fetchGeography',{latitude:data.bdlat,longitude:data.bdlon}).then(() => {
-                        self.more(true)
-                    })
-                }).catch(() => {
-                    console.log(latitude+","+longitude)
-                    self.$store.dispatch('fetchGeography',{longitude,latitude}).then(() => {
-                        self.more(true)
-                    })
-                })
-            }
             // 区域,分类,排序 选着展示切换
-            ,showSelect(data) {
+            showSelect(data) {
                 if(!this.isActive){
                     this.isActive = true
                 }else if(this.isActive && this.list == data){
@@ -346,10 +328,11 @@
                     this.showArea = true
                 })
             }
-            ,more(way) {
-                this.busy = true
-                return this.$store.dispatch("shopList",{params:this.params,way}).then(data => {
-                    this.busy = !data
+            ,more(way=false) {
+                let self = this
+                self.busy = true
+                return self.$store.dispatch("shopList",{params:this.params,way}).then(data => {
+                    self.busy = !data
                     return Promise.resolve()
                 })
             }

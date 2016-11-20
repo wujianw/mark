@@ -5,8 +5,6 @@ const state = {
         provinceCode:'330000'
     },
     geography:{
-        // longitude:window.localStorage.lon,// 经度
-        // latitude:window.localStorage.lat// 纬度
         longitude:'',// 纬度
         latitude:''// 纬度
     },
