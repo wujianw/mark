@@ -33,17 +33,23 @@
 <script type="text/babel">
     import linkList from './../linkList'
     import submit from './../submit'
+    import member from '../../api/member'
+    import store from '../../store'
+    import {mapGetters} from 'vuex'
     export default {
-        data() {
-            return {
-                lists:{
+        computed:{
+            ...mapGetters({
+                getMember:'getMember'
+            }),
+            lists() {
+                return {
                     nickname:{
                         title:"微信昵称",
                         icon:{
                             iconClass:'icon-nickname'
                         },
-                        to: {name: 'activation' },
-                        details:'去认证'
+                        to: {name: 'activation',query:{mActivate:this.getMember.mActivate}},
+                        details:this.getMember.mActivate == 1 ? "去认证" :  "已认证"
                     }
                     ,block:{
                         title:"积分宝卡",
@@ -51,16 +57,16 @@
                             iconClass:'icon-block'
                         },
                         to: {name: 'bound' },
-                        details:"去绑定"
+                        details:this.getMember.mBinding ==0 ? "去绑定" : "已绑定"
                     }
-                    ,address:{
-                        title:"收货地址",
-                        icon:{
-                            iconClass:'icon-address'
-                        },
-                        to: {name: 'loadMobile' },
-                        details:"添加/修改"
-                    }
+//                    ,address:{
+//                        title:"收货地址",
+//                        icon:{
+//                            iconClass:'icon-address'
+//                        },
+//                        to: {name: 'loadMobile' },
+//                        details:"添加/修改"
+//                    }
                     ,bound:{
                         title:"手机绑定",
                         icon:{
@@ -86,16 +92,18 @@
                     }
                 }
             }
-        }
-        ,components:{
-            linkList
-            ,submit
+        },
+        beforeRouteEnter(to,from,next) {
+            store.dispatch("getUser").then(() => {
+                next()
+            })
         }
         ,methods:{
             logout() {
                 localStorage.removeItem('token')
                 this.$router.push({name:'loadMobile'})
             }
-        }
+        },
+        components:{linkList,submit}
     }
 </script>

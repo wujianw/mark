@@ -9,6 +9,15 @@ export const login = ({commit},option) => {
         data => commit(types.LOGIN_FAILURE,data)
     )
 }
+export const getUser = ({commit,state}) => {
+    if(!state.member.member.mName){
+        return member.getMember().then(data => {
+            commit(types.MEMBER,data)
+        })
+    }
+}
+
+
 //地理位置
 export const fetchGeography = ({commit},{latitude,longitude}) => {
     commit(types.INSET_GEOGRAPHY,{latitude,longitude})

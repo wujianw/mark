@@ -302,7 +302,6 @@ export default {
         let url,params
         url = '/api/pri/member/old_age_persions.json'
         params = {token,startTime,endTime,pageSize,pageIndex}
-        console.log(params)
         return postData(url,params)
     }
     /**
@@ -336,17 +335,15 @@ export default {
     ,activate({token=store.getters.getToken,name="22",idCard="",areaCode="",email=""}={}){
         let url,params;
         url = '/api/pri/member/name_auth.json'
-        params = {"token":token,"name":name,"idCard":idCard,"areaCode":areaCode,"email":email}
-        console.log(params)
-        return Vue.http.post(url,params).then(res => {
-            let data = JSON.parse(res.data)
-            if(data.code != 0) {
-                return Promise.reject(data.message)
-            }
-            console.log(data.data)
-            return Promise.resolve(data.message)
-        }).catch(res => {
-            return Promise.reject(res)
-        })
+        params = {token,name,idCard,areaCode,email}
+        return postData(url,params)
+    }
+    /*
+    * 获取会员信息
+    * */
+    ,getMember(token=store.getters.getToken) {
+        let url = '/api/pri/member/getmember.htm',
+            params = {token}
+        return postData(url,params)
     }
 }

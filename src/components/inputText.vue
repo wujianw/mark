@@ -2,8 +2,8 @@
     <div class="flex-space input-el">
         <div class="input flex-space">
             <i class="icon" :class="icon.iconClass" :style="styleObj"></i>
-            <input :type="type" :value="value" :placeholder="placeholder" :maxlength="maxLength" @input="onInput">
-            <i class="icon icon-off" @click="emptyText"></i>
+            <input :type="type" :value="value" :placeholder="placeholder" :maxlength="maxLength" :disabled="dis" @input="onInput">
+            <i class="icon icon-off" @click="emptyText" v-show="show"></i>
         </div>
         <slot></slot>
     </div>
@@ -46,6 +46,9 @@
                 &:focus+i:last-of-type{
                     color:#000;
                 }
+            }
+            input[disabled]{
+                background:#fff;
             }
         }
     }
@@ -91,6 +94,14 @@
             ,value: {
                 type:String,
                 default: ""
+            }
+            ,show:{
+                type:Boolean,
+                default:true
+            }
+            ,dis:{
+                type:Boolean,
+                default:false
             }
         }
     }

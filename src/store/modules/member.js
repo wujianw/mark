@@ -3,11 +3,14 @@ import * as types from '../mutation-types'
 // initial state
 // shape: [{ id, quantity }]
 const state = {
+    token:window.localStorage.token,
     member: {
-        token:window.localStorage.token,
-        mAuth_flag:window.localStorage.mAuth_flag,
-        mIdentityId:window.localStorage.mIdentityId,
-        mName:window.localStorage.mName
+        mActivate:0,
+        mName:"",
+        mIdentityId:"",
+        mNativeAddress:"",
+        mEmail:"",
+        mCurrentAddress:''
     },
     chitOrder: [],
     chitOrderChange:true,
@@ -25,10 +28,13 @@ const state = {
 // mutations
 const mutations = {
     [types.LOGIN_SUCCESS] (state,member) {
-        state.member = member
+        state.token = member.token
     },
     [types.LOGIN_FAILURE] (state) {
-        state.member = null
+        state.token = null
+    },
+    [types.MEMBER] (state,member) {
+        state.member = member
     },
 
     // 订单 ------代金券&扫码买单

@@ -1,4 +1,5 @@
-export const getToken = state => {return state.member.member.token}
+export const getToken = state => {return state.member.token}
+export const getMember =state=>{return state.member.member}
 
 //扫码代金券
 export const chitOrder = state => {return state.member.chitOrder}
@@ -40,4 +41,4 @@ export const specialGoods = state => {return state.shop.specialGoods}
 // 获取经纬度
 export const geography = state => {return state.shop.geography}
 
-export const mAuth_flag=state=>{return state.member.member.mAuth_flag}
+

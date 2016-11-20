@@ -268,8 +268,8 @@
             },
             params() { // 数据请求参数
                 return {
-                    lat:this.geography.longitude || window.localStorage.lon || '',
-                    lon:this.geography.latitude || window.localStorage.lat || '',
+                    lon:this.geography.longitude || window.localStorage.lon || '',
+                    lat:this.geography.latitude || window.localStorage.lat || '',
                     local:1,
                     keywords:'',
                     limit:10,
