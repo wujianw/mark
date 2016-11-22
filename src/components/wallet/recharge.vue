@@ -106,9 +106,9 @@
     export default{
         data(){
             return {
-                money:5,
+                money:0.01,
                 choiceList:[
-                    {gold:5,active:true},
+                    {gold:0.01,active:true},
                     {gold:10,active:false},
                     {gold:20,active:false},
                     {gold:30,active:false},
@@ -118,6 +118,7 @@
             }
         }
         ,methods: {
+            // 选择默认方式
             choice(e) {
                 let target = e.target
                 if(target.tagName.toLowerCase() == 'li'){
@@ -132,9 +133,31 @@
                 }
             },
             success() {
-                this.$router.push({name:'success'})
+                let self = this
+
+                onBridgeReady.call(self)
             }
         }
         ,components: { radio, submit }
+    }
+    function onBridgeReady() {
+        let self = this
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入
+                "timeStamp":" 1395712654",         //时间戳，自1970年以来的秒数
+                "nonceStr" : "e61463f8efa94090b1f366cccfbbb444", //随机串
+                "package" : "prepay_id=u802345jgfjsdfgsdg888",
+                "signType" : "MD5",         //微信签名方式：
+                "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
+            },
+            function(res){
+                if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+                    console.log(121212)
+                }else {
+                    self.$router.push({name:'success'})
+                }
+            }
+        )
     }
 </script>

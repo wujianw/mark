@@ -1,14 +1,15 @@
 import * as types from '../mutation-types'
 const state = {
     location:{
+        city:'杭州市',
         cityCode:'330100',
         provinceCode:'330000'
     },
+    address:"",
     geography:{
         longitude:'',// 纬度
         latitude:''// 纬度
     },
-
     specialGoods:[], //特卖商品
     start:0,
     provinceList:[],// 所有省
@@ -51,10 +52,15 @@ const state = {
 // mutations
 const mutations = {
 
-    // 获取经纬度
+    // 获取经纬度&当前城市
     [types.INSET_GEOGRAPHY]  (state,{latitude,longitude}) {
         state.geography.latitude = latitude
         state.geography.longitude = longitude
+    },
+    // 当前城市及其定位信息
+    [types.INSET_LOCATION]  (state,{area,address}) {
+        state.location = area
+        state.address = address.split(area.area)[1]
     },
     // 特卖商品列表
     [types.SPECIAL_GOODS] (state,{data,first,rows}){

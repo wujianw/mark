@@ -1,11 +1,11 @@
 <template>
     <div class="nearby-hot-container">
         <header class="index-header">
-            <index-header  :prefix="prefix"></index-header>
+            <router-link :to="{name:'search'}" class="flex-space header-container">
+                <p class="area">{{area.city}}</p>
+                <i class="icon icon-big"></i>
+            </router-link>
         </header>
-        <!--<div class="nearby-hot-top">-->
-            <!--<img src="../../../static/img/special-bg.png" alt="">-->
-        <!--</div>-->
         <slider class="nearby-hot-top"></slider>
         <div class="hot-area flex-right-left">
             <router-link tag="div" :to="{name:'specialGoods',query:{type:18}}" class="">
@@ -38,20 +38,19 @@
 <script type="text/babel">
     import member from "../../api/member"
     import { mapGetters } from 'vuex'
-    import indexHeader from "./indexHeader"
     import slider from "./slider"
     import goodItem from './indexGoodItem'
     export default {
         data() {
             return {
-                prefix:"杭州市-滨区",
                 busy :false
             }
-        } ,
+        },
         computed: {
             ...mapGetters({
                 specialGoods:'specialGoods',
-                geography:'geography'
+                geography:'geography',
+                area:'getLocation'
             }),
             params() {
                 console.log("longitude:"+this.geography.longitude)
@@ -74,12 +73,7 @@
             }
 
         }
-
-        ,components:{
-            indexHeader,
-            goodItem,
-            slider
-        }
+        ,components:{goodItem, slider}
 
     }
 </script>
@@ -91,6 +85,15 @@
              flex-grow:1;
              align-items: stretch;
         }
+    }
+    // 头部搜索按钮
+    .header-container{
+        padding:0 30px;
+        font-size:30px;
+        line-height:76px;
+        background: rgba(102,104,109,.8);
+        color:#fff;
+        i{font-size:35px;}
     }
     .nearby-hot-top{
         height:338px;

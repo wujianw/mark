@@ -198,12 +198,6 @@
                 }
             }
         }
-        ,created() {
-            document.title ="会员中心"
-        }
-        ,components:{
-            linkList,
-            blockBtn
-        }
+        ,components:{linkList, blockBtn}
     }
 </script>

@@ -43,43 +43,52 @@
             // 初始化获取经纬度
             if(this.geography.latitude == ''){
                 WX.getSignature()
-                    .then(wxJson => {
-                        wx.config({
-                            debug: false,
-                            appId: wxJson.appid,
-                            timestamp: wxJson.timestamp,
-                            nonceStr: wxJson.noncestr,
-                            signature: wxJson.signature,
-                            jsApiList: ['getLocation']
-                        })
-                        let latitude,longitude
-                        wx.error(function() {
-
-                        })
-                        wx.ready(function(){
-                            wx.getLocation({
-                                type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
-                                success:function(res) {
-                                    latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
-                                    longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
-                                    self.getGeography({latitude,longitude})
-                                }
-                            })
+                .then(wxJson => {
+                    wx.config({
+                        debug: false,
+                        appId: wxJson.appid,
+                        timestamp: wxJson.timestamp,
+                        nonceStr: wxJson.noncestr,
+                        signature: wxJson.signature,
+                        jsApiList: ['getLocation']
+                    })
+                    let latitude,longitude
+                    wx.error(function() {
+                        self.showView = true
+                    })
+                    wx.ready(function(){
+                        wx.getLocation({
+                            type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
+                            success:function(res) {
+                                latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
+                                longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
+//                                WX.getCityName([longitude,latitude])
+                                self.getGeography({latitude,longitude})
+                            },
+                            cancel:function() {
+                                self.showView = true
+                            }
                         })
                     })
-                self.showView = true
+                })
             }
-            if(process.env.NODE_ENV != 'production'){
+            window.localStorage.openId = document.getElementById("open").value
+            console.log(window.localStorage.openId)
+            let appVersion = window.navigator.appVersion.toLowerCase(),  //客户端信息
+                isSystem = appVersion.indexOf("micromessenger")>-1
+            if(process.env.NODE_ENV != 'production' && !isSystem){
                 window.localStorage.lat = 30.267442999999997
                 window.localStorage.lon = 120.152792
+                self.showView = true
             }
             return true
         }
         ,methods:{
             getGeography({latitude,longitude}={}) {
                 let self = this
-                let params = { gcjLon:latitude,gcjLat:longitude }
+                let params = {gcjLon:longitude, gcjLat:latitude}
                 shop.getLonLat(params).then(data => {
+                    console.log(JSON.stringify(data))
                     let latitude = data.bdlat,
                         longitude = data.bdlon
                     window.localStorage.lon = longitude // 经度
@@ -87,6 +96,7 @@
                     self.$store.dispatch('fetchGeography',{latitude,longitude}).then(() => {
                         self.showView = true
                     })
+                    self.$store.dispatch('setLocation',{area:data.area,address:data.address})
                 })
             }
         }

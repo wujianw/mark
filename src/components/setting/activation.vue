@@ -59,7 +59,7 @@
                     }
                     ,loc:{
                         dis:this.mActivate != 0,
-                        value:this.getMember.mNativeAddress,
+                        value:this.getMember.location,
                         placeholder:"选择所在区县",
                         icon:{
                             iconClass: 'icon-place'

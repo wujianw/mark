@@ -16,14 +16,14 @@
         </header>
         <h3 class="list-title">收支明细</h3>
         <ul v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            <li v-for="item in rows" class="flex-space income-li">
+            <li v-for="item in rows" class="flex-space income-li" :key="item.id">
                 <div class="details">
                     <p class="name">{{item.transCodeName}}</p>
                     <p class="time">{{item.gmtCreated}}</p>
                 </div>
                 <div :class="item.tradeType==0 ? 'activeClass':'errorClass'"> {{item.tradeType ==0 ? '-':'+'}}{{item.transAmount}}</div>
             </li>
-            <li class="no-more" :class="{'show':noMore}"></li>
+            <li class="no-more" :class="{'show':busy}" v-if="busy"></li>
         </ul>
     </div>
 </template>
@@ -112,7 +112,6 @@
     export default {
         data() {
             return {
-                noMore:false,
                 busy:false,
                 rows:[],
                 isActive: true,
@@ -150,9 +149,6 @@
                 }
             }
         },
-        created() {
-//            this.fetchData()
-        },
         computed: {
             ...mapGetters({
                 getToken:'getToken'
@@ -179,7 +175,6 @@
                     enddate = self.endTime.time
                 member.getincome({startdate,enddate,rows,start,type}).then(val => {
                     self.start += rows
-                    self.noMore = val.rows.length != rows
                     self.rows.push(...val.rows)
                     self.busy = val.rows.length != rows
                 }).catch(()=>{
@@ -191,11 +186,11 @@
                 this.fetchData()
             },
             toggleType({type=this.type}={}) {
-                this.noMore = false
                 this.type = type
-                this.rows = []
                 this.start = 0
-                this.busy = false
+                this.busy = true
+                this.rows = []
+                this.fetchData()
             }
 
         },

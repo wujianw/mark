@@ -3,33 +3,7 @@
  */
 import Vue from 'vue'
 import store from '../store'
-import MessageBox from '../msgbox';
-const postData = (url,params) => {
-    return Vue.http.post(url,params).then(res => {
-        let data = JSON.parse(res.data)
-        if(data.code != 0) {
-            MessageBox.alert(data)
-            return Promise.reject()
-        }
-        // console.log(JSON.stringify(data.data))
-        return Promise.resolve(data.data)
-    }).catch(res => {
-        return Promise.reject()
-    })
-}
-const getData = (url,params) => {
-    return Vue.http.get(url,params).then(res => {
-        let data = JSON.parse(res.data)
-        if(data.code != 0) {
-            MessageBox.alert(data)
-            return Promise.reject()
-        }
-        // console.log(JSON.stringify(data.data))
-        return Promise.resolve(data.data)
-    }).catch(res => {
-        return Promise.reject()
-    })
-}
+import {postData,getData} from './public'
 export default {
     /*
      *转成百度经纬度
@@ -84,13 +58,12 @@ export default {
     postShopList({
         lon=window.localStorage.lon,lat=window.localStorage.lat,
         limit,page=1,sortrule='intelligence',
-        local,cityCode,areaCode,consumePtype,keywords}={}) {
+        local='',cityCode='',areaCode='',consumePtype='',keywords=''}={}) {
         let url,params
         url = '/api/open/shop/around.json'
         // url = '/api/open/shop/list.json'
 
         params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
-        console.log(params)
         return postData(url,params)
 },
     /*

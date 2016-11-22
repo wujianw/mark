@@ -10,7 +10,7 @@
                     </div>
                     <div class="btn-dialog flex-start" @click="dialog" v-show="!noFavourable"><i class="icon icon-import"></i>输入不享受优惠金额</div>
                     <div class="flex-space afterinputnofavourable" @click="dialog" v-show="noFavourable">
-                        <span style="padding-left: 12px">不享受优惠的金额为:  ￥{{noFavourable}}</span>
+                        <span style="padding-left: 12px">不享受优惠的金额为:  &yen;{{noFavourable}}</span>
                         <button style="background: #e85352;border:none;color: #fff ; padding:0 20px;font-size:24px; line-height:74px">修改</button>
                     </div>
                     <div class="favor-wrap">

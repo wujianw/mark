@@ -23,6 +23,10 @@ export const fetchGeography = ({commit},{latitude,longitude}) => {
     commit(types.INSET_GEOGRAPHY,{latitude,longitude})
     return Promise.resolve()
 }
+export const setLocation = ({commit},{area,address}) => {
+    commit(types.INSET_LOCATION,{area,address})
+    return Promise.resolve()
+}
 
 //全部订单列表处理，获取&更新
 export const fetchOrder = ({commit},{type,rows}) => {
@@ -99,7 +103,6 @@ export const toggleProvince = ({commit},provinceCode) => {
 // 附近商家列表
 export const shopList = ({commit,state},{params,way}) => {
     params.page = way ? 1 : state.shop.shopPages // 是否首页
-    console.log(params)
     return shop.postShopList(params).then(data => {
         let more = data.length // 是否有更多，无限加载开关
         commit(types.FETCH_SHOP_LIST,{data,way,more})
@@ -132,6 +135,7 @@ export  const goodDetails = ({commit},{goodsId}) => {
 export const specialData = ({commit,state},{params,first}) => {
     params.start = first ? 0 : state.shop.start
     return shop.getSpecialGoods(params).then(data => {
+        console.log(data)
         let more = data.goods.length
         commit(types.SPECIAL_GOODS,{data:data.goods,first,rows:params.rows})
         return Promise.resolve(more)

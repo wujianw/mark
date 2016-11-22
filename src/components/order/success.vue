@@ -71,6 +71,7 @@
             }
         }
         .link-picword{
+            margin-bottom:18px;
             text-align:center;font:20px/58px "微软雅黑";color:#505050;background:#e3e3e3;
             background:linear-gradient(0deg,transparent 28px,#a4a4a4 1px,transparent 29px) top left,
             linear-gradient(0deg,transparent 28px,#a4a4a4 1px,transparent 29px) bottom right,

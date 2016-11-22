@@ -4,8 +4,8 @@
             <div class="position-wrap flex-center">
                 <div class="position flex-center">
                     <i class="icon icon-position"></i>
-                    <span>新东方国际炒菜中心</span>
-                    <i class="icon icon-arrow-right"></i>
+                    <span>{{address}}</span>
+                    <!--<i class="icon icon-arrow-right"></i>-->
                 </div>
             </div>
             <div class="nav-warp">
@@ -75,7 +75,7 @@
                 top:100%;
                 width:100%;
                 max-height:0;
-                border-bottom:1px solid #f2f2f2;
+
                 background: #fff;
                 font-size:24px;
                 color:#505050;
@@ -129,6 +129,7 @@
             }
             .active~.menu-ul{
                 max-height:405px;
+                border-bottom:1px solid #f2f2f2;
             }
             &+.shade.active{
                 display: block;
@@ -150,7 +151,6 @@
     import shop from '../../api/shop'
     import WX from '../../api/wx'
     import { mapGetters } from 'vuex'
-
     export default {
         data() {
             return {
@@ -238,6 +238,7 @@
         }
         ,computed: {
             ...mapGetters({
+                address:'address',
                 shopMenu:'shopMenu',
                 provinceList:'provinceList',
                 areaList:'areaList',
@@ -337,8 +338,6 @@
                 })
             }
         }
-        ,components:{
-            shopBlock
-        }
+        ,components:{shopBlock}
     }
 </script>

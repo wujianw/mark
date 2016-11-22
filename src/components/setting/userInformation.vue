@@ -16,15 +16,16 @@
         background:#fff;
         border-top:18px solid #f2f2f2;
         .link-li{
-            height:75px;
+            height:88px;
             padding-left:0;
             margin-left:54px;
             .title-name{
                 color:#505050;
                 i{font-size:40px;padding:0 33px 0 3px;}
+                &:after{font-size:30px;}
             }
             .link-details{
-                font-size:20px;
+                font-size:24px;
                 &:before{color:#e85352;padding:0 10px;}
             }
         }
@@ -95,6 +96,8 @@
         },
         beforeRouteEnter(to,from,next) {
             store.dispatch("getUser").then(() => {
+                next()
+            }).catch(() => {
                 next()
             })
         }

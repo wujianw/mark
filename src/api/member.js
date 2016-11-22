@@ -3,24 +3,13 @@
  */
 import Vue from 'vue'
 import store from '../store'
-import MessageBox from '../msgbox';
+import {postData,getData} from './public'
 // const TOKEN = store.getters.getToken
 /**
  * 数据请求 code:0 成功
  * @params
  */
-const postData = (url,params) => {
-    return Vue.http.post(url,params).then(res => {
-        let data = JSON.parse(res.data)
-        if(data.code != 0) {
-            return Promise.reject()
-        }
-        console.log(JSON.stringify(data))
-        return Promise.resolve(data.data)
-    }).catch(res => {
-        return Promise.reject()
-    })
-}
+
 export default {
     /**
      * 验证码和普通登入
@@ -342,7 +331,7 @@ export default {
     * 获取会员信息
     * */
     ,getMember(token=store.getters.getToken) {
-        let url = '/api/pri/member/getmember.htm',
+        let url = '/api/pri/member/getmember.json',
             params = {token}
         return postData(url,params)
     }

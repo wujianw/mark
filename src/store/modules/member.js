@@ -8,7 +8,7 @@ const state = {
         mActivate:0,
         mName:"",
         mIdentityId:"",
-        mNativeAddress:"",
+        location:"",
         mEmail:"",
         mCurrentAddress:''
     },

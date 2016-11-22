@@ -40,5 +40,7 @@ export const specialGoods = state => {return state.shop.specialGoods}
 
 // 获取经纬度
 export const geography = state => {return state.shop.geography}
+export const getLocation = state => {return state.shop.location}
+export const address = state => {return state.shop.address}
 
 

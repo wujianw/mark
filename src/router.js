@@ -93,6 +93,8 @@ const recharge = resolve => require(['./components/wallet/recharge'], resolve)
 
 //附近热卖
 const nearbyHot = resolve => require(['./components/special/nearbyHot'],resolve);
+//附近热卖搜索
+const search = resolve => require(['./components/special/search'],resolve);
 
 
 //扫码买单
@@ -146,19 +148,20 @@ export const routes = [
     ,{ path: '/user/setPassword' , name: 'setPassword' , component: setPassword }
 
     ,{
-        path: '/',name: 'footerView', component: footerView,
+        path: '/',name: 'footerView', component: footerView,redirect: '/nearbyHot',
         children:[
             // 会员中心
             { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {
-                // if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
-                //     next({name:'loadMobile'})
-                // }
+                if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                    next({name:'loadMobile'})
+                }
                 next()
             }}
             // 附近商家
             ,{ path: '/shopList' , name: 'shopList' , component: shopList }
             // 特价商品列表
             ,{ path: '/nearbyHot/specialGoods' , name: 'specialGoods' , component: specialGoods }
+            ,{ path: '/nearbyHot/search' , name: 'search' , component: search }
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
             //特卖专区

@@ -1,7 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 // var __webpack_public_path__ = "http://localhost:63342/mark/dist/"
-var __webpack_public_path__ = "http://wx.ttj315.com:9090/"
+var __webpack_public_path__ = "http://wx.ttj315.com/"
 module.exports = {
     build: {
         env: require('./prod.env'),

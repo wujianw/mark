@@ -47,3 +47,5 @@ export const SPECIAL_GOODS = 'SPECIAL_GOODS'
 // 存入经纬度
 export const INSET_GEOGRAPHY = 'INSET_GEOGRAPHY'
 
+// 城市名称
+export const INSET_LOCATION = 'INSET_LOCATION'
