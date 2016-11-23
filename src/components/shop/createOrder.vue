@@ -5,20 +5,21 @@
             <div>数量</div>
             <div class="flex-space">
                 <button @click="operationNum(-1)">-</button>
-                <input type="number" v-model="num">
+                <input type="text" v-model="num" readonly @click="keyboard">
                 <button @click="operationNum(1)">+</button>
             </div>
         </div>
-        <link-list title="优惠金额" :arrow="!1" :details="salesPrice"></link-list>
-        <link-list id="marketPrice" title="实付金额" :arrow="!1" :details="marketPrice"></link-list>
+        <link-list title="优惠金额" :arrow="!1" :details="ableRed"></link-list>
+        <link-list id="marketPrice" title="实付金额" :arrow="!1" :details="salesPrice"></link-list>
         <link-list class="buy-pension" title="将获得养老金" :arrow="!1" :details="buyPension"></link-list>
         <div class="remark">
-            <input type="text" placeholder="选填，可填写您的其他要求给商家">
+            <input type="text" v-model="buyerRemark" placeholder="选填，可填写您的其他要求给商家">
         </div>
+        <number-key v-show="numKey" @isComputed="isComputed" @simulate="simulate"></number-key>
         <footer class="footer">
             <div class="flex-space buy-btn">
                 <div></div>
-                <a>提交订单</a>
+                <a @click="submit">提交订单</a>
             </div>
         </footer>
     </div>
@@ -101,11 +102,18 @@
      */
     import goodItem from "./goodItem"
     import linkList from "../linkList"
+    import numberKey from "../numberKey"
+    import shop from "../../api/shop"
+    import pay from "../../api/pay"
     import { mapGetters,Store } from 'vuex'
     export default{
         data(){
             return{
                 num:1,
+                numKey:false,
+                ableRed:0,
+                sendPacketRed:0,
+                buyerRemark:''// 买家备注
             }
         },
         computed:{
@@ -113,24 +121,70 @@
                 goods:'goodDetails'
             }),
             salesPrice() {
-                return this.num*this.goods.salesPrice
-            },
-            marketPrice() {
-                return this.num*this.goods.marketPrice
+                return (this.num*this.goods.salesPrice).toFixed(2)
             },
             buyPension() {
-                return this.num*this.goods.buyPension
+                return (this.num*this.goods.buyPension).toFixed(2)
             }
         },
         created() {
+            console.log(JSON.stringify(this.goods))
             document.title = "提交订单"
+            this.upData()
+        },
+        watch:{
+            num(newVal){
+                if(newVal==0){
+                    this.num = 1
+                }
+            }
         },
         methods:{
+            keyboard() {
+                this.numKey = !this.numKey
+            },
+            isComputed() {// 完成按钮
+                this.numKey = false
+                this.upData()
+            },
+            simulate(text) { // 键盘时间触发
+                let num = this.num.toString()
+                if(Number(text) >= 0) {
+                    this.num = Number(num+text)
+                }else if(text.toLowerCase() == 'x'){
+                    this.num = Number(num.substring(0,num.length-1))
+                }else {
+                    this.num = 1
+                }
+            },
+            upData() {// 获取养老金和获得红包数据
+                shop.useAblePacketRed({goodsId:this.goods.id,number:this.num}).then(data => {
+                    this.ableRed = data
+                })
+                shop.sendPacketRed({goodsId:this.goods.id,number:this.num}).then(data => {
+                    this.sendPacketRed = data
+                })
+            },
             operationNum(a) {
                 if(this.num+a < 1) return false
                 this.num+= a
+                this.upData()
+            },
+            submit() {
+                let option = {
+                    goodsId:this.goods.id,
+                    number:this.num,
+                    buyerRemark:this.buyerRemark,
+                    totalPrice:this.salesPrice,
+                    packetPayAmout:this.sendPacketRed,
+                    benefitId:''
+                }
+                pay.createOrder(option).then(data => {
+                    
+                    this.$router.push({name:'verifyPay',query:{orderNum:1111}})
+                })
             }
         },
-        components:{ goodItem,linkList }
+        components:{ goodItem,linkList,numberKey }
     }
 </script>

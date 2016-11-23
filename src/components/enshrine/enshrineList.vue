@@ -30,6 +30,7 @@
                     <p>{{item.business_type_name}}</p>
                 </div>
                 <div slot="btn" class="btn-wrap" @click.stop="linkMessage">
+                    <p class="meg-num">{{item.messageCount | maxLength}}</p>
                     <i class="icon icon-information" v-if="!isDelete"></i>
                 </div>
             </block>
@@ -122,7 +123,6 @@
 <script type="text/babel">
     import block from "./block"
     import member from "../../api/member"
-    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
@@ -134,18 +134,22 @@
                 shopDet:[],// 待删除的商家
             }
         }
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
-        }
         ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                member.getMemberCollect(vm.getToken).then(val => {
+            member.getMemberCollect().then(val => {
+                console.log(JSON.stringify(val))
+                next(vm => {
                     vm.merchantdata = val.merchantdata
                     vm.goodsdata = val.goodsdata
                 })
             })
+        }
+        ,filters:{
+            maxLength(value) {
+                if(value.toString().length>3){
+                    value = "..."
+                }
+                return value
+            }
         }
         ,created(){
             this.fetchData()

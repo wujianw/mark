@@ -17,13 +17,7 @@
      * @params
      */
     export default{
-        data(){
-            return {
-
-
-            }
-        }
-        ,props:{
+        props:{
             good:Object
         }
     }

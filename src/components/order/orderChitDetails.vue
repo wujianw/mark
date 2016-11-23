@@ -11,7 +11,8 @@
                     <div class="refund-btn"
                          v-if="isHasRefuning != 2"
                          :class="isHasRefuning == 0 ? 'refund-apply-btn' : 'refund-close-btn'"
-                         @click="applyRefund"></div>
+                         @click="applyRefund"
+                    ></div>
                 </div>
             </div>
             <ticket-block v-for="item in coupons" :obj="item"></ticket-block>
@@ -241,7 +242,7 @@
 
             //去支付画面
             payWay() {
-console.log(121212)
+                this.$router.push({name:'verifyPay'})
             }
         }
         ,components: { goodBlock,linkList,ticketBlock,submit }

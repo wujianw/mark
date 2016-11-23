@@ -32,6 +32,7 @@ module.exports = {
             },
             '/wechatpay': {
                 target: 'http://wx.ttj315.com/',
+                // target: 'http://192.168.8.123/',
                 changeOrigin: true
             }
         },

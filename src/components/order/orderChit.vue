@@ -128,6 +128,7 @@
             img.onload = function () {
                 self.imgUrl = url+'@226_146h'
             }
+            console.log(this.obj)
         }
         ,computed:{
             state() {

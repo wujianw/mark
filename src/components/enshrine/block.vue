@@ -43,6 +43,16 @@
         .btn-wrap{
             position:relative;
             padding:50px 34px;
+            .meg-num{
+                position:absolute;
+                top:20px;
+                width:40px;
+                border-radius: 50%;
+                background:#e85453;
+                text-align: center;
+                line-height:40px;
+                color:#fff;
+            }
             i{font-size:40px;color:#aeaeae;}
             .btn{
                 display:flex;

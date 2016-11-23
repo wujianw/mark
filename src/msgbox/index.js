@@ -149,7 +149,9 @@ var MessageBox = function(options, callback) {
     showNextMsg();
   }
 };
-
+MessageBox.arr = function(meg){
+    return [meg]
+}
 MessageBox.setDefaults = function(defaults) {
   MessageBox.defaults = defaults;
 };
@@ -158,6 +160,9 @@ MessageBox.alert = function(message, title, options) {
   if (typeof title === 'object') {
     options = title;
     title = '';
+  }
+  if (typeof message === 'string'){
+      message = MessageBox.arr(message)
   }
   return MessageBox(merge({
     title: title,
@@ -173,6 +178,9 @@ MessageBox.confirm = function(message, title, options) {
     options = title;
     title = '';
   }
+    if (typeof message === 'string'){
+        message = MessageBox.arr(message)
+    }
   return MessageBox(merge({
     title: title,
     message: message,
@@ -186,6 +194,9 @@ MessageBox.prompt = function(message, title, options) {
     options = title;
     title = '';
   }
+    if (typeof message === 'string'){
+        message = MessageBox.arr(message)
+    }
   return MessageBox(merge({
     title: title,
     message: message,

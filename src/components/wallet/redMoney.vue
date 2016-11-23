@@ -11,10 +11,8 @@
             </div>
         </header>
         <h3 class="title-details">最近30天红包明细</h3>
-
         <ul>
             <li v-for="item in rows" :rows="item" class="flex-space cell-view">
-
                 <div class="red-image"></div>
                 <div class="red-details">
                     <div class="flex-space type-gold">
@@ -28,8 +26,6 @@
                 </div>
             </li>
         </ul>
-
-
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -112,32 +108,19 @@
     }
 </style>
 <script type="text/babel">
-
     import member from "../../api/member"
-    import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
-                rows:[]
-                ,blance:''
+                rows:[],
+                blance:''
             }
         }
-
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
-        }
         ,beforeRouteEnter (to, from, next) {
-            next(vm => {
-                member.getRedMoney(vm.getToken).then(val => {
+            member.getRedMoney().then(val => {
+                next(vm => {
                     vm.blance = val.blance
                     vm.rows = val.rows
-
-
-                    console.log(JSON.stringify(val))
-
-
                 })
             })
         }

@@ -21,7 +21,7 @@
             </radio>
         </div>
         <div class="submit-wrap">
-            <submit value="确认支付" :dis="false" @commit="success"></submit>
+            <submit value="确认支付" :dis="!money" @commit="success"></submit>
         </div>
     </div>
 </template>
@@ -103,6 +103,9 @@
 <script type="text/babel">
     import submit from "../submit"
     import radio from '../select/radio'
+    import pay from '../../api/pay'
+    import {domain} from '../../api/public'
+    import MessageBox from '../../msgbox'
     export default{
         data(){
             return {
@@ -133,29 +136,52 @@
                 }
             },
             success() {
-                let self = this
-
-                onBridgeReady.call(self)
+                let self = this,outTradeNo
+                pay.ablePacketRed({amount:this.money}).then(data => {
+                    let megTop = "充值金额"+this.money+"元"
+                    let megBottom = "同时活动赠送红包"+data+"元"
+                    let meg = [megTop,megBottom],
+                        title = "充值确认"
+                    return MessageBox.confirm(meg,title)
+                }).then(()=>{
+                    return pay.recharge({tradeAmount:this.money})
+                }).then(data=>{
+                    let notifyUrl = domain+'wechatpay/wechat_paynotify.htm',
+                        totalFee = data.tradeAmount*100
+                    outTradeNo = data.tradeSid
+                    return pay.placeOrder({notifyUrl, totalFee, outTradeNo, body:'现金充值', openid:window.localStorage.openId})
+                }).then(data => {
+                    let option = {
+                        "appId":data.appId,     //公众号名称，由商户传入
+                        "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数
+                        "nonceStr" : data.nonceStr, //随机串
+                        "package" :data.package,
+                        "signType" : "MD5",         //微信签名方式：
+                        "paySign" : data.paySign //微信签名
+                    }
+                    onBridgeReady.call(self,option,outTradeNo)
+                }).catch(() => {})
             }
         }
-        ,components: { radio, submit }
+        ,components: {radio, submit}
     }
-    function onBridgeReady() {
+    function onBridgeReady(option,orderNum) {
         let self = this
         WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', {
-                "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入
-                "timeStamp":" 1395712654",         //时间戳，自1970年以来的秒数
-                "nonceStr" : "e61463f8efa94090b1f366cccfbbb444", //随机串
-                "package" : "prepay_id=u802345jgfjsdfgsdg888",
-                "signType" : "MD5",         //微信签名方式：
-                "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
-            },
+            'getBrandWCPayRequest', option,
             function(res){
-                if(res.err_msg == "get_brand_wcpay_request：ok" ) {
-                    console.log(121212)
-                }else {
-                    self.$router.push({name:'success'})
+                if(res.err_msg.indexOf('ok') > -1) {
+                    pay.payCb({orderNum,type:'LOCAL'}).then(data => {
+                        if(data.trade_state == 'SUCCESS'){
+                            MessageBox.alert("支付成功").then(() => {
+                                self.$router.back()
+                            })
+                        }else{
+                            return Promise.reject(data)
+                        }
+                    }).catch(data => {
+                        MessageBox.alert(data.trade_state)
+                    })
                 }
             }
         )

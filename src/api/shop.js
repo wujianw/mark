@@ -65,7 +65,7 @@ export default {
 
         params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
         return postData(url,params)
-},
+    },
     /*
      * 商户详情
      */
@@ -78,7 +78,7 @@ export default {
         url = '/api/open/shop/get.json'
         params= {lon,lat,shopId,token}
         return getData(url,{params})
-    }
+    },
 
     /*
      * 附近特卖商品列表
@@ -89,11 +89,25 @@ export default {
      * goodsName :模糊查找,
      * @params
      */
-    ,getSpecialGoods({cityId="",areaId='',type='',lon,lat,start=0,rows,goodsName=''}={}){
+    getSpecialGoods({cityId="",areaId='',type='',lon,lat,start=0,rows,goodsName=''}={}){
         let url,params;
         url = '/api/open/goods/special.json'
         params = { cityId,areaId,type,lon,lat,start,rows,goodsName }
         console.log(params)
         return postData(url,params)
-    }
+    },
+    // pri/campaign/useablePacketRed      pri/campaign/sendPacketRed
+    useAblePacketRed({token=store.getters.getToken,goodsId,number}={}){
+        let url,params;
+        url = '/api/pri/campaign/useablePacketRed'
+        params = {token, goodsId, number}
+        console.log(params)
+        return postData(url,params)
+    },
+    sendPacketRed({token=store.getters.getToken,goodsId,number}={}){
+        let url,params;
+        url = '/api/pri/campaign/sendPacketRed'
+        params = {token, goodsId, number}
+        return postData(url,params)
+    },
 }

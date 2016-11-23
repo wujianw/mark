@@ -3,7 +3,7 @@
  */
 import Vue from 'vue'
 import store from '../store'
-import {postData,getData} from './public'
+import {postData} from './public'
 // const TOKEN = store.getters.getToken
 /**
  * 数据请求 code:0 成功
@@ -19,7 +19,7 @@ export default {
         let url,params;
         if(typeof option.vcode != 'undefined') {
             url = '/api/open/member/vcodelogin.json'
-            params = {"userType":"member","loginId":option.loginId,"vcode":option.vcode}
+            params = {"userType":"member","loginId":option.loginId,"vcode":option.vcode,}
         } else {
             url = '/api/open/member/login.json'
             params = {"userType":"member","loginId":option.loginId,"password":option.password}
@@ -55,7 +55,7 @@ export default {
      * @params  function
      * @option  type 接口类型
      */
-    ,postOrder(type,{token=store.getters.getToken,start=0,rows=10}={}) {
+    ,postOrder(type,{token=store.getters.getToken,start=0,rows=10,isComment=''}={}) {
         let url,params;
         if(type=="chit") {
             url = '/api/pri/order/listcoupon.json'

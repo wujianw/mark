@@ -133,7 +133,6 @@ const scrollTop = (to, from, next) => {
 }
 
 export const routes = [
-    { path: '/',beforeEnter:scrollTop},
     {
         path: '/login',name: 'login',component:login,
         children:[
@@ -148,7 +147,7 @@ export const routes = [
     ,{ path: '/user/setPassword' , name: 'setPassword' , component: setPassword }
 
     ,{
-        path: '/',name: 'footerView', component: footerView,redirect: '/nearbyHot',
+        path: '/',name: 'footerView', component: footerView,redirect: '/nearbyHot',beforeEnter:scrollTop,
         children:[
             // 会员中心
             { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {

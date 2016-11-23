@@ -71,7 +71,6 @@
                     this.busy = !more
                 })
             }
-
         }
         ,components:{goodItem, slider}
 

@@ -3,7 +3,7 @@ import store from '../store'
 import shop from './shop'
 const appid = process.env.NODE_ENV != 'production' ? 'wx5a45a2b5222a07da' : 'wx32df88fb43e04fbf'
 export default {
-    async getSignature() {
+    getSignature() {
         let fullPath = window.location.href.split("#")[0],
             url = '/wechatpay/get_signature.json',
             params = {url:fullPath,appid:appid},
@@ -14,6 +14,7 @@ export default {
             return Promise.resolve(wxJson)
         })
     },
+
     getLocation(cb) {
         let latitude,longitude
         wx.ready(function(){
