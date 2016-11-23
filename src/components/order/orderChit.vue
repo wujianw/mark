@@ -128,7 +128,6 @@
             img.onload = function () {
                 self.imgUrl = url+'@226_146h'
             }
-            console.log(this.obj)
         }
         ,computed:{
             state() {
@@ -161,7 +160,10 @@
                         obj.name = "待支付"
                         obj.btn = "付款"
                         obj.to = {
-                            name:""
+                            name:"orderChitDetails",
+                            query:{
+                                orderId:this.obj.id
+                            }
                         }
                         break
                     case "deliveryed" :

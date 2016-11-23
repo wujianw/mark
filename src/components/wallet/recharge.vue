@@ -21,7 +21,7 @@
             </radio>
         </div>
         <div class="submit-wrap">
-            <submit value="确认支付" :dis="!money" @commit="success"></submit>
+            <submit value="确认支付" :dis="!money" @commit="verify"></submit>
         </div>
     </div>
 </template>
@@ -104,6 +104,7 @@
     import submit from "../submit"
     import radio from '../select/radio'
     import pay from '../../api/pay'
+    import wx from '../../api/wx'
     import {domain} from '../../api/public'
     import MessageBox from '../../msgbox'
     export default{
@@ -111,7 +112,7 @@
             return {
                 money:0.01,
                 choiceList:[
-                    {gold:0.01,active:true},
+                    {gold:5,active:true},
                     {gold:10,active:false},
                     {gold:20,active:false},
                     {gold:30,active:false},
@@ -135,7 +136,7 @@
                     })
                 }
             },
-            success() {
+            verify() {
                 let self = this,outTradeNo
                 pay.ablePacketRed({amount:this.money}).then(data => {
                     let megTop = "充值金额"+this.money+"元"
@@ -144,9 +145,10 @@
                         title = "充值确认"
                     return MessageBox.confirm(meg,title)
                 }).then(()=>{
+
                     return pay.recharge({tradeAmount:this.money})
                 }).then(data=>{
-                    let notifyUrl = domain+'wechatpay/wechat_paynotify.htm',
+                    let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
                         totalFee = data.tradeAmount*100
                     outTradeNo = data.tradeSid
                     return pay.placeOrder({notifyUrl, totalFee, outTradeNo, body:'现金充值', openid:window.localStorage.openId})
@@ -159,31 +161,24 @@
                         "signType" : "MD5",         //微信签名方式：
                         "paySign" : data.paySign //微信签名
                     }
-                    onBridgeReady.call(self,option,outTradeNo)
+                    wx.onBridgeReady.call(self,option,outTradeNo,self.successCb) //发起微信支付
+                    console.log("吊起支付")
                 }).catch(() => {})
+            },
+            successCb(orderNum) { // 微信成功回调 验证微信是否有返回
+                pay.payCb({orderNum,type:'LOCAL'}).then(data => {
+                    if(data.trade_state == 'SUCCESS'){
+                        MessageBox.alert("支付成功").then(() => {
+                            self.$router.back()
+                        })
+                    }else{
+                        return Promise.reject(data)
+                    }
+                }).catch(data => {
+                    MessageBox.alert(data.trade_state)
+                })
             }
         }
         ,components: {radio, submit}
-    }
-    function onBridgeReady(option,orderNum) {
-        let self = this
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest', option,
-            function(res){
-                if(res.err_msg.indexOf('ok') > -1) {
-                    pay.payCb({orderNum,type:'LOCAL'}).then(data => {
-                        if(data.trade_state == 'SUCCESS'){
-                            MessageBox.alert("支付成功").then(() => {
-                                self.$router.back()
-                            })
-                        }else{
-                            return Promise.reject(data)
-                        }
-                    }).catch(data => {
-                        MessageBox.alert(data.trade_state)
-                    })
-                }
-            }
-        )
     }
 </script>

@@ -24,6 +24,7 @@ const user = resolve => require(['./components/user'], resolve)
 const shopList = resolve => require(['./components/shop/shopList'], resolve)
 const goodDetails = resolve => require(['./components/shop/goodDetails'], resolve)
 const shopDetails = resolve => require(['./components/shop/shopDetails'], resolve)
+const goodsDesc = resolve => require(['./components/shop/goodsDesc'], resolve)
 
 
 // 评价
@@ -168,10 +169,10 @@ export const routes = [
             // 消息模块
             ,{ path: '/messageList', name: 'messageList', component: messageList }
             ,{ path: '/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
-            ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails }
+
         ]
     }
-
+    ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails }
     // 我的收藏
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,
@@ -183,6 +184,7 @@ export const routes = [
 
     // 商品详情模块
     ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
+    ,{ path: '/goodsDesc' , name: 'goodsDesc' , component: goodsDesc }
 
     // 商家&商品评论详情模块
     ,{ path: '/evaluate', name: 'evaluate', component: evaluateNav,

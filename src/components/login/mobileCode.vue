@@ -1,13 +1,13 @@
 <template>
     <ul class="load-mobile-el">
         <li class="flex-space">
-            <input-text :value="mobile" @input="mobileFn" maxLength="11"  placeholder="请输入您的手机号码" :icon="mobileIcon">
+            <input-text :value="mobile" type="number" @input="mobileFn" placeholder="请输入您的手机号码" :icon="mobileIcon">
                 <div class="mobile-btn"><p @click="refCaptcha">{{refCaptchaText}}</p></div>
             </input-text>
         </li>
         <slot></slot>
         <li class="flex-space">
-            <input-text :value="vcode" @input="vcodeFn" placeholder="请输入您收到的短信验证码" :icon="vcodeIcon" maxLength="4"></input-text>
+            <input-text :value="vcode" type="number" @input="vcodeFn" placeholder="请输入您收到的短信验证码" :icon="vcodeIcon" maxLength="4"></input-text>
         </li>
     </ul>
 </template>
@@ -24,10 +24,12 @@
 </style>
 <script type="text/babel">
     import inputText from '../inputText'
+    import MessageBox from '../../msgbox'
+//    import MessageBox from '../../msgbox'
     /*
      * 双向绑定 手机验证码组件
      * 示例 <mobileCode :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]"></mobileCode>
-     * @params 
+     * @params
      */
     export default{
         data() {
@@ -77,14 +79,15 @@
                     if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
                         this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
                             .then((response) => {
-                                this.refCaptchaBtn = false;
-//                                var data = JSON.parse(response.data);
-                                this.countDown();
+                                this.refCaptchaBtn = false
+                                this.countDown()
                             },(response) => {
                                 this.refCaptchaBtn = true;
                             }).catch(res => {
 
-                            });
+                            })
+                    }else if(this.refCaptchaBtn){
+                        MessageBox.alert("请输入有效手机号码")
                     }
                     return false;
                 });

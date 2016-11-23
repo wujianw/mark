@@ -21,9 +21,6 @@
                 verifyPassword:"",
                 dis:false
             }
-        },
-        created(){
-          console.log(this.$route.params)
         }
         ,components:{
             inputRule,
@@ -33,18 +30,17 @@
             userSubmit() {
                 //调用密码修改接口，成功后返回登入页面
                 let params = this.$route.params
-                console.log(params+","+this.newPassword)
                 this.$http.get('/api/open/member/find_pwd3.json',
                         {params:{"mobile":params.mobile,"vcode":params.vcode,"password":this.newPassword}})
-                        .then(res => {
-                            let data = JSON.parse(res.data)
-                            console.log(data)
-                            if(data.code == 0){
-                                this.$router.push({name:'loadMobile'})
-                            }else{
-                                MessageBox.alert(data.message)
-                            }
-                        })
+                .then(res => {
+                    let data = JSON.parse(res.data)
+                    console.log(data)
+                    if(data.code == 0){
+                        this.$router.push({name:'loadMobile'})
+                    }else{
+                        MessageBox.alert(data.message)
+                    }
+                })
             }
         }
         ,computed:{

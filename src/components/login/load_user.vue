@@ -50,6 +50,7 @@
 <script type="text/babel">
     import inputText from '../inputText'
     import submit from '../submit'
+    import MessageBox from '../../msgbox'
     export default{
         data() {
             return {
@@ -73,7 +74,7 @@
                 this.$store.dispatch('login', params).then(res => {
                     this.$router.push({name:'user'})
                 }).catch(res =>{
-                    console.log(2)
+                    MessageBox.alert(res)
                 })
             }
         }

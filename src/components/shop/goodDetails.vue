@@ -51,7 +51,7 @@
                 </div>
             </section>
             <div class="link-picword">
-                <p>向下拖动 查看详情</p>
+                <!--<p>向下拖动 查看详情</p>-->
             </div>
             <div id="picWord">
 

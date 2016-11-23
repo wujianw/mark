@@ -3,23 +3,22 @@
         <div class="load-view">
             <mobile-code type="memberLogin" :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]"></mobile-code>
             <div>
-                <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意<a href="">《积分宝消费养老用户服务协议》</a></p>
+                <p class="hint">温馨提示：未注册积分账号的手机号，登入时间自动为您注册且代表您已同意
+                    <router-link :to="{name:'agreementDetails',query:{title:'《积分宝消费养老用户服务协议》',type:7}}">《积分宝消费养老用户服务协议》</router-link></p>
             </div>
             <div class="load-btn">
                 <submit class="" value="登录" :dis="!disabled" @commit="createdUser"></submit>
             </div>
             <div class="hint-voice">
-                <p>收不到短信？ 使用<span>语音验证码</span></p>
-                <!--<p>{{getToken}}</p>-->
+                <!--<p>收不到短信？ 使用<span>语音验证码</span></p>-->
             </div>
         </div>
     </transition>
 </template>
 <script type="text/babel">
-    import { mapGetters } from 'vuex'
     import mobileCode from './mobileCode'
     import submit from '../submit'
-
+    import MessageBox from '../../msgbox'
     export default{
         data(){
             return {
@@ -32,9 +31,6 @@
             ,submit
         },
         computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            }),
             disabled() {
                 return this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/);
             }
@@ -49,7 +45,7 @@
                 this.$store.dispatch('login', params).then(res => {
                     this.$router.push({name:'user'})
                 }).catch(res =>{
-//                    console.log(2)
+                    MessageBox.alert(res)
                 })
             }
         }

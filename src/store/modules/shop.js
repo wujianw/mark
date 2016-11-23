@@ -46,7 +46,8 @@ const state = {
         name:""
         ,address:""
         ,telephone:""
-    }
+    },
+    goodsDesc:null
 
 }
 // mutations
@@ -115,6 +116,10 @@ const mutations = {
     [types.FETCH_GOOD_DETAILS] (state,data) {
         state.goods = data.goodsdata
         state.shop = data.shop
+    },
+    // 商品图文详情
+    [types.GOODS_DESC] (state,goodsDesc) {
+        state.goodsDesc = goodsDesc
     }
 }
 

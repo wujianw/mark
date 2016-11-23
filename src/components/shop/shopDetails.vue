@@ -201,7 +201,7 @@
                     vm.info = data.info
                     vm.review = data.reviews.datas.slice(0,2)
                     vm.reviewLen = data.reviews.total
-                    vm.goods = data.goods
+                    vm.goods = data.goods.filter(item => item.consumeMode == 'offline')
                     vm.tel = data.info.tel || data.info.mobile_number
                 })
             })

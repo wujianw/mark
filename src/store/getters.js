@@ -33,4 +33,10 @@ export const geography = state => {return state.shop.geography}
 export const getLocation = state => {return state.shop.location}
 export const address = state => {return state.shop.address}
 
+export const markOrderDetails = state => {return state.member.markOrderDetails}
+export const markOrderSubmit = state => {return state.member.markOrderSubmit}
+
+// 商品图文详情
+export const goodsDesc = state => {return state.shop.goodsDesc}
+
 

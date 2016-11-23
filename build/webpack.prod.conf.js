@@ -58,7 +58,8 @@ var webpackConfig = merge(baseWebpackConfig, {
             chunksSortMode: 'dependency'
         }),
         new webpack.ProvidePlugin({
-            iSlider: 'iSlider'
+            iSlider: 'iSlider',
+            MessageBox: 'MessageBox'
         }),
         // split vendor js into its own file
         new webpack.optimize.CommonsChunkPlugin({

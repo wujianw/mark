@@ -8,16 +8,6 @@ export const MEMBER = 'MEMBER'
 //update
 export const UPDATE = 'UPDATE'
 
-//fetch chit order
-export const FETCH_CHIT_ORDER = 'FETCH_CHIT_ORDER'
-//push chit order
-export const PUSH_CHIT_ORDER = 'PUSH_CHIT_ORDER'
-
-
-//fetch scan order
-export const FETCH_SCAN_ORDER = 'FETCH_SCAN_ORDER'
-//push scan order
-export const PUSH_SCAN_ORDER = 'PUSH_SCAN_ORDER'
 
 // refund reason template
 export const REFUND_REASON = 'REFUND_REASON'
@@ -49,3 +39,9 @@ export const INSET_GEOGRAPHY = 'INSET_GEOGRAPHY'
 
 // 城市名称
 export const INSET_LOCATION = 'INSET_LOCATION'
+
+// 当前订单详情
+export const MARK_ORDER = 'MARK_ORDER'
+
+// 商品描述
+export const GOODS_DESC = 'GOODS_DESC'

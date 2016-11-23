@@ -96,17 +96,27 @@ export const evaluateCount = ({commit},data) => {
 }
 
 // 当前商品详情数据，用于创建订单
-export  const goodDetails = ({commit},{goodsId}) => {
+export const goodDetails = ({commit},{goodsId}) => {
     return shop.getGoodsDetails({goodsId}).then(data => {
         commit(types.FETCH_GOOD_DETAILS,data)
         let obj = {
             countreview:data.reviews.rows.slice(0,2),
-            vcountreviewLen:data.reviews.total
+            countreviewLen:data.reviews.total
         }
         return Promise.resolve(obj)
     })
 }
+// 商品图文详情
+export const goodsDesc = ({commit},goodsDesc) => {
+    commit(types.GOODS_DESC,goodsDesc)
+}
 
+/*
+* 订单详情数据，用于支付画面所需参数，新建订单&待支付订单详情画面--调用这个方法
+* */
+export const markOrder = ({commit},{option,information}) => {
+    commit(types.MARK_ORDER,{option,information})
+}
 
 /*
  * 附近特卖商品列表

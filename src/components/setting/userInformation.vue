@@ -3,7 +3,7 @@
         <div class="user-information-wrap">
             <link-list v-for="item in lists" :title="item.title" :icon="item.icon" :to="item.to" :details="item.details"></link-list>
         </div>
-        <submit class="submit" @commit="logout" value="退出登入" :dis="!1"></submit>
+        <submit class="submit" @commit="logout" value="退出登录" :dis="!1"></submit>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -74,7 +74,7 @@
                             iconClass:'icon-bound'
                         },
                         to: {name: 'loadMobile' },
-                        details:"添加/修改"
+                        details:"换绑"
                     }
                     ,password:{
                         title:"登入密码",
@@ -87,7 +87,7 @@
                     ,agreement:{
                         title:"相关协议",
                         icon:{
-                            iconClass:'icon-address'
+                            iconClass:'icon-agreement'
                         },
                         to: {name: 'agreement' }
                     }

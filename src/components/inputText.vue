@@ -2,7 +2,7 @@
     <div class="flex-space input-el">
         <div class="input flex-space">
             <i class="icon" :class="icon.iconClass" :style="styleObj"></i>
-            <input :type="type" :value="value" :placeholder="placeholder" :maxlength="maxLength" :disabled="dis" @input="onInput">
+            <input :type="type" :value="value" :placeholder="placeholder" :maxlength="maxLength" :disabled="dis" @input="onInput" ref="refFn">
             <i class="icon icon-off" @click="emptyText" v-show="show"></i>
         </div>
         <slot></slot>
@@ -92,7 +92,7 @@
             }
             ,maxLength: String
             ,value: {
-                type:String,
+                type:[String,Number],
                 default: ""
             }
             ,show:{

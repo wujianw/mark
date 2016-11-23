@@ -105,6 +105,7 @@
     import numberKey from "../numberKey"
     import shop from "../../api/shop"
     import pay from "../../api/pay"
+    import {domain} from '../../api/public'
     import { mapGetters,Store } from 'vuex'
     export default{
         data(){
@@ -128,8 +129,6 @@
             }
         },
         created() {
-            console.log(JSON.stringify(this.goods))
-            document.title = "提交订单"
             this.upData()
         },
         watch:{
@@ -178,10 +177,24 @@
                     totalPrice:this.salesPrice,
                     packetPayAmout:this.sendPacketRed,
                     benefitId:''
-                }
+                },
+                    self = this
                 pay.createOrder(option).then(data => {
-                    
-                    this.$router.push({name:'verifyPay',query:{orderNum:1111}})
+                    let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
+                        option = { // 请求微信参数用
+                            body:self.goods.goodsName,
+                            outTradeNo:data.orderNum,
+                            totalFee:data.buyerAmount*100,
+                            notifyUrl:notifyUrl,
+                            openId:window.localStorage.openId
+                        },
+                        information = { // 下个页面重要参数
+                            buyerAmount:data.buyerAmount,
+                            buyNumber:self.num
+                        }
+                    self.$store.dispatch('markOrder',{option,information}).then(() => { // vuex 存储
+                        self.$router.replace({name:'verifyPay',query:{orderNum:data.orderNum}})
+                    })
                 })
             }
         },

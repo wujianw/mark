@@ -14,7 +14,8 @@ const state = {
     },
     refundReason:null,
 
-
+    markOrderDetails:null,
+    markOrderSubmit:null
 }
 
 // mutations
@@ -31,6 +32,10 @@ const mutations = {
     // 退款 ----原因模板
     [types.REFUND_REASON] (state,data) {
         state.refundReason = data
+    },
+    [types.MARK_ORDER] (state,{option,information}) {
+        state.markOrderSubmit = option
+        state.markOrderDetails = information
     }
 }
 

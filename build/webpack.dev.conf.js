@@ -31,13 +31,14 @@ module.exports = merge(baseWebpackConfig, {
             template: 'index.html',
             inject: true
         }),
-        new HtmlWebpackPlugin({
-            filename: 'MP_verify_rbKSFY86z8HeFnBj.txt',
-            template: 'MP_verify_rbKSFY86z8HeFnBj.txt',
-            inject: false
-        }),
+        // new HtmlWebpackPlugin({
+        //     filename: 'MP_verify_rbKSFY86z8HeFnBj.txt',
+        //     template: 'MP_verify_rbKSFY86z8HeFnBj.txt',
+        //     inject: false
+        // }),
         new webpack.ProvidePlugin({
-            iSlider: 'iSlider'
+            iSlider: 'iSlider',
+            MessageBox: 'MessageBox'
         })
     ]
 })

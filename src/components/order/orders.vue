@@ -46,7 +46,6 @@
                     start = this.start
                 this.busy = true
                 member.postOrder(type,{rows,start}).then(data => {
-                    console.log(data)
                     if(data.rows.length){
                         off ? this.chitOrder.push(...data.rows) : this.scanOrder.push(...data.rows)
                         this.start += rows

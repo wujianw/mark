@@ -5,8 +5,8 @@
                 <img src="../../assets/img/shop-pic.png" alt="">
             </div>
             <header class="success-hd">
-                <p class="verify-money">&yen125.00</p>
-                <p class="verify-goods-name">咖啡代金券一张</p>
+                <p class="verify-money">&yen{{details.buyerAmount}}</p>
+                <p class="verify-goods-name">{{option.body+details.buyNumber}}张</p>
             </header>
         </div>
         <div class="pay-way">
@@ -21,7 +21,7 @@
             </radio>
         </div>
         <div class="submit-wrap">
-            <submit value="确认支付" :dis="false" @commit="success"></submit>
+            <submit value="确认支付" :dis="false" @commit="verify"></submit>
         </div>
     </div>
 </template>
@@ -70,15 +70,49 @@
 <script type="text/babel">
     import submit from "../submit"
     import radio from '../select/radio'
+    import {mapGetters} from 'vuex'
+    import wx from '../../api/wx'
+    import pay from '../../api/pay'
     export default{
         data(){
-            return {}
-        }
-        ,methods:{
-            success() {
-                this.$router.push({name:'success'})
+            return {
+
             }
         }
-        ,components: { submit, radio }
+        ,computed:{
+            ...mapGetters({
+                option:'markOrderSubmit',
+                details:'markOrderDetails'
+            })
+        }
+        ,methods:{
+            verify() {
+                let self = this
+                pay.placeOrder(this.option).then(data => {
+                    let option = {
+                        "appId":data.appId,     //公众号名称，由商户传入
+                        "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数
+                        "nonceStr" : data.nonceStr, //随机串
+                        "package" :data.package,
+                        "signType" : "MD5",         //微信签名方式：
+                        "paySign" : data.paySign //微信签名
+                    },
+                        outTradeNo = this.option.outTradeNo
+                    wx.onBridgeReady.call(self,option,outTradeNo,self.successCb)
+                })
+            },
+            successCb(orderNum) { // 微信成功回调 验证微信是否有返回
+                pay.payCb({orderNum,type:'LOCAL'}).then(data => {
+                    if(data.trade_state == 'SUCCESS'){
+                        MessageBox.alert("支付成功").then(() => {
+                            self.$router.replace({name:'success'})
+                        })
+                    }else{
+                        MessageBox.alert(data.trade_state)
+                    }
+                })
+            }
+        }
+        ,components: {submit, radio}
     }
 </script>

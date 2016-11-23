@@ -19,7 +19,8 @@ module.exports = {
             'src': path.resolve(__dirname, '../src'),
             'assets': path.resolve(__dirname, '../src/assets'),
             'components': path.resolve(__dirname, '../src/components'),
-            'iSlider': path.join(__dirname, '../src/assets/js/iSlider')
+            'iSlider': path.join(__dirname, '../src/assets/js/iSlider'),
+            'MessageBox': path.join(__dirname, '../src/msgbox/index')
         }
     },
     resolveLoader: {

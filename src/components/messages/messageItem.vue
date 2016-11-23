@@ -17,7 +17,7 @@
             <div @click="remove(obj.id)">
                 <i>2</i>
             </div>
-            <router-link :to="{name:'messageDetails'}" class="wallet-agreement" tag="div">查看详情&gt;</router-link>
+            <router-link :to="{name:'messageDetails',query:{msgId:obj.msgId}}" class="wallet-agreement" tag="div">查看详情&gt;</router-link>
         </div>
     </div>
 </template>

@@ -24,7 +24,7 @@
                 <div class="shop-details">
                     <p class="shop-name">{{details.merchantName}}</p>
                     <p class="shop-address">{{details.merchantAddress}}</p>
-                    <p><i class="icon icon-orders"></i>定位。。。。</p>
+                    <!--<p><i class="icon icon-orders"></i>定位。。。。</p>-->
                 </div>
                 <a class="iphone flex-space" :href="'tel:'+details.tel"><i class="icon icon-tel"></i></a>
             </div>
@@ -34,7 +34,7 @@
             <div class="details-wrap combo">
                 <p class="combo-details">{{details.couponUseDesc}}</p>
                 <p class="combo-details">{{details.buyerTips}}</p>
-                <div class="flex-center go-details"><p class="">查看图文详情</p></div>
+                <div class="flex-center go-details"><router-link :to="{name:'goodsDesc'}" tag="p" class="">查看图文详情</router-link></div>
             </div>
         </div>
         </template>
@@ -46,8 +46,8 @@
                 <p>付款手机：{{order.buyerMobile}}</p>
                 <p>商品数量：{{order.buyNumber}}</p>
                 <p>订单总价：{{order.orderAmount}}</p>
-                <p class="mark">优惠抵扣：{{order.packetPayAmout || '0.00'}}</p>
-                <p class="mark">实付金额：{{order.goodsAmount}}</p>
+                <p class="mark">优惠抵扣：{{(order.orderAmount - order.buyerAmount) || '0.00'}}</p>
+                <p class="mark">实付金额：{{order.buyerAmount}}</p>
                 <p class="mark">养老金：{{order.merchantPension}}</p>
             </div>
         </div>
@@ -98,7 +98,7 @@
                     height:80px;
                     p{
                         width:168px;
-                        height:1.5;
+                        line-height:1.5;
                         border-radius:3px;
                         border:1px solid #e2544f;
                         text-align:center;
@@ -132,7 +132,8 @@
     import ticketBlock from './ticketBlock'
     import member from '../../api/member'
     import submit from '../submit'
-    import MessageBox from '../../msgbox';
+    import MessageBox from '../../msgbox'
+    import {domain} from '../../api/public'
     export default{
         data(){
             return {
@@ -154,7 +155,7 @@
                     buyNumber:"",
                     orderAmount:"",
                     packetPayAmout:"",
-                    goodsAmount:"",
+                    buyerAmount:"",
                     merchantPension:""
                 }
                 ,good:null
@@ -200,8 +201,8 @@
                     buyNumber:data.orderDetails[0].buyNumber,
                     orderAmount:data.orderAmount,
                     packetPayAmout:data.packetPayAmout,
-                    goodsAmount:data.goodsAmount,
-                    merchantPension:data.goodsAmount,
+                    buyerAmount:data.buyerAmount,
+                    merchantPension:data.merchantPension,
                 }
                 vm.coupons = data.coupons
                 vm.state = data.state
@@ -217,6 +218,8 @@
                     goodsImages: data.orderDetails[0].goodsImages,
                     merchantName: data.merchantName,
                 }
+                this.$store.dispatch('goodsDesc',data.orderDetails[0].goodsDesc)
+
             },
             applyRefund() {
                 let self = this
@@ -242,7 +245,21 @@
 
             //去支付画面
             payWay() {
-                this.$router.push({name:'verifyPay'})
+                let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
+                    option = {
+                        body:this.details.goodsName,
+                        outTradeNo:this.order.orderNum,
+                        totalFee:this.order.buyerAmount*100,
+                        notifyUrl:notifyUrl,
+                        openId:window.localStorage.openId
+                    },
+                    information = {
+                        buyerAmount:this.order.buyerAmount,
+                        buyNumber:this.order.buyNumber
+                    }
+                this.$store.dispatch('markOrder',{option,information}).then(() => {
+                    this.$router.push({name:'verifyPay',query:{orderNum:this.order.orderNum}})
+                })
             }
         }
         ,components: { goodBlock,linkList,ticketBlock,submit }

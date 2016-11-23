@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import store from '../store'
 import shop from './shop'
+import MessageBox from '../msgbox'
 const appid = process.env.NODE_ENV != 'production' ? 'wx5a45a2b5222a07da' : 'wx32df88fb43e04fbf'
 export default {
     getSignature() {
@@ -14,7 +15,17 @@ export default {
             return Promise.resolve(wxJson)
         })
     },
-
+    onBridgeReady(option,orderNum,cb) {
+        let self = this
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', option,
+            function(res){
+                if(res.err_msg.indexOf('ok') > -1) {
+                    cb.call(self,orderNum)
+                }
+            }
+        )
+    },
     getLocation(cb) {
         let latitude,longitude
         wx.ready(function(){

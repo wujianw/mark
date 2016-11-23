@@ -94,8 +94,10 @@
         }
         ,beforeRouteEnter (to,from,next) {
             next(vm => {
-                member.getMessage().then(val => {
-                    vm.details = val
+                member.getReception().then(data => {
+                    member.getMessage().then(val => {
+                        vm.details = val
+                    })
                 })
             })
 

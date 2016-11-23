@@ -136,7 +136,18 @@
     .no-more.show{
         display: block;
     }
-
+    .message-count{
+        width:100%;
+        line-height:1.5;
+        font-size:26px;
+        h2{font-size:40px;}
+        h3{font-size:36px;}
+        h4{font-size:30px;}
+        p{font-size:28px;}
+        img{
+            max-width:100%
+        }
+    }
     /* -----内容------   结构样式 */
     .link-picword{
         margin-bottom:88px;

@@ -28,15 +28,20 @@ export default {
             let data = JSON.parse(res.data)
             if(data.code != 0) {
                 errorCb()
-                return Promise.reject()
+                return Promise.reject(data.message)
             }else {
                 window.localStorage.token = data.data.token
             }
             return cb(data.data)
         }).catch(res => {
             errorCb()
-            return Promise.reject()
+            return Promise.reject(res)
         })
+    }
+    ,pwd({token=store.getters.getToken,oldPassword,password}) {
+        let url='/api/pri/member/modify_pwd.json',
+            params = {token,oldPassword,password}
+        return postData(url,params)
     }
 
     /**
@@ -67,7 +72,7 @@ export default {
     }
 
     /**
-     * 订单详情
+     * 29. 订单详情
      * @params  function
      * @option  type 接口类型
      */
@@ -282,7 +287,29 @@ export default {
         url = '/api/usermessage/delete.json'
         params = {token,id}
         return postData(url,params)
-}
+    }
+    /*
+     *
+     * 获取消息
+     * @params
+     */
+    ,getReception(token=store.getters.getToken){
+        let url,params;
+        url = '/api/usermessage/reception.json'
+        params = {token}
+        return postData(url,params)
+    }
+    /*
+     *
+     * 消息详情
+     * @params
+     */
+    ,getMessageDetails({token=store.getters.getToken,msgId}={}){
+        let url,params
+        url = '/api/usermessage/detail.json'
+        params = {token,msgId}
+        return postData(url,params)
+    }
     /**
      * 养老金列表
      * @params  token,start,rows
@@ -304,21 +331,12 @@ export default {
         return postData(url,params)
     }
     //绑定
-    ,changecard({token=store.getters.getToken,blockNum="22",authCode=""}={}){
+    ,changeCard({token=store.getters.getToken,blockNum,authCode}={}){
         let url,params;
         url = '/api/pri/member/bind_card.json'
-        params = {"token":token,"newCId":blockNum,"aCode":authCode}
+        params = {token,"newCId":blockNum,"aCode":authCode}
         console.log(params)
-        return Vue.http.post(url,params).then(res => {
-            let data = JSON.parse(res.data)
-            if(data.code != 0) {
-                return Promise.reject(data.message)
-            }
-            console.log(data.data)
-            return Promise.resolve(data.data)
-        }).catch(res => {
-            return Promise.reject(res)
-        })
+        return postData(url,params)
     }
     //绑定认证
     ,activate({token=store.getters.getToken,name="22",idCard="",areaCode="",email=""}={}){
