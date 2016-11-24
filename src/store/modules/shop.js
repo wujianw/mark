@@ -1,6 +1,7 @@
 import * as types from '../mutation-types'
 const state = {
     location:{
+        province:'浙江省',
         city:'杭州市',
         cityCode:'330100',
         provinceCode:'330000'
@@ -86,6 +87,7 @@ const mutations = {
     // 切换省获得城市
     [types.TOGGLE_FOCUS_CITY] (state,provinceCode) {
         state.cityList = provinceCode ? state.cityAllList.filter(item => item.parentCode == provinceCode) : []
+        state.areaList = state.areaAllList.filter(item => item.parentCode == state.cityList[0].currentCode)
         state.location.provinceCode = provinceCode
     },
     // 切换城市获得区域
@@ -93,7 +95,6 @@ const mutations = {
         state.areaList = cityCode ? state.areaAllList.filter(item => item.parentCode == cityCode) : []
         state.location.cityCode = cityCode
     },
-
     // 附近商家列表处理
     [types.FETCH_SHOP_LIST] (state,{data,way=false,more=true}) {
         if(way) {

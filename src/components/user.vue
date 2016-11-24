@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="flex-space-around consumption">
-            <block-btn v-for="item in shopTrade" :icon="item.icon" :name="item.name"></block-btn>
+            <block-btn v-for="item in shopTrade" :icon="item.icon" :to="item.to" :name="item.name"></block-btn>
         </div>
         <div class="list-link-wrap" v-for="items in linkList">
             <link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to"></link-list>
@@ -175,25 +175,29 @@
                         icon:{
                             iconClass:'icon-waitPay'
                         },
-                        name:"待支付"
+                        name:"待支付",
+                        to:{name:"orders",params:{type:'chit'},query:{state:'created'}}
                     }
                     ,waitConsume:{
                         icon:{
                             iconClass:'icon-waitConsume'
                         },
-                        name:"待确认"
+                        name:"待确认",
+                        to:{name:"orders",params:{type:'chit'},query:{state:'deliveryed'}}
                     }
                     ,waitAppraise:{
                         icon:{
                             iconClass:'icon-waitAppraise'
                         },
-                        name:"待评价"
+                        name:"待评价",
+                        to:{name:"orders",params:{type:'chit'},query:{state:'finished',isComment:0}}
                     }
                     ,aftermarket:{
                         icon:{
                             iconClass:'icon-aftermarket'
                         },
-                        name:"退款/售后"
+                        name:"退款/售后",
+                        to:{name:"orders",params:{type:'chit'},query:{state:'closed'}}
                     }
                 }
             }

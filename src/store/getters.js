@@ -15,6 +15,7 @@ export const areaList = state => {return state.shop.areaList}
 // 获取当前城市区县数据
 export const provinceCode = state => {return state.shop.location.provinceCode}
 export const cityCode = state => {return state.shop.location.cityCode}
+export const location = state => {return state.shop.location}
 
 //附近商家列表
 export const shopList = state => { return state.shop.shopList }

@@ -5,7 +5,6 @@
                 <div class="position flex-center">
                     <i class="icon icon-position"></i>
                     <span>{{address}}</span>
-                    <!--<i class="icon icon-arrow-right"></i>-->
                 </div>
             </div>
             <div class="nav-warp">
@@ -179,62 +178,9 @@
             // 初始化区县数据
             if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("allArea")
-            }
-            if(!this.areaList || this.areaList.length == 0){
                 this.$store.dispatch("toggleCity",this.cityCode)
                 this.$store.dispatch("toggleProvince",this.provinceCode)
             }
-
-//            this.more(true)
-//            let fullPath = window.location.href.split("#")[0],
-//                url = '/wechatpay/get_signature.json',
-//                params = {url:fullPath,appid:'wx5a45a2b5222a07da'}
-//                console.log(params)
-//            self.$http.get(url,{params}).then(res =>{
-//                let data = JSON.parse(res.data)
-//                self.wxJson = data.data
-//            }).then(() => {
-//                if(this.geography.latitude != ''){
-//
-//                    self.more(true)
-//                    return false
-//                }  // 获取成功后不在获取
-//                wx.config({
-//                    debug: true,
-//                    appId: self.wxJson.appid,
-//                    timestamp: self.wxJson.timestamp,
-//                    nonceStr: self.wxJson.noncestr,
-//                    signature: self.wxJson.signature,
-//                    jsApiList: ['getLocation']
-//                });
-//                wx.error(function() {
-//
-//                })
-//                wx.ready(function(){
-//                    wx.getLocation({
-//                        type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
-//                        success: function (res) {
-//                            let latitude = res.latitude, // 纬度，浮点数，范围为90 ~ -90
-//                                longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
-//                            let params = {
-//                                    gcjLon:latitude,
-//                                    gcjLat:longitude
-//                                }
-//                            shop.getLonLat(params).then(() => {
-//                                self.$store.dispatch('fetchGeography',{longitude:data.bdlon,latitude:data.bdlat}).then(() => {
-//                                    self.more(true)
-//                                })
-//                            }).catch(() => {
-//                                console.log(latitude+","+longitude)
-//                                self.$store.dispatch('fetchGeography',{longitude,latitude}).then(() => {
-//                                    self.more(true)
-//                                })
-//                            })
-//                        }
-//                    });
-//                });
-//
-//            })
         }
         ,computed: {
             ...mapGetters({

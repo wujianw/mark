@@ -145,7 +145,6 @@
                         title = "充值确认"
                     return MessageBox.confirm(meg,title)
                 }).then(()=>{
-
                     return pay.recharge({tradeAmount:this.money})
                 }).then(data=>{
                     let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
@@ -172,7 +171,7 @@
                             self.$router.back()
                         })
                     }else{
-                        return Promise.reject(data)
+                        MessageBox.alert(data.trade_state)
                     }
                 }).catch(data => {
                     MessageBox.alert(data.trade_state)

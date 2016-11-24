@@ -98,12 +98,13 @@
             store.dispatch("getUser").then(() => {
                 next()
             }).catch(() => {
-                next()
+                window.localStorage.removeItem('token')
+                this.$router.push({name:'loadMobile'})
             })
         }
         ,methods:{
             logout() {
-                localStorage.removeItem('token')
+                window.localStorage.removeItem('token')
                 this.$router.push({name:'loadMobile'})
             }
         },

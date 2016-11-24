@@ -41,11 +41,13 @@
         ,methods:{
             fetchData(rows=10) {
                 let self = this,
-                    type = self.$route.params.type;
-                let off = type == "chit",
-                    start = this.start
+                    type = self.$route.params.type,
+                    off = type == "chit",
+                    start = this.start,
+                    state = this.$route.query.state || '',
+                    isComment = this.$route.query.isComment || ''
                 this.busy = true
-                member.postOrder(type,{rows,start}).then(data => {
+                member.postOrder(type,{rows,start,state,isComment:Number(isComment)}).then(data => {
                     if(data.rows.length){
                         off ? this.chitOrder.push(...data.rows) : this.scanOrder.push(...data.rows)
                         this.start += rows

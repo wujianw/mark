@@ -60,14 +60,15 @@ export default {
      * @params  function
      * @option  type 接口类型
      */
-    ,postOrder(type,{token=store.getters.getToken,start=0,rows=10,isComment=''}={}) {
+    ,postOrder(type,{token=store.getters.getToken,start=0,rows=10,isComment='',state}={}) {
         let url,params;
         if(type=="chit") {
             url = '/api/pri/order/listcoupon.json'
         } else if(type=="scan") {
             url = '/api/pri/scancode/cashOrderMember.json'
         }
-        params = {"token":token,"start":start,"rows":rows}
+        params = {token,start,rows,state,isComment}
+        console.log(params)
         return postData(url,params)
     }
 
@@ -339,10 +340,18 @@ export default {
         return postData(url,params)
     }
     //绑定认证
-    ,activate({token=store.getters.getToken,name="22",idCard="",areaCode="",email=""}={}){
+    ,activate({token=store.getters.getToken,name,idCard="",areaCode="",email=""}={}){
         let url,params;
         url = '/api/pri/member/name_auth.json'
         params = {token,name,idCard,areaCode,email}
+        return postData(url,params)
+    }
+    //46. 绑定认证后修改
+    ,changeInformation({token=store.getters.getToken,areaCode,email}={}){
+        let url,params
+        url = '/api/pri/member/modify_msg.json'
+        params = {token,areaCode,email}
+        console.log(params)
         return postData(url,params)
     }
     /*
