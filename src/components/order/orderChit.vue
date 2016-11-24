@@ -2,7 +2,8 @@
     <div class="order-el">
         <header class="flex-space" :data-status="state.name">
             <div class="title flex-space" :data-shop="orderDetails.merchantName">
-                <div class="hd-logo"></div>
+                <!--<div class="hd-logo"></div>-->
+                <i class="icon icon-arch"></i>
             </div>
         </header>
         <router-link tag="main" :to="to">
@@ -30,25 +31,13 @@
             height:64px;
             color:#505050;
             .title{
+                padding:0 22px;
                 &:after{
                      content:attr(data-shop);
+
                      font-size:26px;
                      color:#505050;
                  }
-                .hd-logo{
-                    width:50px;
-                    height:50px;
-                    margin:0 12px;
-                    border-radius:50%;
-                    background:#ee4e51;
-                    text-align:center;
-                    line-height:50px;
-                    font-size:24px;
-                    font-weight:700;
-                    font-family:'Microsoft Yahei';
-                    color:#fff;
-                    &:after{content:"券";}
-                }
             }
             &:after{content:attr(data-status);padding-right:22px;font-size:28px;color:#fcb111;}
         }

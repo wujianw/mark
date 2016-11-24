@@ -2,7 +2,10 @@
     <ul class="load-mobile-el">
         <li class="flex-space">
             <input-text :value="mobile" type="number" @input="mobileFn" placeholder="请输入您的手机号码" :icon="mobileIcon">
-                <div class="mobile-btn"><p @click="refCaptcha">{{refCaptchaText}}</p></div>
+                <div class="mobile-btn">
+                    <p @click="refCaptcha">{{refCaptchaText}}</p>
+                    <div class="shade" v-if="shade"></div>
+                </div>
             </input-text>
         </li>
         <slot></slot>
@@ -13,6 +16,7 @@
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .mobile-btn {
+        position:relative;
         flex-grow: 1;
         margin-left: 10px;
         background: #e85350;
@@ -20,6 +24,14 @@
         text-align: center;
         font: 26px/74px "Microsoft Yahei";
         color: #fff;
+        .shade{
+            position:absolute;
+            top:0;
+            bottom:0;
+            width:100%;
+            opacity: 0;
+            font: 26px/74px "Microsoft Yahei";
+        }
     }
 </style>
 <script type="text/babel">
@@ -78,12 +90,12 @@
                 this.$nextTick(function () {
                     if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
                         this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
-                            .then((response) => {
+                            .then(() => {
                                 this.refCaptchaBtn = false
                                 this.countDown()
-                            },(response) => {
+                            },() => {
                                 this.refCaptchaBtn = true;
-                            }).catch(res => {
+                            }).catch(() => {
 
                             })
                     }else if(this.refCaptchaBtn){
@@ -100,7 +112,10 @@
             }
             ,vcode:String
             ,type:String
-
+            ,shade:{
+                type:Boolean,
+                default:false
+            }
         }
     }
 </script>

@@ -57,7 +57,9 @@
                         icon:{
                             iconClass:'icon-block'
                         },
-                        to: {name: 'bound' },
+                        to: {
+                            name: this.getMember.mBinding ==0 ? 'bound' : ''
+                        },
                         details:this.getMember.mBinding ==0 ? "去绑定" : "已绑定"
                     }
 //                    ,address:{
@@ -105,6 +107,7 @@
         ,methods:{
             logout() {
                 window.localStorage.removeItem('token')
+                this.$store.dispatch("clearUser")
                 this.$router.push({name:'loadMobile'})
             }
         },

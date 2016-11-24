@@ -38,12 +38,23 @@ export default {
             return Promise.reject(res)
         })
     }
+    /*
+    * 修改密码
+    * */
     ,pwd({token=store.getters.getToken,oldPassword,password}) {
         let url='/api/pri/member/modify_pwd.json',
             params = {token,oldPassword,password}
         return postData(url,params)
     }
-
+// /api/pri/wallet/refushdata.htm
+    /*
+    * 55. 首页获取我的个人信息
+    * */
+    ,getIndex({token=store.getters.getToken}) {
+        let url='/api/pri/wallet/refushdata.json',
+            params = {token}
+        return postData(url,params)
+    }
     /**
      * 代金券列表
      * @params  token,start,rows
@@ -151,14 +162,15 @@ export default {
      * 优惠券请求
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
-    ,getCouponList({token=store.getters.getToken,start,rows}={}){
+    ,getCouponList({token=store.getters.getToken,start,rows,shopId=''}={}){
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
-        params = {token,start,rows}
+        params = {token,start,rows,shopId}
+        console.log(params)
         return postData(url,params)
     }
     /**
-     * 所有可领取代金券列表
+     * 所有可领取优惠券列表
      * @params  shopId:接口参数 ,errorCb：失败回调
      */
     ,getAllCoupon({start=0,rows=10}={}){

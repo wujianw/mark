@@ -72,7 +72,7 @@
         data() {
             return {
                 items:[],
-                total:0,
+                total:this.$route.query.gold,
                 busy:false,
                 pageIndex:1,
                 startTime: {
@@ -128,7 +128,6 @@
                 member.getAnnuityList({startTime,endTime,pageSize,pageIndex}).then(data => {
                     this.pageIndex++
                     this.items.push(...data.data)
-                    this.total = data.total
                     this.busy = pageSize != data.data.lengths
                 }).catch(() => {
                     this.busy = true

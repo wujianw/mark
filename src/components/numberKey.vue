@@ -28,7 +28,7 @@
             line-height:160px;
             &:before{content:attr(data-text)}
         }
-        li:last-of-type{color:#fff;}
+        /*li:last-of-type{color:#fff;}*/
     }
     div{
         width:100%;

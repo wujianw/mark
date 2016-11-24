@@ -9,6 +9,8 @@ export const login = ({commit},option) => {
         data => commit(types.LOGIN_FAILURE,data)
     )
 }
+
+// 用户认证数据
 export const getUser = ({commit,state}) => {
     if(!state.member.member.mName){
         return member.getMember().then(data => {
@@ -16,7 +18,15 @@ export const getUser = ({commit,state}) => {
         })
     }
 }
+// 清空用户认证store数据
+export const clearUser = ({commit}) => {
+    commit(types.MEMBER_CLEAR)
+}
+// 首页用户信息
 
+export const fetchInformation = ({commit},data) => {
+    commit(types.INDEX_DATA,data)
+}
 
 //地理位置
 export const fetchGeography = ({commit},{latitude,longitude}) => {

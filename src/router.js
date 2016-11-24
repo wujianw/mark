@@ -53,6 +53,7 @@ const orderChitDetails = resolve => require(['./components/order/orderChitDetail
 const orderScanDetails = resolve => require(['./components/order/orderScanDetails'], resolve)
 // 创建订单
 const createOrder = resolve => require(['./components/shop/createOrder'], resolve)
+const useCoupon = resolve => require(['./components/shop/useCoupon'], resolve)
 // 去评论
 const goEvaluate = resolve => require(['./components/order/goEvaluate'], resolve)
 
@@ -210,6 +211,7 @@ export const routes = [
 
     // 创建订单
     ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder }
+    ,{ path: '/user/useCoupon', name: 'useCoupon', component: useCoupon }
 
     // 扫码买单
     ,{ path: '/user/scanBillPay', name: 'scanBillPay', component: scanBillPay }

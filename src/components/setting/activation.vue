@@ -53,7 +53,11 @@
                 this.mAuth_flag = true
                 this.name = this.getMember.mName
                 this.mIdentityId = this.getMember.mIdentityId
-                this.locationName = this.getMember.location || ''
+                if(this.getMember.location == 'null' || !this.getMember.location || this.getMember.location.length < 5){
+                    this.locationName = ""
+                }else {
+                    this.locationName = this.getMember.location
+                }
                 this.email = this.getMember.mEmail
             }
 
@@ -90,6 +94,7 @@
                 if(!reg_email.test(email)) return MessageBox.alert("无效邮箱")
                 if(this.mAuth_flag){ // 已认证调用修改接口
                     member.changeInformation({areaCode,email}).then(() => {
+                        this.$store.dispatch("clearUser")
                         MessageBox.alert("修改成功！").then(() => {
                             this.$router.back()
                         })
@@ -102,6 +107,7 @@
                     if(!reg_idCard.test(idCard)) return MessageBox.alert("身份证号无效")
                     if(!areaCode) return MessageBox.alert("无效地址")
                     member.activate({name, idCard, areaCode, email}).then(() => {
+                        this.$store.dispatch("clearUser")
                         MessageBox.alert("认证成功！").then(() => {
                             this.$router.back()
                         })

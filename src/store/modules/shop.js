@@ -115,6 +115,8 @@ const mutations = {
     },
 
     [types.FETCH_GOOD_DETAILS] (state,data) {
+        console.log(JSON.stringify(data))
+        console.log(data)
         state.goods = data.goodsdata
         state.shop = data.shop
     },

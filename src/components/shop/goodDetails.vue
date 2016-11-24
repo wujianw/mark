@@ -45,9 +45,9 @@
                     <div class="info">
                         <p class="info-name">{{shop.name}}</p>
                         <p>{{shop.address}}</p>
-                        <p><i class="icon icon-position"></i>1.8km</p>
+                        <!--<p><i class="icon icon-position"></i>1.8km</p>-->
                     </div>
-                    <div>{{shop.mobile}}</div>
+                    <div><a :href="'tel:'+shop.mobile"><i class="icon icon-tel"></i></a></div>
                 </div>
             </section>
             <div class="link-picword">
@@ -59,7 +59,9 @@
         </main>
         <footer class="footer">
             <div class="flex-box ft">
-                <div class="iphone" :data-phone="shop.telephone"><i class="icon icon-iphone"></i><p>电话</p></div>
+                <div class="iphone flex-space">
+                    <a :href="'tel:'+shop.telephone"><i class="icon icon-tel"></i></a>
+                </div>
                 <div>
                     <p class="buy-btn">
                         <router-link :to="{name:'createOrder',query:{goodId:goods.id}}">立即购买</router-link>
@@ -173,7 +175,7 @@
         .ft{justify-content: space-between;align-items:center;color:#838383;}
         .buy-btn a{display:inline-block;background:#e85350;height:88px;line-height:88px;font-size:40px;color:#fff;width:376px;text-align:center;}
         .iphone{font:20px/1.2 "Microsoft YaHei";padding:0 26px;border-right:1px solid #d9d9d9;text-align:center;}
-        i.icon-iphone{font-size:38px;}
+        a{color:#e85354;i{font-size:38px;}}
         #picWord {margin-bottom:88px;}
         #picWord img{max-width:100%;}
     }

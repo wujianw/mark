@@ -4,8 +4,8 @@
             <div class="flex-space">
                 <div class="hd-pic"><img src="../../static/img/hd-pic.png" alt=""/></div>
                 <div class="nickname-wrap">
-                    <div class="nickname">微信昵称/会员名称</div>
-                    <div>养老金：&nbsp<span class="annuity">{{annuity | gold}}</span></div>
+                    <div class="nickname">{{getMember.mName}}</div>
+                    <div>养老金：&nbsp<span class="annuity">{{annuity}}</span></div>
                 </div>
             </div>
             <div>
@@ -15,10 +15,10 @@
             </div>
         </div>
         <div class="flex-space-around consumption">
-            <block-btn v-for="item in shopTrade" :icon="item.icon" :to="item.to" :name="item.name"></block-btn>
+            <block-btn v-for="item in shopTrade" :icon="item.icon" :to="item.to" :name="item.name" :num="item.num"></block-btn>
         </div>
         <div class="list-link-wrap" v-for="items in linkList">
-            <link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to"></link-list>
+            <link-list v-for="item in items" :title="item.title" :icon="item.icon" :to="item.to" :details="item.details || ''"></link-list>
         </div>
     </div>
 </template>
@@ -89,11 +89,24 @@
 <script>
     import linkList from "./linkList.vue"
     import blockBtn from "./blockBtn.vue"
+    import member from "../api/member"
+    import store from '../store'
+    import {mapGetters} from 'vuex'
     export default{
         data(){
             return{
-                annuity : 0.00
-                ,linkList: {
+            }
+        }
+        ,computed:{
+            ...mapGetters({
+                information:'getIndexData',
+                getMember:'getMember'
+            }),
+            annuity() {
+                return parseFloat(this.information.persion.toString()).toFixed(2)
+            },
+            linkList() {
+                return {
                     trade: {
                         order:{
                             title:"全部订单",
@@ -106,14 +119,6 @@
                                 params:{type:"chit"}
                             }
                         }
-//                        ,tradeList: {
-//                            title:"交易记录",
-//                            icon:{
-//                                iconClass:'icon-tradeList',
-//                                color:'#d55b97'
-//                            },
-//                            to: { name:'loadMobile' }
-//                        }
                     }
                     ,gold: {
                         wallet: {
@@ -122,7 +127,8 @@
                                 iconClass:'icon-wallet',
                                 color:'#fe7d5b'
                             },
-                            to: { name:'mineWallet' }
+                            to: { name:'mineWallet' },
+                            details:this.information.cashBalance
                         },
                         annuity: {
                             title:"我的养老金",
@@ -130,7 +136,8 @@
                                 iconClass:'icon-annuity',
                                 color:'#ffb100'
                             },
-                            to: { name: 'annuityList' }
+                            to: { name: 'annuityList',query:{gold:this.information.persion}},
+                            details:this.annuity
                         }
                     }
                     ,ticket: {
@@ -140,7 +147,8 @@
                                 iconClass:'icon-chit',
                                 color:'#e6696a'
                             },
-                            to: { name: 'chitList' }
+                            to: { name: 'chitList' },
+                            details:this.information.couponnum
                         },
                         coupon: {
                             title:"优惠券",
@@ -148,7 +156,8 @@
                                 iconClass:'icon-coupon',
                                 color:'#5a9add'
                             },
-                            to: { name: 'coupon' }
+                            to: { name: 'coupon' },
+                            details:this.information.benefitCount
                         },
                         enshrine: {
                             title:"我的收藏",
@@ -156,7 +165,8 @@
                                 iconClass:'icon-enshrine',
                                 color:'#d95693'
                             },
-                            to:{ name: 'enshrineList',params:{type:"shops"}}
+                            to:{ name: 'enshrineList',params:{type:"shops"}},
+                            details:this.information.collectnum
                         }
                     }
                     ,setting: {
@@ -170,36 +180,67 @@
                         }
                     }
                 }
-                ,shopTrade: {
+            },
+            shopTrade() {
+                return {
                     waitPay:{
                         icon:{
                             iconClass:'icon-waitPay'
                         },
                         name:"待支付",
-                        to:{name:"orders",params:{type:'chit'},query:{state:'created'}}
+                        to:{name:"orders",params:{type:'chit'},query:{state:'created'}},
+                        num:this.information.couponordernum == 0 ? '' : this.information.couponordernum
                     }
                     ,waitConsume:{
                         icon:{
                             iconClass:'icon-waitConsume'
                         },
                         name:"待确认",
-                        to:{name:"orders",params:{type:'chit'},query:{state:'deliveryed'}}
+                        to:{name:"orders",params:{type:'chit'},query:{state:'deliveryed'}},
+                        num:this.information.coupondeliveryednum == 0 ? '' : this.information.coupondeliveryednum
                     }
                     ,waitAppraise:{
                         icon:{
                             iconClass:'icon-waitAppraise'
                         },
                         name:"待评价",
-                        to:{name:"orders",params:{type:'chit'},query:{state:'finished',isComment:0}}
+                        to:{name:"orders",params:{type:'chit'},query:{state:'finished',isComment:0}},
+                        num:''
                     }
                     ,aftermarket:{
                         icon:{
                             iconClass:'icon-aftermarket'
                         },
                         name:"退款/售后",
-                        to:{name:"orders",params:{type:'chit'},query:{state:'closed'}}
+                        to:{name:"orders",params:{type:'chit'},query:{state:'closed'}},
+                        num:this.information.couponrefundingnum == 0 ? '' : this.information.couponrefundingnum
                     }
                 }
+            }
+        }
+        ,beforeRouteEnter(to,from,next) {
+            /*
+            * 初始化获取首页 信息数据
+            * if from.name with userInformation or message 无需改变首页信息数据
+            * */
+            if(from.name == "userInformation" || from.name == "messageList") {
+                next()
+            }else {
+                member.getIndex({}).then(data => {
+                        console.log(JSON.stringify(data))
+                    store.dispatch("fetchInformation",data)
+                }).then(() => {
+                    next()
+                }).catch(() => {
+                    store.dispatch("clearUser")
+                    window.localStorage.removeItem('token')
+                    next()
+                })
+            }
+        }
+        ,created() {
+            if(this.getMember.mName == ""){
+                this.$store.dispatch("getUser")
             }
         }
         ,components:{linkList, blockBtn}

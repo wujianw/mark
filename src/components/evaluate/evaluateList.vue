@@ -17,7 +17,7 @@
             <div class="flex-space evaluate-img" v-if="item.reviewPic">
                 <div class="img" v-for="url in item.reviewPic.split(',')"><img :src="url" alt=""></div>
             </div>
-            <p v-if="item.listreply" class="shop-message">{{item.listreply}}</p>
+            <p v-if="item.listreply" class="shop-message">{{item.listreply[0].content}}</p>
         </li>
     </ul>
 </template>

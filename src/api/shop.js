@@ -21,7 +21,6 @@ export default {
         let url,params;
         url = '/api/open/goods/get.json'
         params = {token,goodsId}
-        console.log(params)
         return postData(url,params)
     },
     /*

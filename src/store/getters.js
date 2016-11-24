@@ -1,5 +1,6 @@
 export const getToken = state => {return state.member.token}
 export const getMember =state=>{return state.member.member}
+export const getIndexData =state=>{return state.member.indexData}
 
 // 退款原因目标
 export const refundReason = state => {return state.member.refundReason}

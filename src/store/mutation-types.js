@@ -5,6 +5,8 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 //会员信息
 export const MEMBER = 'MEMBER'
+export const MEMBER_CLEAR = 'MEMBER_CLEAR'
+export const INDEX_DATA = 'INDEX_DATA'
 //update
 export const UPDATE = 'UPDATE'
 
