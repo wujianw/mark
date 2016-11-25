@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import MessageBox from '../msgbox'
-const url = window.location.href
-export const domain = url.indexOf('?')>-1 ? url.split("?")[0] : url.split("#")[0]
+export const domain = window.location.protocol+ "//" + window.location.host
 export const  postData = (url,params)=>{
     return Vue.http.post(url,params).then(res => {
         let data = JSON.parse(res.data)

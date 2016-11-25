@@ -51,9 +51,6 @@
                 line-height:2;
             }
         }
-        .pic-all{
-            background-image:url('../../assets/img/red-packet-all.png')
-        }
     }
 </style>
 <script type="text/babel">

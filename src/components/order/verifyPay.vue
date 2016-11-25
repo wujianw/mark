@@ -88,7 +88,7 @@
         ,methods:{
             verify() {
                 let self = this
-                pay.placeOrder(this.option).then(data => {
+                pay.placeOrder(self.option).then(data => {
                     let option = {
                         "appId":data.appId,     //公众号名称，由商户传入
                         "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数

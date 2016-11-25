@@ -191,7 +191,7 @@
                 },
                 goods:[],
                 review:[],
-                reviewLen:0,
+                reviewLen:0
             }
         }
         ,beforeRouteEnter(to,from,next) {

@@ -24,8 +24,11 @@ export const shopList = state => { return state.shop.shopList }
 // 评论数量
 export const evaluateCount = state => { return state.shop.evaluate }
 
+// 订单用数据
 export const goodDetails = state => { return state.shop.goods }
 export const goodDetailsShop = state => { return state.shop.shop }
+export const activeNum = state => { return state.shop.activeNum }
+export const getMarkCoupon = state => { return state.shop.markCoupon }
 
 // 谭绍飞---- 特卖商品
 export const specialGoods = state => {return state.shop.specialGoods}

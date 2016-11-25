@@ -16,11 +16,12 @@ export default {
         })
     },
     onBridgeReady(option,orderNum,cb) {
+        console.log(option)
         let self = this
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', option,
             function(res){
-                if(res.err_msg.indexOf('ok') > -1) {
+                if(res.err_msg && res.err_msg.indexOf('ok') > -1) {
                     cb.call(self,orderNum)
                 }
             }

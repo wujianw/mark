@@ -205,7 +205,7 @@
                         },
                         name:"待评价",
                         to:{name:"orders",params:{type:'chit'},query:{state:'finished',isComment:0}},
-                        num:''
+                        num:this.information.noCommentCount == 0 ? '' : this.information.noCommentCount
                     }
                     ,aftermarket:{
                         icon:{

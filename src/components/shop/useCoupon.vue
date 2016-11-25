@@ -1,23 +1,29 @@
 <template>
-    <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-        <div v-if="list.length" v-for="details in list" @click="back"  class="coupon-block-el flex-space">
-            <div class="coupon-content">
-                <h3>{{details.activeName}}</h3>
-                <div>
-                    <p>满{{details.campaginAmount | gold}}元可用</p>
-                    <p>{{details.startDate}}至{{details.endDate}}</p>
-                    <p>仅限{{details.merchantName}}使用</p>
+    <div>
+        <header class="flex-space"></header>
+
+        <div class="use-coupon-el" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            <div v-if="list.length" v-for="details in orderedList" :key="details.id" @click="back(details.id,details.discntAmount)"  class="coupon-block-el flex-space">
+                <div class="coupon-content">
+                    <h3>{{details.activeName}}</h3>
+                    <div>
+                        <p>满{{details.campaginAmount | gold}}元可用</p>
+                        <p>{{details.startDate}}至{{details.endDate}}</p>
+                        <p>仅限{{details.merchantName}}使用</p>
+                    </div>
+                </div>
+                <div class="pic-icon flex-start" :class="details.campaginAmount < gold ? '' : 'pic-no'">
+                    <div class="gold">{{details.discntAmount}}</div>
+                    <div class="explain"></div>
                 </div>
             </div>
-            <div class="pic-icon flex-start" :class="details.type==1 ? '' : 'pic-all'">
-                <div class="gold">{{details.discntAmount}}</div>
-                <div class="explain"></div>
-            </div>
-            <div></div>
         </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
+    .use-coupon-el{
+        padding:0 16px;
+    }
     .coupon-block-el{
         border-top:22px solid #f2f2f2;
         background:#fff;
@@ -54,37 +60,50 @@
                 line-height:2;
             }
         }
-        .pic-all{
-            background-image:url('../../assets/img/red-packet-all.png')
+        .pic-no{
+            background-image:url('../../assets/img/red-packet-no.png')
         }
     }
 </style>
 <script type="text/babel">
     import member from '../../api/member'
     import {mapGetters} from 'vuex'
+    const orderBy = require('lodash/orderBy')
     export default{
         data() {
             return {
                 busy:false,
                 start:0,
-                list:[]
+                list:[],
+                shopId:'',
+
             }
         },
         computed:{
             ...mapGetters({
-                shop:'goodDetailsShop'
-            })
+                goods:'goodDetails'
+            }),
+            orderedList() {
+                return orderBy(this.list, 'campaginAmount')
+            },
+            gold() {
+                return parseFloat(this.$route.query.gold)
+            }
         },
         created() {
-
+            this.shopId = this.goods.merchantId
         },
         methods:{
-            back(){
-//                if()
-//            :to="{name:'shopDetails',query:{shopId:details.merchantId}}"
+            back(id,discntAmount){
+                if( discntAmount < this.gold) {
+                    let option = {id,discntAmount,changeUse:true}
+                    this.$store.dispatch("insetMarkCoupon",option).then(() => {
+                        this.$router.back()
+                    })
+                }
             },
-            fetchData(rows=30) {
-                member.getCouponList({shopId:this.$route.query.shopId,rows,start:this.start}).then(val => {
+            fetchData(rows=10) {
+                member.getCouponList({shopId:this.shopId,rows,start:this.start}).then(val => {
                     this.list.push(...val)
                     this.start +=rows
                     this.busy = val.length != rows

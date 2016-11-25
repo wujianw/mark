@@ -32,6 +32,8 @@ export const EVALUATE_COUNT = 'EVALUATE_COUNT'
 
 // fetch good details data
 export const FETCH_GOOD_DETAILS = 'FETCH_GOOD_DETAILS'
+export const CREATE_ACTIVE_NUM = 'CREATE_ACTIVE_NUM'
+export const MARK_COUPON = 'MARK_COUPON'
 
 // 特卖商品列表
 export const SPECIAL_GOODS = 'SPECIAL_GOODS'

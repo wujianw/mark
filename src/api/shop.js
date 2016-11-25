@@ -104,9 +104,16 @@ export default {
         return postData(url,params)
     },
     sendPacketRed({token=store.getters.getToken,goodsId,number}={}){
-        let url,params;
+        let url,params
         url = '/api/pri/campaign/sendPacketRed'
         params = {token, goodsId, number}
         return postData(url,params)
     },
+    benefitMemberBest({token=store.getters.getToken,shopId,campaginAmount}={}){
+        let url,params
+        url = '/api/benefit/benefitmember/benefitMemberBest.json'
+        params = {token, shopId, campaginAmount}
+        console.log(params)
+        return postData(url,params)
+    }
 }

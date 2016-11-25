@@ -34,10 +34,11 @@ export default {
     placeOrder({body,outTradeNo,totalFee,notifyUrl,openid}={}) {
         let url = '/wechatpay/uniform_order_h5.htm',
             params = {notifyUrl, totalFee, outTradeNo, body, openid, deviceInfo:'WEB'}
+        console.log(params)
         return postData(url,params)
     },
     payCb({orderNum,type='LOCAL'}={}) {
-        let url = '/wechatpay/orderquery.htm',
+        let url = '/wechatpay/orderquery_h5.htm',
             params = {orderNum,type}
         return postData(url,params)
     },

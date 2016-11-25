@@ -148,7 +148,7 @@
                     return pay.recharge({tradeAmount:this.money})
                 }).then(data=>{
                     let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
-                        totalFee = data.tradeAmount*100
+                        totalFee = (data.tradeAmount*100).toFixed(0)
                     outTradeNo = data.tradeSid
                     return pay.placeOrder({notifyUrl, totalFee, outTradeNo, body:'现金充值', openid:window.localStorage.openId})
                 }).then(data => {
@@ -161,7 +161,6 @@
                         "paySign" : data.paySign //微信签名
                     }
                     wx.onBridgeReady.call(self,option,outTradeNo,self.successCb) //发起微信支付
-                    console.log("吊起支付")
                 }).catch(() => {})
             },
             successCb(orderNum) { // 微信成功回调 验证微信是否有返回

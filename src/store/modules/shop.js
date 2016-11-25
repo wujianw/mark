@@ -48,6 +48,12 @@ const state = {
         ,address:""
         ,telephone:""
     },
+    activeNum:1,
+    markCoupon:{
+        id:'',
+        discntAmount:'',
+        changeUse:false
+    },
     goodsDesc:null
 
 }
@@ -113,12 +119,26 @@ const mutations = {
         state.evaluate.countNoReply = data.countnoreply
         state.evaluate.countDownScore = data.countdownscore
     },
-
+    /*
+    * 商品详情数据 创建订单
+    * */
     [types.FETCH_GOOD_DETAILS] (state,data) {
-        console.log(JSON.stringify(data))
-        console.log(data)
         state.goods = data.goodsdata
         state.shop = data.shop
+        state.activeNum = 1
+        state.markCoupon.changeUse = false
+    },
+    /*
+    * 保存将要购买的商品数量 ---用于选择优惠券
+    * */
+    [types.CREATE_ACTIVE_NUM] (state,num) {
+        state.activeNum = num
+    },
+    /*
+    * 保存修改的优惠券信息 or 清空优惠券信息
+    * */
+    [types.MARK_COUPON] (state,option) {
+        state.markCoupon = option
     },
     // 商品图文详情
     [types.GOODS_DESC] (state,goodsDesc) {

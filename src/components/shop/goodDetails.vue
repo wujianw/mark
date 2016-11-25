@@ -156,7 +156,7 @@
         }
         /* 商家信息 */
         .shop{
-            padding:0 26px;
+            padding:15px 26px;
             .info{padding:14px 0;}
             p{padding:6px 0;color:#838383;font-size:20px;}
             p.info-name{color:#505050;font-size:26px;}

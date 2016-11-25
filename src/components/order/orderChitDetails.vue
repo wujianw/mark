@@ -45,8 +45,8 @@
                 <p>下单时间：{{order.gmtCreate}}</p>
                 <p>付款手机：{{order.buyerMobile}}</p>
                 <p>商品数量：{{order.buyNumber}}</p>
-                <p>订单总价：{{order.orderAmount}}</p>
-                <p class="mark">优惠抵扣：{{(order.orderAmount - order.buyerAmount) || '0.00'}}</p>
+                <p>订单总价：{{order.goodsAmount}}</p>
+                <p class="mark">优惠抵扣：{{order.benefitPacketAmount}}</p>
                 <p class="mark">实付金额：{{order.buyerAmount}}</p>
                 <p class="mark">养老金：{{order.merchantPension}}</p>
             </div>
@@ -146,7 +146,7 @@
                     buyerTips:"",
                     merchantName:"",
                     shopId:"",
-                    tel:''
+                    tel:""
                 }
                 ,order:{
                     orderNum:"",
@@ -156,7 +156,8 @@
                     orderAmount:"",
                     packetPayAmout:"",
                     buyerAmount:"",
-                    merchantPension:""
+                    merchantPension:"",
+                    goodsAmount:""
                 }
                 ,good:null
                 ,state:null
@@ -200,9 +201,12 @@
                     buyerMobile:data.buyerMobile,
                     buyNumber:data.orderDetails[0].buyNumber,
                     orderAmount:data.orderAmount,
-                    packetPayAmout:data.packetPayAmout,
-                    buyerAmount:data.buyerAmount,
+                    packetPayAmout:data.packetPayAmout || 0,
+                    buyerAmount:data.buyerAmount,//
+                    goodsAmount:data.goodsAmount,//  应付
                     merchantPension:data.merchantPension,
+                    benefitPayAmount:data.benefitPayAmount || 0,
+                    benefitPacketAmount:(data.packetPayAmout + data.benefitPayAmount).toFixed(2) || 0.00
                 }
                 vm.coupons = data.coupons
                 vm.state = data.state
@@ -249,9 +253,9 @@
                     option = {
                         body:this.details.goodsName,
                         outTradeNo:this.order.orderNum,
-                        totalFee:this.order.buyerAmount*100,
+                        totalFee:(this.order.buyerAmount*100).toFixed(0),
                         notifyUrl:notifyUrl,
-                        openId:window.localStorage.openId
+                        openid:window.localStorage.openId
                     },
                     information = {
                         buyerAmount:this.order.buyerAmount,

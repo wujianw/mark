@@ -116,6 +116,14 @@ export const goodDetails = ({commit},{goodsId}) => {
         return Promise.resolve(obj)
     })
 }
+// 选中的订单数量，优惠券选择画面返回用
+export const toggleCreateActiveNum = ({commit},num) => {
+    commit(types.CREATE_ACTIVE_NUM,num)
+}
+export const insetMarkCoupon = ({commit},option) => {
+    commit(types.MARK_COUPON,option)
+}
+
 // 商品图文详情
 export const goodsDesc = ({commit},goodsDesc) => {
     commit(types.GOODS_DESC,goodsDesc)
