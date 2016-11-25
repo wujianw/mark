@@ -147,7 +147,7 @@
                 }).then(()=>{
                     return pay.recharge({tradeAmount:this.money})
                 }).then(data=>{
-                    let notifyUrl = domain+'/wechatpay/wechat_paynotify_h5.htm',
+                    let notifyUrl = domain+'/wechatpay/wechat_rechargenotify_h5.htm',
                         totalFee = (data.tradeAmount*100).toFixed(0)
                     outTradeNo = data.tradeSid
                     return pay.placeOrder({notifyUrl, totalFee, outTradeNo, body:'现金充值', openid:window.localStorage.openId})

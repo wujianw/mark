@@ -255,6 +255,14 @@ export default {
         return postData(url,params)
 
     }
+    ,getCollect({token=store.getters.getToken,collectType,collectId}={}){
+        let url,params;
+        url = '/api/pri/membercollect/collect.json'
+        params = {token,collectType,collectId}
+        console.log(params)
+        return postData(url,params)
+
+    }
     /**
      *
      * 取消收藏

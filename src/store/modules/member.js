@@ -48,6 +48,7 @@ const mutations = {
         state.member = member
     },
     [types.MEMBER_CLEAR] (state) {
+        state.token='',
         state.member = {
             mActivate:0,
             mName:"",

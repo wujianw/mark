@@ -36,6 +36,7 @@ const specialGoods = resolve => require(['./components/special/specialGoods'], r
 // 个人信息
 const userInformation = resolve => require(['./components/setting/userInformation'], resolve)
 const password = resolve => require(['./components/login/password'], resolve)
+const telBound = resolve => require(['./components/setting/telBound'], resolve)
 
 //绑定
 const bound = resolve => require(['./components/setting/bound'], resolve)
@@ -237,6 +238,7 @@ export const routes = [
     ,{ path: '/user/password' , name: 'password' , component: password }
     ,{ path: '/user/bound' , name: 'bound' , component: bound }
     ,{ path: '/user/activation' , name: 'activation' , component: activation }
+    ,{ path: '/user/telBound' , name: 'telBound' , component: telBound }
 
     // 相关协议模块
     ,{ path: '/agreement', name: 'agreement', component: agreement }

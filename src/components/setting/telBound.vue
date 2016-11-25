@@ -47,7 +47,7 @@
     }
 </style>
 <script type="text/babel">
-    import mobileCode from './mobileCode'
+    import mobileCode from '../login/mobileCode'
     import submit from '../submit'
     import MessageBox from '../../msgbox';
     const touchStart = (e,self) => {

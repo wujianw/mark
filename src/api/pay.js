@@ -40,6 +40,8 @@ export default {
     payCb({orderNum,type='LOCAL'}={}) {
         let url = '/wechatpay/orderquery_h5.htm',
             params = {orderNum,type}
+        console.log("支付成功验证回调：")
+        console.log(params)
         return postData(url,params)
     },
     /*

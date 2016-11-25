@@ -1,6 +1,7 @@
 <template>
     <div class="good-details-el">
         <header class="hd">
+            <div class="enshrine" @click="collect"><i>收藏</i></div>
             <div class="hd-pic">
                 <img :src="goods.goodsImages" alt=""/>
             </div>
@@ -36,11 +37,11 @@
                     <good-review :reviews="countreview" :goodsId="goods.id"></good-review>
                 </div>
             </section>
-            <section class="lump">
+            <section @click="linkShop"class="lump">
                 <h3>
                     <p>商家信息</p>
                 </h3>
-                <div class="lump-content flex-space shop">
+                <div class="lump-content flex-space shop" >
                     <div class="pic-shop"><img :src="shop.logoImg" alt="" class="shop-logo"></div>
                     <div class="info">
                         <p class="info-name">{{shop.name}}</p>
@@ -81,7 +82,16 @@
         .hd-title p{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;color:#fff;}
         .hd-title p:nth-of-type(1){width:25em;font-size:28px;padding:10px 0;}
         .hd-title p:nth-of-type(2){width:30em;font-size:20px;}
-
+        .enshrine{
+            position:absolute;
+            top:0;
+            width:90%;
+            padding:0 5%;
+            line-height:78px;
+            background:rgba(0,0,0,.3);
+            text-align: right;
+            i{font-size:28px;}
+        }
         .flex-box{display: flex;}
         .section{
             padding:0 18px 0 30px;
@@ -184,6 +194,8 @@
 <script type="text/babel">
     import goodReview from './goodReview'
     import shop from "../../api/shop"
+    import member from "../../api/member"
+    import MessageBox from "../../msgbox"
     import { mapGetters,Store } from 'vuex'
     import store from '../../store'
     export default{
@@ -207,6 +219,18 @@
                     vm.countreviewLen = obj.countreviewLen
                 })
             })
+        }
+        ,methods:{
+            linkShop() {
+                this.$router.push({name:'shopDetails',query:{shopId:this.goods.merchantId}})
+            },
+            collect() {
+                member.getCollect({collectType:'0',collectId:this.$route.query.goodsId}).then(() => {
+                    MessageBox.alert("收藏成功")
+                }).catch(() => {
+                    MessageBox.alert("您已经收藏该商品")
+                })
+            }
         }
         ,components:{
             goodReview

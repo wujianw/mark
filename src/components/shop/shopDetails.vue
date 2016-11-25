@@ -1,7 +1,10 @@
 <template>
     <div class="shop-details-el">
         <header class="hd">
-            <img :src="info.background" alt="">
+            <div class="enshrine" @click="collect"><i>收藏</i></div>
+            <div class="img-wrap">
+                <img :src="info.background" alt="">
+            </div>
         </header>
         <section>
             <div class="title-wrap flex-space">
@@ -67,8 +70,21 @@
         background:#fff;
         .hd{
             position:relative;
-            height:380px;
-            img{width:100%;height:100%;}
+            .enshrine{
+                position:absolute;
+                top:0;
+                width:90%;
+                padding:0 5%;
+                line-height:78px;
+                background:rgba(0,0,0,.3);
+                text-align: right;
+                i{font-size:28px;}
+            }
+            .img-wrap{
+                height:380px;
+                img{width:100%;height:100%;}
+            }
+
         }
         /* 标题&积分率 */
         .title-wrap{
@@ -174,6 +190,8 @@
     import goodItem from "./goodItem"
     import couponItem from "./couponItem"
     import shop from "../../api/shop"
+    import member from "../../api/member"
+    import MessageBox from "../../msgbox"
     export default{
         data(){
             return{
@@ -205,6 +223,15 @@
                     vm.tel = data.info.tel || data.info.mobile_number
                 })
             })
+        }
+        ,methods:{
+            collect() {
+                member.getCollect({collectType:"1",collectId:this.$route.query.shopId}).then(() => {
+                        MessageBox.alert("收藏成功")
+                }).catch(() =>{
+                        MessageBox.alert("您已经收藏该商家")
+                })
+            }
         }
         ,components:{goodItem, goodReview,couponItem}
     }

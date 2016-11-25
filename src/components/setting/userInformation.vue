@@ -75,7 +75,7 @@
                         icon:{
                             iconClass:'icon-bound'
                         },
-                        to: {name: 'loadMobile' },
+                        to: {name: 'telBound' },
                         details:"换绑"
                     }
                     ,password:{
