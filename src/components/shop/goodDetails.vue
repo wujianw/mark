@@ -1,7 +1,7 @@
 <template>
     <div class="good-details-el">
         <header class="hd">
-            <div class="enshrine" @click="collect"><i>收藏</i></div>
+            <div class="enshrine" @click="collect"><i class="icon" :class="isCollect ? 'icon-is-collect' : 'icon-collect'"></i></div>
             <div class="hd-pic">
                 <img :src="goods.goodsImages" alt=""/>
             </div>
@@ -90,7 +90,7 @@
             line-height:78px;
             background:rgba(0,0,0,.3);
             text-align: right;
-            i{font-size:28px;}
+            i{font-size:30px;color:#f7a926;}
         }
         .flex-box{display: flex;}
         .section{
@@ -202,7 +202,8 @@
         data(){
             return{
                 countreviewLen:0,// 评论长度
-                countreview:[] // 评论数量
+                countreview:[], // 评论数量
+                isCollect:false
             }
         },
         computed:{
@@ -217,6 +218,7 @@
                 next(vm => {
                     vm.countreview = obj.countreview
                     vm.countreviewLen = obj.countreviewLen
+                    vm.isCollect = vm.goods.isCollect
                 })
             })
         }
@@ -225,11 +227,27 @@
                 this.$router.push({name:'shopDetails',query:{shopId:this.goods.merchantId}})
             },
             collect() {
-                member.getCollect({collectType:'0',collectId:this.$route.query.goodsId}).then(() => {
-                    MessageBox.alert("收藏成功")
-                }).catch(() => {
-                    MessageBox.alert("您已经收藏该商品")
-                })
+                if(!window.localStorage.token){
+                    MessageBox.confirm("请重新登入").then(() => {
+                        this.$router.push({name:'loadMobile'})
+                    }).catch(() => {})
+                }else {
+                    if(this.isCollect){
+                        MessageBox.confirm("是否取消收藏").then(() => {
+                            return member.getUnCollect({collectType:"0",collectId:this.$route.query.goodsId})
+                        }).then(() => {
+                            this.isCollect = false
+                        }).catch(() => {
+                            MessageBox.alert("您已经收藏该商品")
+                        })
+                    }else {
+                        member.getCollect({collectType:'0',collectId:this.$route.query.goodsId}).then(() => {
+                            this.isCollect = true
+                        }).catch(() => {
+                            MessageBox.alert("您已经收藏该商品")
+                        })
+                    }
+                }
             }
         }
         ,components:{

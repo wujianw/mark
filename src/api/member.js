@@ -255,6 +255,11 @@ export default {
         return postData(url,params)
 
     }
+    /*
+    *  收藏商家 or 商品
+    *  collectType => 收藏类型（0：商品、1：商户）
+    *  collectId => 商品ID或商户ID
+    * */
     ,getCollect({token=store.getters.getToken,collectType,collectId}={}){
         let url,params;
         url = '/api/pri/membercollect/collect.json'
@@ -263,13 +268,23 @@ export default {
         return postData(url,params)
 
     }
+    /*
+    *  单个 取消收藏
+    *  @params collectType => 收藏类型（0：商品、1：商户）
+    *  @params collectId => 商品ID或商户ID
+    * */
+    ,getUnCollect({token=store.getters.getToken,collectType,collectId}={}){
+        let url,params;
+        url = '/api/pri/membercollect/uncollect.json'
+        params = {token,collectType,collectId}
+        return postData(url,params)
+    }
     /**
-     *
-     * 取消收藏
+     * 批量取消收藏
      * @params collectType => 0：商品、1：商户
      * @params collectIds => 商品ID或商户ID，以逗号隔开
      */
-    ,getCloseCollect({token=store.getters.getToken,collectType,collectIds}={}){
+    ,getUnCollects({token=store.getters.getToken,collectType,collectIds}={}){
         let url,params;
         url = '/api/pri/membercollect/uncollects.json'
         params = {token,collectType,collectIds}

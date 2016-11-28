@@ -72,7 +72,8 @@
                     "password":this.password
                 }
                 this.$store.dispatch('login', params).then(res => {
-                    this.$router.push({name:'user'})
+//                    this.$router.push({name:'user'})
+                    this.$router.back()
                 }).catch(res =>{
                     MessageBox.alert(res)
                 })

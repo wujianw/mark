@@ -71,7 +71,7 @@ export default {
     getShopDetails({
         lon=window.localStorage.lon,
         lat=window.localStorage.lat,
-        token=window.localStorage.token,
+        token=window.localStorage.token||"",
         shopId}={}) {
         let url,params
         url = '/api/open/shop/get.json'

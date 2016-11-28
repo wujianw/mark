@@ -1,7 +1,7 @@
 <template>
     <div class="shop-details-el">
         <header class="hd">
-            <div class="enshrine" @click="collect"><i>收藏</i></div>
+            <div class="enshrine" @click="collect"><i class="icon" :class="isCollect ? 'icon-is-collect' : 'icon-collect'"></i></div>
             <div class="img-wrap">
                 <img :src="info.background" alt="">
             </div>
@@ -70,6 +70,7 @@
         background:#fff;
         .hd{
             position:relative;
+            /* 收藏 */
             .enshrine{
                 position:absolute;
                 top:0;
@@ -78,7 +79,7 @@
                 line-height:78px;
                 background:rgba(0,0,0,.3);
                 text-align: right;
-                i{font-size:28px;}
+                i{font-size:30px;color:#f7a926;}
             }
             .img-wrap{
                 height:380px;
@@ -207,6 +208,7 @@
                     },
                     listBenefit:null
                 },
+                isCollect:false,
                 goods:[],
                 review:[],
                 reviewLen:0
@@ -221,16 +223,38 @@
                     vm.reviewLen = data.reviews.total
                     vm.goods = data.goods.filter(item => item.consumeMode == 'offline')
                     vm.tel = data.info.tel || data.info.mobile_number
+                    vm.isCollect = data.info.iscollect
                 })
             })
         }
         ,methods:{
             collect() {
-                member.getCollect({collectType:"1",collectId:this.$route.query.shopId}).then(() => {
-                        MessageBox.alert("收藏成功")
-                }).catch(() =>{
-                        MessageBox.alert("您已经收藏该商家")
-                })
+                /*
+                * 未登入
+                * 登入已收藏
+                * 登入未收藏
+                * */
+                if(!window.localStorage.token){
+                    MessageBox.confirm("请重新登入").then(() => {
+                        this.$router.push({name:'loadMobile'})
+                    }).catch(() => {})
+                }else{
+                    if(this.isCollect){
+                        MessageBox.confirm("是否取消收藏").then(() => {
+                            return member.getUnCollect({collectType:"1",collectId:this.$route.query.shopId})
+                        }).then(() => {
+                            this.isCollect = false
+                        }).catch(() => {
+                            MessageBox.alert("您已经收藏该商家")
+                        })
+                    }else{
+                        member.getCollect({collectType:"1",collectId:this.$route.query.shopId}).then(() => {
+                            this.isCollect = true
+                        }).catch(() =>{
+                            MessageBox.alert("您已经收藏该商家")
+                        })
+                    }
+                }
             }
         }
         ,components:{goodItem, goodReview,couponItem}

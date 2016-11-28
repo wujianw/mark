@@ -1,6 +1,6 @@
 <template>
     <div class="find-password-el">
-        <mobile-code type="findPwd" :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]">
+        <mobile-code type="bindMobile" :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]">
             <div class="slide-wrap">
                 <span class="message">按住滑块拖至最右</span>
                 <div class="slide" v-touch="{methods:touchEnd}">

@@ -29,8 +29,8 @@
                     <p>{{item.merchant_name}}</p>
                     <p>{{item.business_type_name}}</p>
                 </div>
-                <div slot="btn" class="btn-wrap" @click.stop="linkMessage">
-                    <p class="meg-num">{{item.messageCount | maxLength}}</p>
+                <div slot="btn" class="btn-wrap" @click.stop="linkMessage(item.merchant_id,item.messageCount)">
+                    <p class="meg-num" v-if="item.messageCount">{{item.messageCount | maxLength}}</p>
                     <i class="icon icon-information" v-if="!isDelete"></i>
                 </div>
             </block>
@@ -136,7 +136,6 @@
         }
         ,beforeRouteEnter (to, from, next) {
             member.getMemberCollect().then(val => {
-                console.log(JSON.stringify(val))
                 next(vm => {
                     vm.merchantdata = val.merchantdata
                     vm.goodsdata = val.goodsdata
@@ -164,7 +163,6 @@
                 if(length == this.shopDet.length){
                     this.shopDet.push(value)
                 }
-                console.log(this.shopDet)
             },
             goodDelete(value) {
                 let length = this.goodDet.length
@@ -172,21 +170,22 @@
                 if(length == this.goodDet.length){
                     this.goodDet.push(value)
                 }
-                console.log(this.goodDet)
             },
             toggleDelete() { // 删除模式切换,清除上一次选中的预删除id
                 this.isDelete = !this.isDelete
                 this.goodDet = []
                 this.shopDet = []
             },
-            linkMessage() { // route消息列表
-
+            linkMessage(id,count) { // route消息列表
+                if(count){
+                    this.$router.push({name:'shopAllMessage',query:{shopId:id}})
+                }
             },
             getDelete() {// 取消收藏
                 let self = this,
                     collectType = self.isGood ? 0 : 1,
                     collectIds = self.isGood ? self.goodDet.join(",") : self.shopDet.join(",")
-                member.getCloseCollect({collectType,collectIds}).then(() => {
+                member.getUnCollects({collectType,collectIds}).then(() => {
                     // 成功后更新数据
                     if(!self.isGood){
                         self.shopDet.forEach(function(item){
