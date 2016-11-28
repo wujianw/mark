@@ -21,7 +21,7 @@
                 </a>
             </div>
         </section>
-        <section class="sweep-pay-wrap section" v-if="info.isCashpayment==1">
+        <section class="sweep-pay-wrap section" v-if="info.isCashpayment == 1">
             <div class="sweep-pay title-wrap flex-space">
                 <div class="title">
                     <i class="icon icon-benefit"></i>

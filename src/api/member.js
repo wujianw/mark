@@ -205,6 +205,16 @@ export default {
         params = {merchantId,start,rows,goodsId,mode}
         return postData(url,params)
     }
+    /**
+     * 提交评论
+     * @params  orderNo
+     */
+    ,getEvaluate(token,orderNo,goodsId,score,content,photo1,photo2,photo3) {
+        let url,params
+        url = '/api/pri/memberreview/refer.json'
+        params = {token,orderNo,goodsId,score,content,photo1,photo2,photo3}
+        return postData(url,params)
+    }
 
     /**
      * 钱包首页
@@ -364,6 +374,12 @@ export default {
         let url,params
         url = '/api/pri/scancode/creatOrder.htm'
         params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
+        return postData(url,params)
+    }
+    ,scanBill({merchantId}={}){
+        let url,params
+        url = '/api/open/refund/listByMerchantId.htm'
+        params = {merchantId}
         return postData(url,params)
     }
     //绑定

@@ -83,13 +83,16 @@
                     maxDiscntAmount:0,// 最高减免金额
                 }
             }
-        }
-        ,computed: {
+        },
+        computed: {
             ...mapGetters({
                 token:'getToken',
             })
-        }
-        ,methods:{
+        },
+        created() {
+            member.scanBill({merchantId:this.$route.query.shopId})
+        },
+        methods:{
             submitScanBill(){
                 let self = this
                 member.confirmScanbill({
@@ -139,8 +142,8 @@
             ,btn_login(){
                 this.$router.push({name:'loadMobile'})
             }
-        }
-        ,components:{ submit }
+        },
+        components:{ submit }
     }
 </script>
 <style lang="scss" rel="stylesheet/scss">
