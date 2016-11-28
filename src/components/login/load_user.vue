@@ -60,8 +60,8 @@
                 ,passwordIcon: {
                     iconClass: 'icon-password'
                 },
-                password: '',
-                loginId: ''
+                password: 123456,
+                loginId: 17858858540
             }
         }
         ,methods:{
@@ -72,7 +72,6 @@
                     "password":this.password
                 }
                 this.$store.dispatch('login', params).then(res => {
-//                    this.$router.push({name:'user'})
                     this.$router.back()
                 }).catch(res =>{
                     MessageBox.alert(res)

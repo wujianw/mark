@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div>
-                <router-link :to="{name:'userInformation',query:{token:1}}">
+                <router-link :to="{name:'userInformation'}">
                     <span class="link-details">完善信息<i class="icon icon-arrow-right"></i></span>
                 </router-link>
             </div>
@@ -223,25 +223,27 @@
             * 初始化获取首页 信息数据
             * if from.name with userInformation or message 无需改变首页信息数据
             * */
-            if(from.name == "userInformation" || from.name == "messageList") {
+            member.getIndex({}).then(data => {
+                store.dispatch("fetchInformation",data)
+            }).then(() => {
                 next()
-            }else {
-                member.getIndex({}).then(data => {
-                        console.log(JSON.stringify(data))
-                    store.dispatch("fetchInformation",data)
-                }).then(() => {
-                    next()
-                }).catch(() => {
-                    store.dispatch("clearUser")
-                    window.localStorage.removeItem('token')
-                    next()
-                })
-            }
+            }).catch(() => {
+                store.dispatch("clearUser")
+                window.localStorage.removeItem('token')
+                next()
+            })
         }
         ,created() {
-            if(this.getMember.mName == ""){
+            if(this.getMember.mName == "" && window.localStorage.token){
+                console.log(window.localStorage.token)
                 this.$store.dispatch("getUser")
             }
+        }
+        ,beforeRouteLeave(to,from,next) {// 销毁实例
+            this.$nextTick(() =>{
+                this.$destroy()
+            })
+            next()
         }
         ,components:{linkList, blockBtn}
     }

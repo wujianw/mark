@@ -34,7 +34,7 @@
                 //调用密码修改接口，成功后返回登入页面
                 let reg = /^[0-9a-zA-Z$#@^&]{6,}$/
                 if(this.newPassword !== this.password){
-                    MessageBox.alert("两次输入不一致")
+                    MessageBox.alert("两次输入密码不一致")
                     return false
                 }
                 if(!reg.test(this.password)){

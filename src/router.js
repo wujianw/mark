@@ -125,9 +125,11 @@ const messageDetails = resolve => require(['./components/messages/messageDetails
 // 已登入重定向
 const loginRedirect = (to, from, next) => {
     if(typeof window.localStorage.token != 'undefined' && window.localStorage.token.length > 5) {
+        console.log("loginRedirect")
         next({name:'user'})
+    }else{
+        next()
     }
-    next()
 }
 //
 const scrollTop = (to, from, next) => {

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <router-view></router-view>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
         <footer class="footer-nav-wrap">
             <nav class="flex-space-around footer-nav">
                 <block-btn v-for="item in nav" :icon="item.icon" :name="item.name" :to="item.to"></block-btn>

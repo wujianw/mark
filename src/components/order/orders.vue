@@ -30,12 +30,14 @@
         }
         ,components:{ orderScan,orderChit }
         ,watch: {
-            $route(){
-                this.chitOrder=[]
-                this.scanOrder=[]
-                this.busy = true
-                this.start = 0
-                this.fetchData()
+            $route(to){
+                if(to.name == 'orders'){
+                    this.chitOrder=[]
+                    this.scanOrder=[]
+                    this.busy = true
+                    this.start = 0
+                    this.fetchData()
+                }
             }
         }
         ,methods:{

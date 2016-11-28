@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view class="view-top" v-if="showView"></router-view>
+        <router-view class="view-top"></router-view>
         <loading v-show="showLoading"></loading>
     </div>
 </template>
@@ -9,14 +9,13 @@
     import Vue from 'vue'
     import MessageBox from './msgbox'
     import { mapGetters } from 'vuex'
-    import WX from './api/wx'
+
     import shop from './api/shop'
     export default {
         data() {
             return {
                 showLoading: false,
-                showModal: false,
-                showView:false
+                showModal: false
             }
         }
         ,computed: {
@@ -39,39 +38,6 @@
                     return response
                 })
             })
-
-            // 初始化获取经纬度
-            if(this.geography.latitude == ''){
-                WX.getSignature()
-                .then(wxJson => {
-                    wx.config({
-                        debug: false,
-                        appId: wxJson.appid,
-                        timestamp: wxJson.timestamp,
-                        nonceStr: wxJson.noncestr,
-                        signature: wxJson.signature,
-                        jsApiList: ['getLocation']
-                    })
-                    let latitude,longitude
-                    wx.error(function() {
-                        self.showView = true
-                    })
-                    wx.ready(function(){
-                        wx.getLocation({
-                            type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
-                            success:function(res) {
-                                latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
-                                longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
-//                                WX.getCityName([longitude,latitude])
-                                self.getGeography({latitude,longitude})
-                            },
-                            cancel:function() {
-                                self.showView = true
-                            }
-                        })
-                    })
-                })
-            }
             window.localStorage.openId = document.getElementById("open").value
             console.log(window.localStorage.openId)
             let appVersion = window.navigator.appVersion.toLowerCase(),  //客户端信息
@@ -82,23 +48,6 @@
                 self.showView = true
             }
             return true
-        }
-        ,methods:{
-            getGeography({latitude,longitude}={}) {
-                let self = this
-                let params = {gcjLon:longitude, gcjLat:latitude}
-                shop.getLonLat(params).then(data => {
-                    console.log(JSON.stringify(data))
-                    let latitude = data.bdlat,
-                        longitude = data.bdlon
-                    window.localStorage.lon = longitude // 经度
-                    window.localStorage.lat = latitude // 纬度
-                    self.$store.dispatch('fetchGeography',{latitude,longitude}).then(() => {
-                        self.showView = true
-                    })
-                    self.$store.dispatch('setLocation',{area:data.area,address:data.address})
-                })
-            }
         }
         ,components:{
             loading

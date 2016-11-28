@@ -4,7 +4,7 @@
             <div class="message-logo">
                 <img :src="item.groupLogo">
             </div>
-            <div class="lint">{{item.unMessageNum}}</div>
+            <div class="lint" v-if="item.unMessageNum">{{item.unMessageNum}}</div>
             <div class="count">
                 <div class="flex-space title-time">
                     <div class="title">{{item.uName}}</div>
@@ -78,23 +78,15 @@
 </style>
 <script type="text/babel">
     import member from "../../api/member"
-    import { mapGetters } from 'vuex'
     export default{
         data(){
             return {
                 details:[]
             }
         }
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
-
-
-        }
         ,beforeRouteEnter (to,from,next) {
             next(vm => {
-                member.getReception().then(data => {
+                member.getReception().then(data => { // 拉取用户消息
                     member.getMessage().then(val => {
                         vm.details = val
                     })

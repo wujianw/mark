@@ -97,6 +97,7 @@
             }
         },
         beforeRouteEnter(to,from,next) {
+
             store.dispatch("getUser").then(() => {
                 next()
             }).catch(() => {
@@ -106,11 +107,12 @@
         }
         ,methods:{
             logout() {
-                window.localStorage.removeItem('token')
-                this.$store.dispatch("clearUser")
-                this.$router.push({name:'loadMobile'})
+                window.localStorage.token = ''
+                this.$store.dispatch("clearUser").then(() => {
+                    this.$router.replace({name:'loadMobile'})
+                })
             }
-        },
-        components:{linkList,submit}
+        }
+        ,components:{linkList,submit}
     }
 </script>

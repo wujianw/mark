@@ -390,6 +390,25 @@ export default {
         return postData(url,params)
     }
     /*
+    * 绑定手机号
+    * type 1验证密码 => 2验证手机号是否存在 => 3提交验证码修改手机号
+    * */
+    ,bindMobile(type,{token=store.getters.getToken,password,mobile='',vcode=''}={}){
+        let url,params
+        url = '/api/pri/member/bind_mobile'+type+'.json'
+        params = {token,password,mobile,vcode}
+        return postData(url,params)
+    }
+    /*
+    * 获取验证码
+    * */
+    ,getMobileCode({type,mobile=''}={}){
+        let url,params
+        url = '/api/open/common/get_vcode.json'
+        params = {mobile,type}
+        return postData(url,params)
+    }
+    /*
     * 获取会员信息
     * */
     ,getMember(token=store.getters.getToken) {

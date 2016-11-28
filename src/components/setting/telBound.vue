@@ -1,19 +1,63 @@
 <template>
     <div class="find-password-el">
-        <mobile-code type="bindMobile" :mobile="mobile" @mobileFn="mobile = arguments[0]" :vcode="vcode" @vcodeFn="vcode = arguments[0]">
-            <div class="slide-wrap">
-                <span class="message">按住滑块拖至最右</span>
-                <div class="slide" v-touch="{methods:touchEnd}">
-                    <div class="slide-block" >&gt;&gt;</div>
-                </div>
-            </div>
-        </mobile-code>
-        <submit class="" value="验证(1/2)" :dis="!dis" @commit="verify"></submit>
+        <ul class="flex-center title">
+            <li class="flex-space" :class="{active:step==1}">验证身份<i class="icon icon-arrow-right"></i></li>
+            <li class="flex-space" :class="{active:step==2}">绑定手机<i class="icon icon-arrow-right"></i></li>
+            <li class="flex-space" :class="{active:step==3}">验证码</li>
+        </ul>
+        <div v-if="step == 1">
+            <input-text
+                type="password"
+                v-model="password"
+                maxLength="18"
+                placeholder="请输入您的密码"
+                :icon="{iconClass:'icon-password'}"
+            ></input-text>
+            <submit class="" value="下一步" :dis="!1" @commit="verify()"></submit>
+        </div>
+        <div v-if="step == 2">
+            <input-text
+                type="number"
+                v-model="mobile"
+                maxLength="11"
+                placeholder="请输入您的手机号"
+                :icon="{iconClass:'icon-user'}"
+            ></input-text>
+            <submit class="" value="下一步" :dis="!1" @commit="verify()"></submit>
+        </div>
+        <div v-if="step == 3">
+            <input-text
+                type="number"
+                v-model="vcode"
+                maxLength="4"
+                placeholder="请输入您收到的验证码"
+                :icon="{iconClass:'icon-verification'}"
+            ></input-text>
+            <submit class="" value="下一步" :dis="!1" @commit="verify()"></submit>
+        </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .find-password-el{
         padding:26px 22px;
+        .title{
+            padding-bottom:20px;
+            line-height: 1.5;
+            text-align: center;
+            font-size:30px;
+            color:#505050;
+            li{
+                flex-grow: 1;
+                &:before{content:''}
+            }
+            li:last-of-type{
+                &:after{content:''}
+            }
+            i{color:#505050;}
+            li.active{
+                color:#e85453;
+            }
+        }
         .slide-wrap{
             position:relative;
             margin:20px 0;
@@ -47,133 +91,46 @@
     }
 </style>
 <script type="text/babel">
-    import mobileCode from '../login/mobileCode'
+    import inputText from '../inputText'
     import submit from '../submit'
-    import MessageBox from '../../msgbox';
-    const touchStart = (e,self) => {
-        var touches = e.touches[0];
-        var tapObj = self.tapObj; // 引用类型赋值
-        tapObj.pageX = touches.pageX;
-        tapObj.pageY = touches.pageY;
-        self.time = +new Date();
-
-    }
-    const touchMove = (e,self) => {
-        if(e.targetTouches.length > 1 || e.scale && e.scale !== 1) return;
-        var tapObj = self.tapObj;
-        var touches = e.changedTouches[0];
-        tapObj.distanceX = touches.pageX - tapObj.pageX;
-        e.preventDefault();
-        if(tapObj.width == 706){
-            return false
-        }
-        tapObj.width = Math.ceil(148 + tapObj.distanceX)
-        if(tapObj.width < 74 ){
-            self.style.width = 74 + 'px';
-        }else if ( tapObj.width > 710){
-            tapObj.width = 706
-            self.style.width = 706 +'px';
-        }else {
-            self.style.width = tapObj.width + 'px';
-        }
-    }
-    const touchEnd = (e,self) => {
-        var tapObj = self.tapObj;
-        self.time = +new Date() - self.time;
-        if (self.disabled || tapObj.width < 700){
-            setTimeout(function () {
-                self.style.width = 148+'px';
-            }, 150)
-        }else{
-            setTimeout(function () {
-                self.handler(e);
-            }, 150)
-        }
-    }
+    import MessageBox from '../../msgbox'
+    import member from '../../api/member'
     export default{
         data(){
             return{
-                mobile:"",
-                vcode:"",
-                actionCode:false
+                step:1,
+                mobile:'',
+                vcode:'',
+                password:''
             }
         }
-        ,components:{
-            mobileCode,
-            submit
-        }
-        ,directives:{
-            touch:{
-                bind: function (el, binding) {
-                    var value = binding.value;
-                    el.tapObj = {};
-                    el.handler = function (e) { //This directive.handler
-                        value.event = e;
-                        value.tapObj = el.tapObj;
-                        value.methods.call(this, value);
-                    };
-                    el.addEventListener('touchstart', function (e) {
-                        Object.defineProperties(e, { // 重写currentTarget对象 与jq相同
-                            "currentTarget": {
-                                value: el,
-                                writable: true,
-                                enumerable: true,
-                                configurable: true
-                            },
-                        });
-                        if (binding.modifiers.stop) e.stopPropagation()
-                        if (binding.modifiers.prevent) e.preventDefault()
-                        touchStart(e, el);
-                    }, false);
-                    el.addEventListener('touchmove', function (e) {
-                        Object.defineProperties(e, { // 重写currentTarget对象 与jq相同
-                            "currentTarget": {
-                                value: el,
-                                writable: true,
-                                enumerable: true,
-                                configurable: true
-                            },
-                        });
-                        e.preventDefault();
-                        touchMove(e, el);
-                    }, false);
-                    el.addEventListener('touchend', function (e) {
-                        Object.defineProperties(e, { // 重写currentTarget对象 与jq相同
-                            "currentTarget": {
-                                value: el,
-                                writable: true,
-                                enumerable: true,
-                                configurable: true
-                            },
-                        });
-                        e.preventDefault();
-                        return touchEnd(e, el);
-                    }, false);
-                }
-            }
-        }
+        ,components:{submit, inputText}
         ,methods:{
-            touchEnd(){
-                this.actionCode = true
-            }
-            ,verify(){
-                console.log(this.mobile+','+this.vcode)
-                this.$http.get('/api/open/member/find_pwd2.json',{params:{"mobile":this.mobile,"vcode":this.vcode}})
-                    .then(res => {
-                        let data = JSON.parse(res.data)
-                        if(data.code == 0){
-                            this.$router.push({name:'setPassword',params:{"mobile":this.mobile,"vcode":this.vcode}})
-                        }else{
-                            MessageBox.alert(data.message)
-                        }
-                    })
-            }
-
+            verify() {
+                if(this.step == 1 && !/^[0-9a-zA-Z$#@^&]{6,}$/.test(this.password)){
+                    MessageBox.alert("6位及以上，字母加数字或者合法字符")
+                    return false
+                }
+                if(this.step == 2 && !/^[1][\d]{10}$/.test(this.mobile)){
+                    MessageBox.alert("请输入有效手机号码")
+                    return false
+                }
+                if(this.step == 3 && !/^[\d]{4}$/.test(this.vcode)){
+                    MessageBox.alert("验证码错误")
+                    return false
+                }
+                member.bindMobile(this.step,{password:this.password,vcode:this.vcode,mobile:this.mobile}).then(() => {
+                    if(this.step == 2){
+                        return member.getMobileCode({type:'bindMobile',mobile:this.mobile})
+                    }
+                }).then(() => {
+                    this.step++
+                }).catch(() => {})
+            },
         }
-        ,computed:{
-            dis() {
-                return this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/) && this.actionCode
-            }
+        ,beforeRouteLeave(to,from,next) {
+            this.$destroy()
+            next()
         }
     }
 </script>

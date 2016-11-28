@@ -88,7 +88,7 @@
             //验证手机号码，验证发送短信
             refCaptcha() {
                 this.$nextTick(function () {
-                    if(this.mobile.match(/^1+\d{10}$/) && this.refCaptchaBtn){
+                    if(this.mobile.match(/^[1][\d]{10}$/) && this.refCaptchaBtn){
                         this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
                             .then(() => {
                                 this.refCaptchaBtn = false

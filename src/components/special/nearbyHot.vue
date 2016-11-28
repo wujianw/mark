@@ -40,10 +40,12 @@
     import { mapGetters } from 'vuex'
     import slider from "./slider"
     import goodItem from './indexGoodItem'
+    import WX from '../../api/wx'
+    import shop from '../../api/shop'
     export default {
         data() {
             return {
-                busy :false
+                busy :true
             }
         },
         computed: {
@@ -53,8 +55,8 @@
                 area:'getLocation'
             }),
             params() {
-                console.log("longitude:"+this.geography.longitude)
                 return {
+                    cityId:this.area.cityCode,
                     type:'',// 特卖类型 特卖类别（18,19,20,21）
                     lon:this.geography.longitude || window.localStorage.lon || '',
                     lat:this.geography.latitude || window.localStorage.lat || '',
@@ -63,10 +65,67 @@
                     goodsName:''// 模糊查询用
                 }
             }
+        },
+        created() {
+            // 初始化获取经纬度
+            let self = this
+            if(this.geography.latitude == ''){
+                WX.getSignature()
+                    .then(wxJson => {
+                    wx.config({
+                        debug: false,
+                        appId: wxJson.appid,
+                        timestamp: wxJson.timestamp,
+                        nonceStr: wxJson.noncestr,
+                        signature: wxJson.signature,
+                        jsApiList: ['getLocation']
+                    })
+                    let latitude,longitude
+                    wx.error(function() {
+                        self.busy = false
+                    })
+                    wx.ready(function(){
+                        wx.getLocation({
+                            type: 'gcj02', // 默认为wgs84的gps坐标,'gcj02'
+                            success:function(res) {
+                                latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
+                                longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
+                                self.getGeography({latitude,longitude})
+                            },
+                            cancel:function() {
+
+                            }
+                        })
+                    })
+                })
+            }else{
+                this.busy = false
+            }
+            let appVersion = window.navigator.appVersion.toLowerCase(),  //客户端信息
+                isSystem = appVersion.indexOf("micromessenger")>-1
+            if(process.env.NODE_ENV != 'production' && !isSystem){
+                this.busy = false
+            }
         }
         ,methods:{
+            getGeography({latitude,longitude}={}) {
+                let self = this
+                let params = {gcjLon:longitude, gcjLat:latitude}
+                shop.getLonLat(params).then(data => {
+                    console.log(JSON.stringify(data))
+                    let latitude = data.bdlat,
+                        longitude = data.bdlon
+                    window.localStorage.lon = longitude // 经度
+                    window.localStorage.lat = latitude // 纬度
+                    self.$store.dispatch('fetchGeography',{latitude,longitude}).then(() => {
+                        self.busy = false
+                    })
+                    self.$store.dispatch('setLocation',{area:data.area,address:data.address})
+                })
+            },
             more(){
                 this.busy = true
+                console.log(this.params)
                 this.$store.dispatch("specialData",{params:this.params}).then(more => {
                     this.busy = !more
                 })
