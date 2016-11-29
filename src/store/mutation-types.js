@@ -35,6 +35,9 @@ export const FETCH_GOOD_DETAILS = 'FETCH_GOOD_DETAILS'
 export const CREATE_ACTIVE_NUM = 'CREATE_ACTIVE_NUM'
 export const MARK_COUPON = 'MARK_COUPON'
 
+// 商家详情
+export const FETCH_SHOP_DETAILS = 'FETCH_SHOP_DETAILS'
+
 // 特卖商品列表
 export const SPECIAL_GOODS = 'SPECIAL_GOODS'
 

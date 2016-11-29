@@ -374,6 +374,7 @@ export default {
         let url,params
         url = '/api/pri/scancode/creatOrder.htm'
         params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
+        console.log(params)
         return postData(url,params)
     }
     ,scanBill({merchantId}={}){

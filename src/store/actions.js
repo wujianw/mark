@@ -116,6 +116,14 @@ export const goodDetails = ({commit},{goodsId}) => {
         return Promise.resolve(obj)
     })
 }
+
+// 当前商品详情数据，用于创建订单
+export const fetchShopDetails = ({commit},shopId) => {
+    return shop.getShopDetails({shopId}).then(data => {
+        commit(types.FETCH_SHOP_DETAILS,data)
+    })
+}
+
 // 选中的订单数量，优惠券选择画面返回用
 export const toggleCreateActiveNum = ({commit},num) => {
     commit(types.CREATE_ACTIVE_NUM,num)

@@ -27,7 +27,7 @@
                     <i class="icon icon-benefit"></i>
                     <span>到店买单</span>
                 </div>
-                <router-link :to="{name:'scanBill',query:{shopName:info.merchant_name,shopId:info.merchant_id}}" class="sweep-pay-link" >我要买单</router-link>
+                <router-link :to="{name:'scanBill',query:{source:1,shopId:info.merchant_id}}" class="sweep-pay-link" >我要买单</router-link>
             </div>
             <div class="active-rule">
                 <!--<p>{{info.campaign.title}}</p>-->
@@ -193,6 +193,8 @@
     import shop from "../../api/shop"
     import member from "../../api/member"
     import MessageBox from "../../msgbox"
+    import store from '../../store'
+    import { mapGetters } from 'vuex'
     export default{
         data(){
             return{
@@ -214,18 +216,24 @@
                 reviewLen:0
             }
         }
+        ,computed:{
+            ...mapGetters({
+                shop:"shopDetails"
+            })
+        }
         ,beforeRouteEnter(to,from,next) {
             let shopId = to.query.shopId
-            shop.getShopDetails({shopId}).then(data => {
-                next(vm => {
-                    vm.info = data.info
-                    vm.review = data.reviews.datas.slice(0,2)
-                    vm.reviewLen = data.reviews.total
-                    vm.goods = data.goods.filter(item => item.consumeMode == 'offline')
-                    vm.tel = data.info.tel || data.info.mobile_number
-                    vm.isCollect = data.info.iscollect
-                })
+            store.dispatch('fetchShopDetails',shopId).then(() => {
+                next()
             })
+        }
+        ,created() {
+            this.info = this.shop.info
+            this.review = this.shop.reviews.datas.slice(0,2)
+            this.reviewLen = this.shop.reviews.total
+            this.goods = this.shop.goods.filter(item => item.consumeMode == 'offline')
+            this.tel = this.shop.info.tel || this.shop.info.mobile_number
+            this.isCollect = this.shop.info.iscollect
         }
         ,methods:{
             collect() {

@@ -9,18 +9,23 @@
                         <div><input type="number" v-model="shouldGetValue"  placeholder="0.00" ref="shouldGetRef"></div>
                     </div>
                     <div class="btn-dialog flex-start" @click="dialog" v-show="!noFavourable"><i class="icon icon-import"></i>输入不享受优惠金额</div>
-                    <div class="flex-space afterinputnofavourable" @click="dialog" v-show="noFavourable">
-                        <span style="padding-left: 12px">不享受优惠的金额为:  &yen;{{noFavourable}}</span>
-                        <button style="background: #e85352;border:none;color: #fff ; padding:0 20px;font-size:24px; line-height:74px">修改</button>
+                    <div class="flex-space unfavourable" @click="dialog" v-show="noFavourable">
+                        <span>不享受优惠的金额为:  &yen;{{noFavourable}}</span>
+                        <button>修改</button>
                     </div>
                     <div class="favor-wrap">
                         <h4 class="favor">优惠活动</h4>
-                        <div class="login" v-if="token">
-                            <p>每满{{data.campaginAmount}}立减{{data.discntAmount}}元，最高减免{{data.maxDiscntAmount}}元</p>
-                            <p>酒水部分不参与优惠，请输入不享受优惠金额</p>
+                        <div v-if="isCashpayment">
+                            <div class="login" v-if="token">
+                                <p>每满{{campaign.campaginAmount}}立减{{campaign.discntAmount}}元，最高减免{{campaign.maxDiscntAmount}}元</p>
+                                <p>酒水部分不参与优惠，请输入不享受优惠金额</p>
+                            </div>
+                            <div class="logout" v-else>
+                                <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
+                            </div>
                         </div>
-                        <div class="logout" v-else>
-                            <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
+                        <div v-else>
+                            <p>商家暂无优惠买单活动</p>
                         </div>
                     </div>
                     <div class="gold-wrap">
@@ -29,8 +34,8 @@
                             <span class="gold">{{realPayValue}}</span>
                         </div>
                         <div class="flex-space">
-                            <span>赠养老金</span>
-                            <span class="gold">11</span>
+                            <span>赠养老金约</span>
+                            <span class="gold">{{annuity}}</span>
                         </div>
                     </div>
                 </div>
@@ -57,18 +62,20 @@
 <script type="text/babel">
     import submit from '../submit'
     import member from '../../api/member'
+    import shop from '../../api/shop'
+    import store from '../../store'
+    import MessageBox from '../../msgbox'
     import { mapGetters } from 'vuex'
     export default {
         data () {
             return {
-                shopName:this.$route.query.shopName,
-                merchantId:this.$route.query.merchantId,
+                shopName:'积分宝',
                 popupShow:false,         // 切换不享受金额输入框
-                noFavourable:null,       // 不享受金额----输入框确定以后的值
-                noFavourable_edit:null,  // 不享受金额----输入框
+                noFavourable:0,       // 不享受金额----输入框确定以后的值
+                noFavourable_edit:0,  // 不享受金额----输入框
 
-                realPayValue:"0.00",
-                shouldGetValue:"",
+//                realPayValue:10000,
+                shouldGetValue:0,
                 campaignId:"",//活动ID
                 orderAmount:"100",//订单总金额
                 paidAmount:"100",//实付总金额
@@ -76,34 +83,81 @@
                 noDisAmount:"100",//不参加折扣的金额
                 disAmount:"0", //参加折扣的金额
 
-                data:{
-                    merchantId:null,
+                /*
+                 * 活动对象数据
+                 */
+                isCashpayment:0,
+                campaign:{
+                    merchantId:this.$route.query.shopId,
                     campaginAmount:0,//单笔消费金额
                     discntAmount:0,//消费满额后的减免金额
                     maxDiscntAmount:0,// 最高减免金额
-                }
+                },
+                fraction:0 // 积分率
             }
         },
         computed: {
             ...mapGetters({
                 token:'getToken',
-            })
+                shop:'shopDetails'
+            }),
+            disconuntAmount() { // 优惠减免金额
+                let discntAmount,max = 0,realPayValue = this.shouldGetValue - this.noFavourable
+                if(this.isCashpayment && realPayValue > this.campaign.discntAmount){
+                    discntAmount = parseInt(realPayValue/this.campaign.campaginAmount)*this.campaign.discntAmount
+                    max = Math.min(discntAmount,this.campaign.maxDiscntAmount)
+                }
+                return max
+            },
+            realPayValue() { // 实际付款金额
+                return (this.shouldGetValue - this.disconuntAmount).toFixed(2)
+            },
+            annuity() {
+                return (this.realPayValue*this.fraction*.5).toFixed(2)
+            }
+        },
+        beforeRouteEnter(to,from,next) {
+            let shopId = to.query.shopId
+            if(to.query.source == 1){
+                store.dispatch('fetchShopDetails',shopId).then(() => {
+                    next()
+                })
+            }else {
+                next()
+            }
         },
         created() {
-            member.scanBill({merchantId:this.$route.query.shopId})
+            this.shopName = this.shop.info.merchant_name
+
+            if(this.shop.info.campaign.campStatus && this.shop.info.campaign.campStatus == 1){ /* 开通优惠买单&&活动正在进行中 */
+                this.isCashpayment = this.shop.info.isCashpayment
+                this.campaign = this.shop.info.campaign
+                console.log(JSON.stringify(this.campaign))
+            }
+            this.fraction = this.shop.info.fraction
+        },
+        watch: {
+            shouldGetValue() {
+                this.noFavourable = this.noFavourable_edit = 0
+            }
         },
         methods:{
             submitScanBill(){
+
                 let self = this
-                member.confirmScanbill({
-                    "merchantId":self.merchantId,
-                    "campaignId":self.campaignId,
-                    "orderAmount":self.orderAmount,
-                    "paidAmount":self.paidAmount,
+                if(this.realPayValue == 0){
+                    return MessageBox.alert("请输入付款金额")
+                }
+                let params = {
+                    "merchantId":self.campaign.merchantId,
+                    "campaignId":self.campaign.id,
+                    "orderAmount":self.shouldGetValue,
+                    "paidAmount":self.realPayValue,
                     "disconuntAmount":self.disconuntAmount,
-                    "noDisAmount":self.noDisAmount,
-                    "disAmount":self.disAmount
-                }).then(val => {
+                    "noDisAmount":self.noFavourable,
+                    "disAmount":(this.shouldGetValue - self.noFavourable).toFixed(2)
+                }
+                member.confirmScanbill(params).then(val => {
                     val.token=self.token
                     this.$router.push({name:'scanBillPay',query:val})
                 }).catch(res => {
@@ -133,6 +187,9 @@
              * */
             ,okClick(){
                 this.popupShow = false
+                if(this.noFavourable_edit > this.shouldGetValue){
+                    this.noFavourable_edit = this.shouldGetValue
+                }
                 this.noFavourable = this.noFavourable_edit
             }
 
@@ -200,12 +257,20 @@
             }
         }
     }
-
-    .afterinputnofavourable{
-        line-height: 74px;
+    /* 不享受优惠金额 */
+    .unfavourable{
         background:#f2f2f2;
-        font:24px "Microsoft Yahei";
+        font:24px/74px "Microsoft Yahei";
         color:#e85352;
+        span{padding-left:12px}
+        button{
+            padding:0 20px;
+            border:none;
+            background: #e85352;
+            line-height:74px;
+            font-size:24px;
+            color: #fff ;
+        }
     }
     .scan-bill-el{
         background: #fff;

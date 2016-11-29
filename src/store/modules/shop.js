@@ -54,8 +54,8 @@ const state = {
         discntAmount:'',
         changeUse:false
     },
-    goodsDesc:null
-
+    goodsDesc:null,
+    shopDetails:{}
 }
 // mutations
 const mutations = {
@@ -112,6 +112,7 @@ const mutations = {
         }
     },
 
+
     // 评价条数统计
     [types.EVALUATE_COUNT] (state,data) {
         state.evaluate.countAll = data.countall
@@ -119,6 +120,14 @@ const mutations = {
         state.evaluate.countNoReply = data.countnoreply
         state.evaluate.countDownScore = data.countdownscore
     },
+    /*
+    * 商家详情数据，商家详情页面&优惠买单页面
+    *
+    * */
+    [types.FETCH_SHOP_DETAILS] (state,data) {
+        state.shopDetails = data
+    },
+
     /*
     * 商品详情数据 创建订单
     * */

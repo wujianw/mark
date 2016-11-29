@@ -30,6 +30,10 @@ export const goodDetailsShop = state => { return state.shop.shop }
 export const activeNum = state => { return state.shop.activeNum }
 export const getMarkCoupon = state => { return state.shop.markCoupon }
 
+// 商家详情数据，商家详情&扫码买单共用
+export const shopDetails = state => { return state.shop.shopDetails }
+
+
 // 谭绍飞---- 特卖商品
 export const specialGoods = state => {return state.shop.specialGoods}
 

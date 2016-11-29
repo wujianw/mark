@@ -110,7 +110,7 @@
     export default{
         data(){
             return {
-                money:0.01,
+                money:5,
                 choiceList:[
                     {gold:5,active:true},
                     {gold:10,active:false},
