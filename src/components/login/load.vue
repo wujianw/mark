@@ -10,11 +10,11 @@
             return{
                 links:{
                     left:{
-                        to:{name:"loadMobile",params:{type:"all"}},
+                        to:{name:"loadMobile",params:{type:"all"},query:this.$route.query},
                         name:"手机验证登录"
                     }
                     ,right:{
-                        to:{name:"loadUser",params:{type:"olnShop"}},
+                        to:{name:"loadUser",params:{type:"olnShop"},query:this.$route.query},
                         name:"账号密码登录"
                     }
                 }

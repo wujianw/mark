@@ -18,11 +18,11 @@
             return{
                 links:{
                     left:{
-                        to:{name:"orders",params:{type:"chit"}},
+                        to:{name:"orders",params:{type:"chit"},query:this.$route.query},
                         name:"代金券"
                     }
                     ,right:{
-                        to:{name:"orders",params:{type:"scan"}},
+                        to:{name:"orders",params:{type:"scan"},query:this.$route.query},
                         name:"到店买单"
                     }
                 }

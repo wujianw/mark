@@ -8,7 +8,7 @@
                 <p class="gold">{{good.salesPrice}}<span>{{good.marketPrice}}</span></p>
             </div>
         </div>
-        <mark class="position">{{good.distance}}m</mark>
+        <mark class="position">{{(good.distance/1000).toFixed(2)}}Km</mark>
     </router-link>
 </template>
 <script type="text/babel">
@@ -46,6 +46,9 @@
                 line-height:68px;
                 font-size:26px;
                 color:#505050;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+                overflow:hidden;width:12em;
             }
             .gold{
                 line-height: 46px;

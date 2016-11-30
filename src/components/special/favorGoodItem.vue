@@ -13,7 +13,7 @@
             <p class="title">{{good.goodsTitle}}</p>
             <div class="information flex-space">
                 <p>{{good.salesPrice}}</p>
-                <p>{{good.distance}}m</p>
+                <p>{{(good.distance/1000).toFixed(2)}}Km</p>
             </div>
         </div>
     </router-link>

@@ -60,8 +60,15 @@
         </main>
         <footer class="footer">
             <div class="flex-box ft">
-                <div class="iphone flex-space">
-                    <a :href="'tel:'+shop.telephone"><i class="icon icon-tel"></i></a>
+                <div class="flex-start">
+                    <router-link :to="{name:'nearbyHot'}" class="btn-link flex-space">
+                        <i class="icon icon-index"></i>
+                        <span>首页</span>
+                    </router-link>
+                    <a class="btn-link flex-space" :href="'tel:'+shop.telephone">
+                        <i class="icon icon-tel"></i>
+                        <span>电话</span>
+                    </a>
                 </div>
                 <div>
                     <p class="buy-btn">
@@ -173,10 +180,8 @@
             .info-price p{display:inline-block;}
             .info-price .market-pay{color:#b5b5b5;}
             .pic-shop{
-
                 width: 200px;
                 height: 100px;
-
                 .shop-logo{width: 100%;height:100%}
             }
         }
@@ -184,8 +189,19 @@
         .footer{position:fixed;bottom:0;width:750px;background:#f2f2f2;z-index:2;}
         .ft{justify-content: space-between;align-items:center;color:#838383;}
         .buy-btn a{display:inline-block;background:#e85350;height:88px;line-height:88px;font-size:40px;color:#fff;width:376px;text-align:center;}
-        .iphone{font:20px/1.2 "Microsoft YaHei";padding:0 26px;border-right:1px solid #d9d9d9;text-align:center;}
-        a{color:#e85354;i{font-size:38px;}}
+        .btn-link{
+            flex-direction: column;
+            padding:0 26px;
+            border-right:1px solid #d9d9d9;
+            text-align:center;
+            font:20px/1.2 "Microsoft YaHei";
+        }
+        a{color:#e85354;
+            i{font-size:38px;}
+            span{
+
+            }
+        }
         #picWord {margin-bottom:88px;}
         #picWord img{max-width:100%;}
     }
@@ -223,9 +239,15 @@
             })
         }
         ,methods:{
+            /*
+            * 商家详情
+            * */
             linkShop() {
                 this.$router.push({name:'shopDetails',query:{shopId:this.goods.merchantId}})
             },
+            /*
+            * 收藏按钮
+            * */
             collect() {
                 if(!window.localStorage.token){
                     MessageBox.confirm("请重新登入").then(() => {

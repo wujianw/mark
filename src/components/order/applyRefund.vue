@@ -19,7 +19,7 @@
         </section>
         <section>
             <h3>现金退还方式</h3>
-            <p>原路反还</p>
+            <p>原路返还</p>
         </section>
         <section>
             <h3>退款原因</h3>

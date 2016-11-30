@@ -151,6 +151,17 @@
                 this.$store.dispatch("toggleCreateActiveNum",newVal)
             }
         },
+        beforeRouteEnter(to,from,next) {
+            if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                MessageBox.confirm("请登入后购买").then(() => {
+                    next({name:'loadMobile'})
+                }).catch(() => {
+                    next(false)
+                })
+            }else {
+                next()
+            }
+        },
         created() {
             this.num = this.activeNum
             this.upData()
@@ -194,7 +205,7 @@
             upData() {// 获取养老金和获得红包数据
                 shop.useAblePacketRed({goodsId:this.goods.id,number:this.num})
                     .then(data => {
-                        this.ableRed = data
+                        this.ableRed = data || 0
                     }).then(() => {
                     return shop.sendPacketRed({goodsId:this.goods.id,number:this.num})
                         .then(data => {

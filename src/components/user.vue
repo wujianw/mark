@@ -90,6 +90,7 @@
     import linkList from "./linkList.vue"
     import blockBtn from "./blockBtn.vue"
     import member from "../api/member"
+    import MessageBox from "../msgbox"
     import store from '../store'
     import {mapGetters} from 'vuex'
     export default{
@@ -212,26 +213,34 @@
                             iconClass:'icon-aftermarket'
                         },
                         name:"退款/售后",
-                        to:{name:"orders",params:{type:'chit'},query:{state:'closed'}},
+                        to:{name:"orders",params:{type:'chit'},query:{state:'refund'}},
                         num:this.information.couponrefundingnum == 0 ? '' : this.information.couponrefundingnum
                     }
                 }
             }
         }
         ,beforeRouteEnter(to,from,next) {
-            /*
-            * 初始化获取首页 信息数据
-            * if from.name with userInformation or message 无需改变首页信息数据
-            * */
-            member.getIndex({}).then(data => {
-                store.dispatch("fetchInformation",data)
-            }).then(() => {
-                next()
-            }).catch(() => {
-                store.dispatch("clearUser")
-                window.localStorage.removeItem('token')
-                next()
-            })
+            if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                MessageBox.confirm("请重新登入").then(() => {
+                    next({name:'loadMobile',query:{from:'user'}})
+                }).catch(() => {
+                    next({name:'nearbyHot'})
+                })
+            }else {
+                /*
+                 * 初始化获取首页 信息数据
+                 * if from.name with userInformation or message 无需改变首页信息数据
+                 * */
+                member.getIndex({}).then(data => {
+                    store.dispatch("fetchInformation",data)
+                }).then(() => {
+                    next()
+                }).catch(() => {
+                    store.dispatch("clearUser")
+                    window.localStorage.removeItem('token')
+                    next({name:'loadMobile'})
+                })
+            }
         }
         ,created() {
             if(this.getMember.mName == "" && window.localStorage.token){

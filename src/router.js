@@ -142,10 +142,10 @@ export const routes = [
         path: '/login',name: 'login',component:login,
         children:[
             //手机验证码登入
-            { path: 'mobile', name:'loadMobile', component: loadMobile, beforeEnter: loginRedirect },
+            { path: 'mobile', name:'loadMobile', component: loadMobile},
 
             //帐号密码登入
-            { path: 'user', name:'loadUser', component: loadUser , beforeEnter:loginRedirect }
+            { path: 'user', name:'loadUser', component: loadUser }
         ]
     }
     ,{ path: '/user/findPassword' , name: 'findPassword' , component: findPassword }
@@ -155,12 +155,7 @@ export const routes = [
         path: '/',name: 'footerView', component: footerView,redirect: '/nearbyHot',beforeEnter:scrollTop,
         children:[
             // 会员中心
-            { path: '/user', name: 'user', component: user, beforeEnter: (to, from, next) => {
-                if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
-                    next({name:'loadMobile'})
-                }
-                next()
-            }}
+            { path: '/user', name: 'user', component: user}
             // 附近商家
             ,{ path: '/shopList' , name: 'shopList' , component: shopList }
             // 特价商品列表

@@ -91,7 +91,7 @@
                     areaCode = Number(this.areaId),
                     email = this.email
                 let reg_email = /^(([a-zA-Z0-9]+[_|-|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|-|.]?)*[a-zA-Z0-9]+(.(com|cn|net|co))+)?$/
-                if(!reg_email.test(email)) return MessageBox.alert("无效邮箱")
+                if(!reg_email.test(email)) return MessageBox.alert("请输入正确的邮箱")
                 if(this.mAuth_flag){ // 已认证调用修改接口
                     member.changeInformation({areaCode,email}).then(() => {
                         this.$store.dispatch("clearUser")
@@ -99,20 +99,20 @@
                             this.$router.back()
                         })
                     }).catch(res => {
-                        MessageBox.alert(res)
+                            MessageBox.alert(res)
                     })
                 }else { // 未认证调用认证接口
                     if(!name) return MessageBox.alert("无效名字")
                     let reg_idCard = /^[a-zA-Z0-9]+$/
-                    if(!reg_idCard.test(idCard)) return MessageBox.alert("身份证号无效")
+                    if(!reg_idCard.test(idCard)) return MessageBox.alert("请输入正确的身份证号码")
                     if(!areaCode) return MessageBox.alert("无效地址")
                     member.activate({name, idCard, areaCode, email}).then(() => {
                         this.$store.dispatch("clearUser")
                         MessageBox.alert("认证成功！").then(() => {
-                            this.$router.back()
+                            this.$router.repalce({name:'loadMobile'})
                         })
                     }).catch(res => {
-                        MessageBox.alert(res)
+                            MessageBox.alert(res)
                     })
                 }
             },

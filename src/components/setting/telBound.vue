@@ -116,7 +116,7 @@
                     return false
                 }
                 if(this.step == 3 && !/^[\d]{4}$/.test(this.vcode)){
-                    MessageBox.alert("验证码错误")
+                    MessageBox.alert("请输入正确验证码")
                     return false
                 }
                 member.bindMobile(this.step,{password:this.password,vcode:this.vcode,mobile:this.mobile}).then(() => {

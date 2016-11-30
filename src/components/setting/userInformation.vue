@@ -97,16 +97,19 @@
             }
         },
         beforeRouteEnter(to,from,next) {
-
-            store.dispatch("getUser").then(() => {
-                next()
-            }).catch(() => {
-                this.$router.push({name:'loadMobile'})
-            })
+            if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                next({name:'nearbyHot'})
+            }else {
+                store.dispatch("getUser").then(() => {
+                    next()
+                }).catch(() => {
+                    next({name:'loadMobile',query:{from:'user'}})
+                })
+            }
         }
         ,methods:{
             logout() {
-                this.$router.replace({name:'loadMobile'})
+                this.$router.replace({name:'loadMobile',query:{from:'user'}})
             }
         }
         ,components:{linkList,submit}
