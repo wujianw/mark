@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div class="message-item-el" v-show="show">
         <div class="flex-center msg-time">
             <span class="msg-time-span">{{obj.msgPushDate}}</span>
@@ -15,7 +15,7 @@
         </div>
         <div class="flex-space msg-op">
             <div @click="remove(obj.id)">
-                <i>2</i>
+                <i class="icon icon-delete"></i>
             </div>
             <router-link :to="{name:'messageDetails',query:{msgId:obj.msgId}}" class="wallet-agreement" tag="div">查看详情&gt;</router-link>
         </div>
@@ -68,6 +68,9 @@
             height: 56px;
             font-size: 22px;
             color: #505050;
+            i{
+                font-size:32px;
+            }
         }
     }
 </style>
@@ -86,7 +89,12 @@
         computed:{
             msgTitle() {
                 // 处理标题，大于40字，省略
-                return this.obj.msgTitle.length > 40 ? this.obj.msgTitle.slice(0,40)+'...' : this.obj.msgTitle
+                if(this.obj.msgTitle){
+                    return this.obj.msgTitle.length > 40 ? this.obj.msgTitle.slice(0,40)+'...' : this.obj.msgTitle
+                }else {
+                    return ''
+                }
+
             },
             msgDesc() {
                 if(this.obj.msgType==1){

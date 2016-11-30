@@ -167,7 +167,7 @@ export const routes = [
             ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot }
             // 消息模块
             ,{ path: '/messageList', name: 'messageList', component: messageList }
-            ,{ path: '/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
+            ,{ path: '/messageList/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
 
         ]
     }

@@ -70,40 +70,58 @@
             //发送成功，倒计时
             ,countDown(){
                 this.$nextTick(function () {
-                    var self = this, count = 60;
-                    self.refCaptchaBtn = !this.refCaptchaBtn;
-                    self.refCaptchaText = count + "s";
+                    var self = this, count = 60
+                    self.refCaptchaBtn = !this.refCaptchaBtn
+                    self.refCaptchaText = count + "s"
                     this.fn = setInterval(function () {
-                        count--;
+                        count--
                         if (!count) {
-                            self.refCaptchaText = "重新发送";
-                            self.refCaptchaBtn = true;
-                            clearInterval(self.fn);
+                            self.refCaptchaText = "重新发送"
+                            self.refCaptchaBtn = true
+                            clearInterval(self.fn)
                         }else{
-                            self.refCaptchaText = count + "s";
+                            self.refCaptchaText = count + "s"
                         }
-                    }, 1000);
-                });
+                    }, 1000)
+                })
             },
             //验证手机号码，验证发送短信
             refCaptcha() {
                 this.$nextTick(function () {
                     if(this.mobile.match(/^[1][\d]{10}$/) && this.refCaptchaBtn){
-                        this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
-                            .then(() => {
-                                this.refCaptchaBtn = false
-                                this.countDown()
-                            },() => {
-                                this.refCaptchaBtn = true;
-                            }).catch(() => {
-
+                        if(this.judgeMember){
+                            this.judge().then(res => {
+                                let data = JSON.parse(res.data)
+                                if(!data.code){
+                                    this.fetchVCode()
+                                }else {
+                                    MessageBox.alert(data.message)
+                                }
                             })
+                        }else {
+                            this.fetchVCode()
+                        }
                     }else if(this.refCaptchaBtn){
                         MessageBox.alert("请输入有效手机号码")
                     }
                     return false;
                 });
+            },
+            judge() {// 验证手机号是否存在
+                return this.$http.get('/api/open/member/find_pwd1.json',{params:{"mobile":this.mobile}})
+            },
+            fetchVCode() { // 获取验证码
+                this.$http.get('/api/open/common/get_vcode.json',{params:{"mobile":this.mobile,"type":this.type}})
+                    .then(() => {
+                        this.refCaptchaBtn = false
+                        this.countDown()
+                    },() => {
+                        this.refCaptchaBtn = true;
+                    }).catch(() => {
+
+                    })
             }
+
         }
         ,props:{
             mobile:{
@@ -113,6 +131,10 @@
             ,vcode:String
             ,type:String
             ,shade:{
+                type:Boolean,
+                default:false
+            }
+            ,judgeMember:{// 是否需要验证手机号是否存在
                 type:Boolean,
                 default:false
             }

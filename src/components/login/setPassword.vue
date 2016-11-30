@@ -31,16 +31,15 @@
                 //调用密码修改接口，成功后返回登入页面
                 let params = this.$route.params
                 this.$http.get('/api/open/member/find_pwd3.json',
-                        {params:{"mobile":params.mobile,"vcode":params.vcode,"password":this.newPassword}})
-                .then(res => {
+                    {params:{"mobile":params.mobile,"vcode":params.vcode,"password":this.newPassword}})
+                    .then(res => {
                     let data = JSON.parse(res.data)
-                    console.log(data)
                     if(data.code == 0){
-                        this.$router.push({name:'loadMobile'})
-                    }else{
-                        MessageBox.alert(data.message)
-                    }
-                })
+                    this.$router.push({name:'loadMobile',query:{from:'user'}})
+                }else{
+                    MessageBox.alert(data.message)
+                }
+            })
             }
         }
         ,computed:{

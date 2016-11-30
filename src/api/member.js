@@ -59,10 +59,10 @@ export default {
      * 代金券列表
      * @params  token,start,rows
      */
-    ,getChit({token=store.getters.getToken,start=0,rows=10}={}) {
+    ,getChit({token=store.getters.getToken,start,rows}={}) {
         let url,params;
         url = '/api/pri/coupon/list.json'
-        params = {"token":token,"start":start,"rows":rows}
+        params = {token,start,rows}
         return postData(url,params)
     }
 
@@ -317,7 +317,7 @@ export default {
      * 二级消息列表
      * @params
      */
-    ,getUsermessage({token=store.getters.getToken,senderId,start=0,rows=10}={}){
+    ,getUsermessage({token=store.getters.getToken,senderId,start,rows}={}){
         let url,params
         url = '/api/usermessage/data.json'
         params = {token,senderId,start,rows}

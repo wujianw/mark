@@ -58,9 +58,12 @@
                 }else {
                     this.locationName = this.getMember.location
                 }
-                this.email = this.getMember.mEmail
+                if(this.getMember.mEmail == 'null' || !this.getMember.mEmail){
+                    this.email = ""
+                }else {
+                    this.email = this.getMember.mEmail
+                }
             }
-
         },
         computed:{
             ...mapGetters({

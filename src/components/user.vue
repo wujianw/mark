@@ -220,12 +220,19 @@
             }
         }
         ,beforeRouteEnter(to,from,next) {
+
             if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
-                MessageBox.confirm("请重新登入").then(() => {
-                    next({name:'loadMobile',query:{from:'user'}})
-                }).catch(() => {
+//                let isfromIndex = from.name == 'nearbyHot' ? "取消" : "返回首页"
+//                MessageBox.confirm("您还未登入帐号,需要登入查看","提示",{confirmButtonText:'去登入',cancelButtonText:isfromIndex}).then(() => {
+//                    next({name:'loadMobile',query:{from:'user'}})
+//                }).catch(() => {
+//                    next({name:'nearbyHot'})
+//                })
+                if(from.name != 'loadMobile') {
+                    next({name: 'loadMobile', query: {from: 'user'}})
+                }else {
                     next({name:'nearbyHot'})
-                })
+                }
             }else {
                 /*
                  * 初始化获取首页 信息数据

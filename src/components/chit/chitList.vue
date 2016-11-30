@@ -1,8 +1,8 @@
 <template>
     <div class="chit-list-el">
-        <!--<div ref="more" v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">-->
+        <div v-infinite-scroll="more" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <chit-block v-for="list in lists"  :code="list.code" :name="list.name" :date="list.useEndDateTime"></chit-block>
-        <!--</div>-->
+        </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
@@ -16,35 +16,24 @@
     export default{
         data(){
             return{
-                busy: false
-                ,lists:null
+                busy: false,
+                start:0,
+                lists:[]
             }
-        }
-        ,components:{
-            chitBlock
-        }
-        ,beforeRouteEnter (to, from, next) {
-            member.getChit().then(val => {
-                next(vm => {
-                    vm.lists = val.rows
-//                    console.log(JSON.stringify(val.rows))
-                })
-            }).catch(res => {
-                next(false)
-            })
         }
         ,methods:{
+            fetchData(rows=10) {
+                member.getChit({rows,start:this.start}).then(data => {
+                    this.start += rows
+                    this.lists.push(...data.rows)
+                    this.busy = data.rows.length != rows
+                })
+            },
             more() {
-                var self = this;
-                self.busy = true;
-                var app = self.$refs.more
-                console.log('loading... ' + new Date());
-                setTimeout(() => {
-                    var height = app.clientHeight;
-                    app.style.height = height + 300 + 'px';
-                    self.busy = false;
-                }, 1000);
+                this.busy = true
+                this.fetchData()
             }
         }
+        ,components:{chitBlock}
     }
 </script>

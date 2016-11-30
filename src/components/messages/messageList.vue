@@ -85,16 +85,21 @@
             }
         }
         ,beforeRouteEnter (to,from,next) {
-            next(vm => {
-                member.getReception().then(data => { // 拉取用户消息
-                    member.getMessage().then(val => {
-                        vm.details = val
+            if(typeof window.localStorage.token == 'undefined' || window.localStorage.token.length < 6) {
+                if (from.name != 'loadMobile') {
+                    next({name: 'loadMobile', query: {from: 'messageList'}})
+                } else {
+                    next(false)
+                }
+            }else {
+                next(vm => {
+                    member.getReception().then(data => { // 拉取用户消息
+                        member.getMessage().then(val => {
+                            vm.details = val
+                        })
                     })
                 })
-            })
-
-
+            }
         }
-        , components: {}
     }
 </script>

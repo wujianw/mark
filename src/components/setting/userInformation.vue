@@ -42,6 +42,14 @@
             ...mapGetters({
                 getMember:'getMember'
             }),
+            mActivate(){
+                let reg  = /^9[1,9]/g
+                return reg.test(this.getMember.mIdentityId)
+            },
+            mBinding() {
+                let reg  = /^00/g
+                return reg.test(this.getMember.cId)
+            },
             lists() {
                 return {
                     nickname:{
@@ -50,7 +58,7 @@
                             iconClass:'icon-nickname'
                         },
                         to: {name: 'activation',query:{mActivate:this.getMember.mActivate}},
-                        details:this.getMember.mActivate == 1 ? "去认证" :  "已认证"
+                        details:this.mActivate ? "去认证" :  "已认证"
                     }
                     ,block:{
                         title:"积分宝卡",
@@ -60,7 +68,7 @@
                         to: {
                             name: this.getMember.mBinding == 0 ? 'bound' : ''
                         },
-                        details:this.getMember.mBinding == 0 ? "去绑定" : "已绑定"
+                        details:this.mBinding ? "去绑定" : "已绑定"
                     }
 //                    ,address:{
 //                        title:"收货地址",

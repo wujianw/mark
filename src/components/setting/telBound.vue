@@ -124,7 +124,11 @@
                         return member.getMobileCode({type:'bindMobile',mobile:this.mobile})
                     }
                 }).then(() => {
-                    this.step++
+                    if(this.step < 3) {
+                        this.step++
+                    }else {
+                        this.$router.back()
+                    }
                 }).catch(() => {})
             },
         }
