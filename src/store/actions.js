@@ -143,7 +143,12 @@ export const goodsDesc = ({commit},goodsDesc) => {
 export const markOrder = ({commit},{option,information}) => {
     commit(types.MARK_ORDER,{option,information})
 }
-
+/*
+ * 扫码订单数据，用于支付画面所需参数，新建订单&待支付订单详情画面--调用这个方法
+ * */
+export const markScanOrder = ({commit},{option,information}) => {
+    commit(types.MARK_SCAN_ORDER,{option,information})
+}
 /*
  * 附近特卖商品列表
  * @params   first 是否重置

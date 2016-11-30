@@ -35,6 +35,10 @@
                 return this.mobile.match(/^1+\d{10}$/) && this.vcode.match(/^\d{4}$/);
             }
         },
+        created() {
+            window.localStorage.token = ''
+            this.$store.dispatch("clearUser")
+        },
         methods: {
             createdUser(){
                 let params = {

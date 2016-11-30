@@ -5,7 +5,7 @@
         </div>
         <div class="good-info">
             <div class="shop-name-wrap flex-space">
-                <h3><i></i>{{good.goodsName}}</h3>
+                <h3>{{good.goodsName}}</h3>
                 <!--<message-mark>-->
                     <!--<span class="mark">7折</span>-->
                 <!--</message-mark>-->
@@ -44,6 +44,11 @@
                 display: inline-block;
                 font-size:22px;
             }
+        }
+        h3{
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            overflow:hidden;width:15em;
         }
         .title{
             padding:0 20px;

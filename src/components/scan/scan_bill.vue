@@ -62,6 +62,7 @@
 <script type="text/babel">
     import submit from '../submit'
     import member from '../../api/member'
+    import {domain} from '../../api/public'
     import shop from '../../api/shop'
     import store from '../../store'
     import MessageBox from '../../msgbox'
@@ -132,7 +133,6 @@
             if(this.shop.info.campaign.campStatus && this.shop.info.campaign.campStatus == 1){ /* 开通优惠买单&&活动正在进行中 */
                 this.isCashpayment = this.shop.info.isCashpayment
                 this.campaign = this.shop.info.campaign
-                console.log(JSON.stringify(this.campaign))
             }
             this.fraction = this.shop.info.fraction
         },
@@ -143,7 +143,6 @@
         },
         methods:{
             submitScanBill(){
-
                 let self = this
                 if(this.realPayValue == 0){
                     return MessageBox.alert("请输入付款金额")
@@ -158,8 +157,28 @@
                     "disAmount":(this.shouldGetValue - self.noFavourable).toFixed(2)
                 }
                 member.confirmScanbill(params).then(val => {
-                    val.token=self.token
-                    this.$router.push({name:'scanBillPay',query:val})
+                    let notifyUrl=domain+'/wechatpay/wechat_scancodenotify_h5.htm',
+                        option={
+                            body:"扫码买单",
+                            outTradeNo:val.orderNum,
+                            totalFee:val.paidAmount*100,
+                            notifyUrl:notifyUrl,
+                            openId:window.localStorage.openId
+                        },
+                        information = {
+                            paidAmount:val.paidAmount
+                        }
+                    self.$store.dispatch('markScanOrder',{option,information}).then(()=>{
+                        self.$router.replace({
+                            name:'scanBillPay',
+                            query:{
+                                shopName:self.shopName,
+                                orderId:val.id,
+                                token:self.token
+                            }
+                        })
+                    })
+//                    this.$router.push({name:'scanBillPay',query:params})
                 }).catch(res => {
                         console.log("failed")
                 })

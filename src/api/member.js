@@ -372,15 +372,21 @@ export default {
      */
     ,confirmScanbill({token=store.getters.getToken,merchantId="8",campaignId="42",orderAmount=10,paidAmount=10,disconuntAmount=10,noDisAmount=10,disAmount=10}={}){
         let url,params
-        url = '/api/pri/scancode/creatOrder.htm'
+        url = '/api/pri/scancode/creatOrder.json'
         params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
         console.log(params)
         return postData(url,params)
     }
     ,scanBill({merchantId}={}){
         let url,params
-        url = '/api/open/refund/listByMerchantId.htm'
+        url = '/api/open/refund/listByMerchantId.json'
         params = {merchantId}
+        return postData(url,params)
+    }
+    ,scanDetails({token,cashOrderId}={}){
+        let url,params
+        url = '/api/pri/scancode/cashOrderDetail.json'
+        params = {token,cashOrderId}
         return postData(url,params)
     }
     //绑定

@@ -72,7 +72,7 @@
                     if(data.code == 0){
                         MessageBox.alert("领取成功,可在我的优惠券列表查看")
                     }else if(data.code == 1001){
-                        MessageBox.alert("登入失效，请重新登入").then(()=> {
+                        MessageBox.alert("请登录后再领取优惠券").then(()=> {
                             self.$router.push({name:'loadMobile'})
                         })
                     }else{

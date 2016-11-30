@@ -145,7 +145,8 @@
                     buttons: {
                         ok: '确定',
                         cancel: '取消'
-                    }
+                    },
+//                    dismissible:false
                 }
             }
         },
@@ -156,14 +157,14 @@
             limitStart() {
                 return [{
                     type: 'fromto',
-                    to: this.endTime.time,
+                    to: this.endTime.time
                 }]
             },
             limitEnd() {
                 return [{
                     type: 'fromto',
                     from: this.startTime.time,
-                    to: getBeforeDate(0)
+                    to: getBeforeDate(-1)
                 }]
             }
         },

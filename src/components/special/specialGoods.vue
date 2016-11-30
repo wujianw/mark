@@ -57,6 +57,10 @@
                 this.fetchData()
             }
         }
+        ,beforeRouteLeave(to,from,next) {
+            this.$destroy()
+            next()
+        }
         ,components:{
             goodItem
         }

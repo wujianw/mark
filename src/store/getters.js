@@ -44,6 +44,8 @@ export const address = state => {return state.shop.address}
 
 export const markOrderDetails = state => {return state.member.markOrderDetails}
 export const markOrderSubmit = state => {return state.member.markOrderSubmit}
+export const markScanOrderDetails = state => {return state.member.markScanOrderDetails}
+export const markScanOrderSubmit = state => {return state.member.markScanOrderSubmit}
 
 // 商品图文详情
 export const goodsDesc = state => {return state.shop.goodsDesc}

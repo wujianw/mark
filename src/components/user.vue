@@ -235,7 +235,6 @@
         }
         ,created() {
             if(this.getMember.mName == "" && window.localStorage.token){
-                console.log(window.localStorage.token)
                 this.$store.dispatch("getUser")
             }
         }

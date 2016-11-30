@@ -16,6 +16,8 @@ const state = {
 
     markOrderDetails:null,
     markOrderSubmit:null,
+    markScanOrderSubmit:null,
+    markScanOrderDetails:null,
     indexData:{
         "couponnum": "0",
         "redBalance": "0",
@@ -70,6 +72,10 @@ const mutations = {
     [types.MARK_ORDER] (state,{option,information}) {
         state.markOrderSubmit = option
         state.markOrderDetails = information
+    },
+    [types.MARK_SCAN_ORDER] (state,{option,information}) {
+        state.markScanOrderSubmit = option
+        state.markScanOrderDetails = information
     }
 }
 

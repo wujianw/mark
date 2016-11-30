@@ -50,5 +50,8 @@ export const INSET_LOCATION = 'INSET_LOCATION'
 // 当前订单详情
 export const MARK_ORDER = 'MARK_ORDER'
 
+// 扫码订单详情
+export const MARK_SCAN_ORDER = 'MARK_SCAN_ORDER'
+
 // 商品描述
 export const GOODS_DESC = 'GOODS_DESC'

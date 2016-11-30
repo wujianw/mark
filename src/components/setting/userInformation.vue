@@ -58,9 +58,9 @@
                             iconClass:'icon-block'
                         },
                         to: {
-                            name: this.getMember.mBinding ==0 ? 'bound' : ''
+                            name: this.getMember.mBinding == 0 ? 'bound' : ''
                         },
-                        details:this.getMember.mBinding ==0 ? "去绑定" : "已绑定"
+                        details:this.getMember.mBinding == 0 ? "去绑定" : "已绑定"
                     }
 //                    ,address:{
 //                        title:"收货地址",
@@ -76,7 +76,7 @@
                             iconClass:'icon-bound'
                         },
                         to: {name: 'telBound' },
-                        details:"换绑"
+                        details:this.getMember.mMobile.length == 11 ? "换绑" : "去绑定"
                     }
                     ,password:{
                         title:"登入密码",
@@ -101,16 +101,12 @@
             store.dispatch("getUser").then(() => {
                 next()
             }).catch(() => {
-                window.localStorage.removeItem('token')
                 this.$router.push({name:'loadMobile'})
             })
         }
         ,methods:{
             logout() {
-                window.localStorage.token = ''
-                this.$store.dispatch("clearUser").then(() => {
-                    this.$router.replace({name:'loadMobile'})
-                })
+                this.$router.replace({name:'loadMobile'})
             }
         }
         ,components:{linkList,submit}

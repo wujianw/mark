@@ -1,54 +1,111 @@
 <template>
     <div class="scan-bill-pay-el" >
         <div class="pay-details">商家名称<span>{{shopName}}</span></div>
-        <div class="pay-details">实付金额<span>&yen;{{realPay}}</span></div>
-        <div class="pay-details">订单编号<span>{{orderNum}}</span></div>
+        <div class="pay-details">实付金额<span>&yen;{{orderDetails.paidAmount}}</span></div>
+        <div class="pay-details">订单编号<span>{{orderSubmit.outTradeNo}}</span></div>
         <div class="pay-way">
             <h3 class="title">选择付款方式</h3>
             <radio id="wx" name="check" :check="true">
                 <div class="way flex-start wx">
-                    <img src="" alt="">
+                    <img src="../../assets/img/wx.png" alt="">
                     <div class="message">
                         <h4>微信支付</h4>
                         <p>推荐安装微信5.0及以上版本的用户使用</p>
                     </div>
                 </div>
             </radio>
-            <radio id="alipay" name="check">
-                <div class="way flex-start alipay">
-                    <img src="" alt="">
-                    <div class="message">
-                        <h4>支付宝</h4>
-                        <p>推荐已安装支付宝客户端的用户使用</p>
-                    </div>
-                </div>
-            </radio>
+            <!--<radio id="alipay" name="check" @sum="setAlipayType">-->
+                <!--<div class="way flex-start alipay">-->
+                    <!--<img src="../../assets/img/alipay.png" alt="">-->
+                    <!--<div class="message">-->
+                        <!--<h4>支付宝</h4>-->
+                        <!--<p>推荐已安装支付宝客户端的用户使用</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</radio>-->
         </div>
         <div class="submit-wrap">
-            <submit value="确认支付" :dis="false" @commit="success"></submit>
+            <submit value="确认支付" :dis="false" @commit="verify"></submit>
         </div>
     </div>
 </template>
 <script type="text/babel">
     import radio from '../select/radio'
     import submit from '../submit'
+    import member from '../../api/member'
+    import {domain} from '../../api/public'
+    import pay from '../../api/pay'
+    import wx from '../../api/wx'
+    import {mapGetters} from 'vuex'
+    import store from '../../store'
+    import MessageBox from '../../msgbox'
     export default {
         data () {
             return {
-                shopName:"商家名称",
-                realPay:"实付金额",
-                orderNum:"121212"
+                shopName:this.$route.query.shopName
             }
         }
-        ,components:{
-            radio,
-            submit
+        ,computed: {
+            ...mapGetters({
+                orderDetails:'markScanOrderDetails',
+                orderSubmit:'markScanOrderSubmit'
+            })
+        }
+        ,beforeRouteEnter(to,from,next){
+            if(!store.getters.markScanOrderSubmit) {
+                console.log({token:to.query.token,cashOrderId:to.query.orderId})
+                member.scanDetails({token:to.query.token,cashOrderId:to.query.orderId}).then(data => {
+                    let notifyUrl=domain+'/wechatpay/wechat_scancodenotify_h5.htm',
+                        option = {
+                            body:"扫码买单",
+                            outTradeNo:data.orderNum,
+                            totalFee:data.paidAmount*100,
+                            notifyUrl:notifyUrl,
+                            openid:window.localStorage.openId
+                        },
+                        information = {
+                            paidAmount:data.paidAmount
+                        }
+                    store.dispatch('markScanOrder',{option,information}).then(() => {
+                        next()
+                    })
+                })
+            }else {
+                next()
+            }
+        }
+        ,created() {
+//            console.log(this.orderDetails)
         }
         ,methods:{
-            success() {
-                this.$router.push({name:'success'})
+            verify() {
+                let self = this
+                pay.placeOrder(self.orderSubmit).then(data => {
+                    let option = {
+                            "appId":data.appId,     //公众号名称，由商户传入
+                            "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数
+                            "nonceStr" : data.nonceStr, //随机串
+                            "package" :data.package,
+                            "signType" : "MD5",         //微信签名方式：
+                            "paySign" : data.paySign //微信签名
+                        },
+                        outTradeNo = self.orderSubmit.outTradeNo
+                    wx.onBridgeReady.call(self,option,outTradeNo,self.successCb)
+                })
+            },
+            successCb(orderNum) { // 微信成功回调 验证微信是否有返回
+                pay.payCb({orderNum,type:'LOCAL'}).then(data => {
+                    if(data.trade_state == 'SUCCESS'){
+                        MessageBox.alert("支付成功").then(() => {
+                            self.$router.replace({name:'success'})
+                        })
+                    }else{
+                        MessageBox.alert(data.trade_state)
+                    }
+                })
             }
         }
+        ,components:{radio, submit}
     }
 </script>
 <style lang="scss" rel="stylesheet/scss">
