@@ -130,7 +130,7 @@
         created() {
             this.shopName = this.shop.info.merchant_name
 
-            if(this.shop.info.campaign.campStatus && this.shop.info.campaign.campStatus == 1){ /* 开通优惠买单&&活动正在进行中 */
+            if(this.shop.info.campaign && this.shop.info.campaign.campStatus && this.shop.info.campaign.campStatus == 1){ /* 开通优惠买单&&活动正在进行中 */
                 this.isCashpayment = this.shop.info.isCashpayment
                 this.campaign = this.shop.info.campaign
             }
@@ -163,7 +163,7 @@
                             outTradeNo:val.orderNum,
                             totalFee:val.paidAmount*100,
                             notifyUrl:notifyUrl,
-                            openId:window.localStorage.openId
+                            openid:window.localStorage.openId
                         },
                         information = {
                             paidAmount:val.paidAmount

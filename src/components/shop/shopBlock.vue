@@ -19,8 +19,8 @@
             </div>
         </router-link>
         <div class="benefit-special">
-            <div class="benefit"><i class="icon icon-benefit"></i>到店买单<span>9折（扫码立减）</span></div>
-            <div class="special"><i class="icon icon-special"></i>商家E&nbsp店<span>多件特价正在进行中</span></div>
+            <div class="benefit" v-if="obj.campaign"><i class="icon icon-benefit"></i>到店买单<span>{{obj.campaign.title}}</span></div>
+            <!--<div class="special"><i class="icon icon-special"></i>商家E&nbsp店<span>多件特价正在进行中</span></div>-->
         </div>
     </div>
 </template>

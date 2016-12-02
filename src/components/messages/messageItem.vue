@@ -9,7 +9,7 @@
                 <div class="msg-content"
                      :class="obj.msgType == 1 ? 'msg-plc-text' : 'msg-pic'"
                      :data-content="msgDesc">
-                    <img v-if="obj.coverImg && obj.msgType !=2" :src="obj.coverImg" alt="">
+                    <img v-if="obj.coverImg && obj.msgType != 2" :src="obj.coverImg" alt="">
                 </div>
             </div>
         </div>

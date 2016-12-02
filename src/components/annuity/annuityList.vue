@@ -68,15 +68,16 @@
     import annuityBlock from './annuityBlock'
     import member from "../../api/member"
     import {getBeforeDate} from '../../assets/js/public'
+//    const orderBy = require('lodash/orderBy')
     export default {
         data() {
             return {
                 items:[],
-                total:this.$route.query.gold,
+                total:parseFloat(this.$route.query.gold).toFixed(2),
                 busy:false,
                 pageIndex:1,
                 startTime: {
-                    time: getBeforeDate(7)
+                    time: getBeforeDate(30)
                 },
                 endTime: {
                     time: getBeforeDate(0)
@@ -121,6 +122,9 @@
                     to: getBeforeDate(0)
                 }]
             }
+//            orderedList() {
+//                return orderBy(this.items, 'dealtime').reverse()
+//            }
         }
         ,components:{ annuityBlock,datePicker }
         ,methods:{
@@ -128,7 +132,7 @@
                 member.getAnnuityList({startTime,endTime,pageSize,pageIndex}).then(data => {
                     this.pageIndex++
                     this.items.push(...data.data)
-                    this.busy = pageSize != data.data.lengths
+                    this.busy = data.data.length == 0
                 }).catch(() => {
                     this.busy = true
                 })

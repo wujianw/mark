@@ -8,7 +8,7 @@
             </div>
             <div>
                 <div class="annuity-gold">{{point}}</div>
-                <div class="integral-rate">{{ratio}}</div>
+                <div class="integral-rate">{{(ratio*100).toFixed(2)+'%'}}</div>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
         ,props:{
             dealMny:String,
             point:String,
-            ratio:String,
+            ratio:[String,Number],
             dealtime:String,
             oName:String
         }

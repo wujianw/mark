@@ -74,9 +74,6 @@
                 next()
             }
         }
-        ,created() {
-//            console.log(this.orderDetails)
-        }
         ,methods:{
             verify() {
                 let self = this
@@ -97,7 +94,7 @@
                 pay.payCb({orderNum,type:'LOCAL'}).then(data => {
                     if(data.trade_state == 'SUCCESS'){
                         MessageBox.alert("支付成功").then(() => {
-                            self.$router.replace({name:'success'})
+                            this.$router.replace({name:'success',query:{goodsName:this.option.body}})
                         })
                     }else{
                         MessageBox.alert(data.trade_state)

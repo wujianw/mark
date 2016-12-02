@@ -62,13 +62,13 @@
                 refundReasonTemplate:"refundReason"
             }),
             refCashAmount() {
-                return this.cashAmount*this.num+"" //应退现金金额
+                return (this.cashAmount*this.num).toFixed(2) //应退现金金额
             },
             refRedPacket() {
-                return this.redPacket*this.num+"" //应退红包
+                return (this.redPacket*this.num).toFixed(2) //应退红包
             },
             refGiveAway() {
-                return this.giveAway*this.num+"" //扣除赠送
+                return (this.giveAway*this.num).toFixed(2) //扣除赠送
             },
             disable() {
                 return this.couponIds.length == 0

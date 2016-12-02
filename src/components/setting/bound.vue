@@ -58,7 +58,7 @@
         ,methods:{
             changeCard(){
                 let self=this,
-                    reg_block = /^[\d]{18}$/,
+                    reg_block = /^[\d]{16}$/,
                     reg_auth = /^[\d]{6}$/
                 if(!reg_block.test(self.blockNum)){
                     MessageBox.alert("输入18位有效数字").then(() => {

@@ -64,8 +64,6 @@
             next(vm => {
                 member.getMessageDetails({msgId}).then(val => {
                     vm.details = val
-
-                    console.log(JSON.stringify(vm.details))
                 })
             })
 

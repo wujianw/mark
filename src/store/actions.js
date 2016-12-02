@@ -18,6 +18,9 @@ export const getUser = ({commit,state}) => {
         })
     }
 }
+export const changeMember = ({commit},option) => {
+    commit(types.MEMBER_EMAIL_LOCATION,option)
+}
 // 清空用户认证store数据
 export const clearUser = ({commit}) => {
     commit(types.MEMBER_CLEAR)
@@ -159,6 +162,9 @@ export const specialData = ({commit,state},{params,first}) => {
         console.log(data)
         let more = data.goods.length
         commit(types.SPECIAL_GOODS,{data:data.goods,first,rows:params.rows})
+        if(!state.shop.banner){
+            commit(types.SPECIAL_BANNER_MODE,data)
+        }
         return Promise.resolve(more)
     })
 }

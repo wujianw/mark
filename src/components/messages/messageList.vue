@@ -11,13 +11,11 @@
                     <div class="time">{{item.msgPushDate}}</div>
                 </div>
                 <div class="message">{{item.msgTitle}}</div>
-
             </div>
         </router-link>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">
-
     .message{
         padding-top: 18px;
     }
@@ -32,7 +30,8 @@
 
             height: 76px;
             width: 76px;
-            background: grey;
+            background: url('../../assets/img/default-good.jpg');
+            background-size:100% 100%;
             border-radius:5px;
             img{width:100%;height:100%; border-radius:5px;}
 
@@ -72,9 +71,6 @@
         }
 
     }
-
-
-
 </style>
 <script type="text/babel">
     import member from "../../api/member"

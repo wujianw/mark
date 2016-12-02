@@ -60,6 +60,11 @@ const mutations = {
             mCurrentAddress:''
         }
     },
+    [types.MEMBER_EMAIL_LOCATION] (state,option) {
+        state.member.mEmail = option.mEmail
+        state.member.location = option.location
+        state.member.areaCode = option.areaCode
+    },
     // 首页数据
     [types.INDEX_DATA] (state,data) {
         state.indexData = data

@@ -36,6 +36,8 @@ export const shopDetails = state => { return state.shop.shopDetails }
 
 // 谭绍飞---- 特卖商品
 export const specialGoods = state => {return state.shop.specialGoods}
+export const specialBanner = state => {return state.shop.banner}
+export const specialMode = state => {return state.shop.mode}
 
 // 获取经纬度
 export const geography = state => {return state.shop.geography}

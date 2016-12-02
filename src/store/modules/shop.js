@@ -12,6 +12,9 @@ const state = {
         latitude:''// 纬度
     },
     specialGoods:[], //特卖商品
+    banner:null,
+    mode:null,
+
     start:0,
     provinceList:[],// 所有省
     cityAllList:[],// 所有市
@@ -80,6 +83,11 @@ const mutations = {
             state.start+=rows
         }
     },
+    [types.SPECIAL_BANNER_MODE] (state,data){
+        state.banner = data.banner
+        state.mode = data.mode
+    },
+
     // 获取商家分类菜单
     [types.FETCH_SHOP_MENU] (state,menu) {
         state.menu = menu

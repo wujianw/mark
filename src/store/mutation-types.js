@@ -6,6 +6,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 //会员信息
 export const MEMBER = 'MEMBER'
 export const MEMBER_CLEAR = 'MEMBER_CLEAR'
+export const MEMBER_EMAIL_LOCATION = 'MEMBER_EMAIL_LOCATION'
 export const INDEX_DATA = 'INDEX_DATA'
 //update
 export const UPDATE = 'UPDATE'
@@ -40,6 +41,7 @@ export const FETCH_SHOP_DETAILS = 'FETCH_SHOP_DETAILS'
 
 // 特卖商品列表
 export const SPECIAL_GOODS = 'SPECIAL_GOODS'
+export const SPECIAL_BANNER_MODE = 'SPECIAL_BANNER_MODE'
 
 // 存入经纬度
 export const INSET_GEOGRAPHY = 'INSET_GEOGRAPHY'

@@ -16,7 +16,7 @@ export default {
         })
     },
     onBridgeReady(option,orderNum,cb) {
-        console.log(option)
+        // console.log(option)
         let self = this
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', option,

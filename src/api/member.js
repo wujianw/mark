@@ -209,10 +209,11 @@ export default {
      * 提交评论
      * @params  orderNo
      */
-    ,getEvaluate(token,orderNo,goodsId,score,content,photo1,photo2,photo3) {
+    ,getEvaluate({token=store.getters.getToken,orderNo,goodsId,score,content,photo1='',photo2='',photo3='',anonymityFlag}={}) {
         let url,params
         url = '/api/pri/memberreview/refer.json'
-        params = {token,orderNo,goodsId,score,content,photo1,photo2,photo3}
+        params = {token,orderNo,goodsId,score,content,photo1,photo2,photo3,anonymityFlag}
+        console.log(params)
         return postData(url,params)
     }
 

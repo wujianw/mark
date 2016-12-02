@@ -178,7 +178,7 @@
             },
             linkMessage(id,count) { // route消息列表
                 if(count){
-                    this.$router.push({name:'shopAllMessage',query:{shopId:id}})
+                    this.$router.push({name:'shopAllMessage',query:{senderId:id}})
                 }
             },
             getDelete() {// 取消收藏

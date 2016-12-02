@@ -2,7 +2,7 @@
     <div class="user-center-wrap">
         <div class="user-center flex-space">
             <div class="flex-space">
-                <div class="hd-pic"><img src="../../static/img/hd-pic.png" alt=""/></div>
+                <div class="hd-pic"><img src="../assets/img/user.png" alt=""/></div>
                 <div class="nickname-wrap">
                     <div class="nickname">{{getMember.mName}}</div>
                     <div>养老金：&nbsp<span class="annuity">{{annuity}}</span></div>
@@ -122,15 +122,15 @@
                         }
                     }
                     ,gold: {
-                        wallet: {
-                            title:"我的钱包",
-                            icon:{
-                                iconClass:'icon-wallet',
-                                color:'#fe7d5b'
-                            },
-                            to: { name:'mineWallet' },
-                            details:this.information.cashBalance
-                        },
+//                        wallet: {
+//                            title:"我的钱包",
+//                            icon:{
+//                                iconClass:'icon-wallet',
+//                                color:'#fe7d5b'
+//                            },
+//                            to: { name:'mineWallet' },
+//                            details:this.information.cashBalance
+//                        },
                         annuity: {
                             title:"我的养老金",
                             icon:{

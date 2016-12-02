@@ -4,7 +4,7 @@
             <li v-for="review in reviews" class="good-review-li">
                 <div class="flex-space">
                     <p class="info info-js evaluate">
-                        <span class="info-name">{{review.memberName}}</span>
+                        <span class="info-name">{{review.anonymityFlag == 1 ? '匿名' : review.memberName}}</span>
                         <star :score="review.score"></star>
                     </p>
                     <p class="time">{{review.reviewTime}}</p>
@@ -61,6 +61,9 @@
     export default{
         components:{
             star
+        }
+        ,created() {
+            console.log(this.reviews)
         }
         ,props:{
             reviews:{

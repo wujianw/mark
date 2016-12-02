@@ -38,7 +38,6 @@
             return{
                 addressActive:false,
                 mAuth_flag:false,
-                mActivate:this.$route.query.mActivate,
                 name:'',
                 mIdentityId:'',
                 locationName:'',
@@ -63,6 +62,7 @@
                 }else {
                     this.email = this.getMember.mEmail
                 }
+                this.areaId = this.getMember.areaCode ? this.getMember.areaCode : ''
             }
         },
         computed:{
@@ -86,33 +86,38 @@
                     }
                 }
             }
+
         },
         methods:{
             activate(){
                 let name = this.name,
                     idCard = this.mIdentityId,
-                    areaCode = Number(this.areaId),
+                    areaCode = this.areaId,
                     email = this.email
                 let reg_email = /^(([a-zA-Z0-9]+[_|-|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|-|.]?)*[a-zA-Z0-9]+(.(com|cn|net|co))+)?$/
                 if(!reg_email.test(email)) return MessageBox.alert("请输入正确的邮箱")
                 if(this.mAuth_flag){ // 已认证调用修改接口
                     member.changeInformation({areaCode,email}).then(() => {
-                        this.$store.dispatch("clearUser")
+                        let option = {
+                            mEmail:email,
+                            areaCode:areaCode,
+                            location:this.locationName
+                        }
+                        this.$store.dispatch("changeMember",option)
                         MessageBox.alert("修改成功！").then(() => {
-                            this.$router.back()
+                            this.$router.replace({name:'user'})
                         })
                     }).catch(res => {
                             MessageBox.alert(res)
                     })
                 }else { // 未认证调用认证接口
-                    if(!name) return MessageBox.alert("无效名字")
+                    if(!name) return MessageBox.alert("请输入认证信息")
                     let reg_idCard = /^[a-zA-Z0-9]+$/
                     if(!reg_idCard.test(idCard)) return MessageBox.alert("请输入正确的身份证号码")
-                    if(!areaCode) return MessageBox.alert("无效地址")
+                    if(!areaCode) return MessageBox.alert("请选择所在区县")
                     member.activate({name, idCard, areaCode, email}).then(() => {
-                        this.$store.dispatch("clearUser")
                         MessageBox.alert("认证成功！").then(() => {
-                            this.$router.repalce({name:'loadMobile'})
+                            this.$router.repalce({name:'loadMobile',query:{from:'user'}})
                         })
                     }).catch(res => {
                             MessageBox.alert(res)

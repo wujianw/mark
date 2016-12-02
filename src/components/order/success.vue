@@ -2,23 +2,23 @@
     <div class="success-el">
         <div class="success">
             <header class="success-hd">
-                <h3>恭喜您兑换成功</h3>
+                <h3>恭喜您支付成功</h3>
             </header>
         </div>
         <div class="information-wrap">
             <p>商品名称：{{goodsName}}</p>
-            <p>订单状态：{{orderStatus}}</p>
+            <p>订单状态：支付成功</p>
             <div class="btn-wrap flex-space">
-                <a>继续购物</a>
-                <a>查看订单</a>
+                <router-link :to="{name:'nearbyHot'}" replace>继续购物</router-link>
+                <router-link :to="{name:'user'}" replace>查看订单</router-link>
             </div>
         </div>
-        <div class="link-picword">
-            <p>查看其它特卖</p>
-        </div>
-        <ul class="main-unit-wrap clearfloat">
-            <good-item v-for="good in goods" :good="good"></good-item>
-        </ul>
+        <!--<div class="link-picword">-->
+            <!--<p>查看其它特卖</p>-->
+        <!--</div>-->
+        <!--<ul class="main-unit-wrap clearfloat">-->
+            <!--<good-item v-for="good in goods" :good="good"></good-item>-->
+        <!--</ul>-->
     </div>
 </template>
 <script type="text/babel">
@@ -26,17 +26,8 @@
     export default{
         data() {
             return {
-                goodsName:''
-                ,orderStatus:''
-                ,goods : [
-                    {goodsName:"dfdfsf",goodsTitle:"好聚好散东方红",goodsImages:"",salesPrice:"12.0",virtualBuy:""}
-                    ,{goodsName:"adgag按揭",goodsTitle:"宽松的咖啡苦涩的减肥",goodsImages:"",salesPrice:"1213.2",virtualBuy:""}
-                    ,{goodsName:"阿凡达发",goodsTitle:"宽松的咖啡苦涩的减肥",goodsImages:"",salesPrice:"5856.00",virtualBuy:""}
-                ]
+                goodsName:this.$route.query.goodsName
             }
-        }
-        ,components:{
-            goodItem
         }
     }
 </script>

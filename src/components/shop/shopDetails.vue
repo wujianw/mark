@@ -265,6 +265,12 @@
                 }
             }
         }
+        ,beforeRouteLeave(to,from,next) {// 销毁实例
+            this.$nextTick(() =>{
+                this.$destroy()
+            })
+            next()
+        }
         ,components:{goodItem, goodReview,couponItem}
     }
 </script>

@@ -57,7 +57,7 @@
                         icon:{
                             iconClass:'icon-nickname'
                         },
-                        to: {name: 'activation',query:{mActivate:this.getMember.mActivate}},
+                        to: {name: 'activation'},
                         details:this.mActivate ? "去认证" :  "已认证"
                     }
                     ,block:{
@@ -66,7 +66,7 @@
                             iconClass:'icon-block'
                         },
                         to: {
-                            name: this.getMember.mBinding == 0 ? 'bound' : ''
+                            name: this.mBinding ? 'bound' : ''
                         },
                         details:this.mBinding ? "去绑定" : "已绑定"
                     }

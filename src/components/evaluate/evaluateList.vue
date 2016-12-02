@@ -6,7 +6,7 @@
                     <img src="../../assets/img/evaluate-hd.png" alt="">
                 </div>
                 <div class="user-details">
-                    <div class="user-name">{{item.memberName}}</div>
+                    <div class="user-name">{{item.anonymityFlag == 1 ? '匿名' : item.memberName}}</div>
                     <div class="time-grade">
                         <star :score="item.score"></star>
                         <span class="time">{{item.reviewTime}}</span>
@@ -65,7 +65,7 @@
                 width: 220px;
                 height: 220px;
                 background: grey;
-
+                img{width:100%;height:100%;}
             }
         }
         /* 商家回复 */
@@ -129,6 +129,10 @@
                     })
                 }
                 member.getEvaluateList({goodsId,merchantId,mode,rows}).then(val => {
+                    val.map(item =>{
+                    console.log(item.anonymityFlag == 1)
+                })
+
                     self.details = val
                     self.start = rows
                     self.busy = val.length < rows

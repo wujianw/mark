@@ -7,20 +7,20 @@
             </router-link>
         </header>
         <slider class="nearby-hot-top"></slider>
-        <div class="hot-area flex-right-left">
+        <div class="hot-area flex-right-left" v-if="mode">
             <router-link tag="div" :to="{name:'specialGoods',query:{type:18}}" class="">
-                <img src="" alt="">
+                <img :src="mode[0].imgUrl" alt="">
             </router-link>
             <div class="">
                 <router-link tag="div" class="hot-area-sm" :to="{name:'specialGoods',query:{type:19}}">
-                    <img src="" alt="">
+                    <img :src="mode[1].imgUrl" alt="">
                 </router-link>
                 <div class="hot-area-sm flex-right-left">
                     <router-link tag="div" :to="{name:'specialGoods',query:{type:20}}">
-                        <img src="" alt="">
+                        <img :src="mode[2].imgUrl" alt="">
                     </router-link>
                     <router-link tag="div" :to="{name:'specialGoods',query:{type:21}}">
-                        <img src="" alt="">
+                        <img :src="mode[3].imgUrl" alt="">
                     </router-link>
                 </div>
             </div>
@@ -52,7 +52,8 @@
             ...mapGetters({
                 specialGoods:'specialGoods',
                 geography:'geography',
-                area:'getLocation'
+                area:'getLocation',
+                mode:'specialMode'
             }),
             params() {
                 return {
@@ -64,7 +65,7 @@
                     rows:10,
                     goodsName:''// 模糊查询用
                 }
-            }
+            },
         },
         created() {
             // 初始化获取经纬度
