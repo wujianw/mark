@@ -79,7 +79,6 @@ export default {
             url = '/api/pri/scancode/cashOrderMember.json'
         }
         params = {token,start,rows,state,isComment}
-        console.log(params)
         return postData(url,params)
     }
 
@@ -132,7 +131,6 @@ export default {
         let url,params;
         url = '/api/pri/refund/applycouponrefund.json'
         params = {token,refundReason,refCashAmount,refRedPacket,refGiveAway,refundRemark,couponIds}
-        console.log(params)
         return postData(url,params)
     }
 
@@ -166,7 +164,6 @@ export default {
         let url,params;
         url = '/api/benefit/benefitmember/get_benefitMember.json'
         params = {token,start,rows,shopId}
-        console.log(params)
         return postData(url,params)
     }
     /**
@@ -213,7 +210,6 @@ export default {
         let url,params
         url = '/api/pri/memberreview/refer.json'
         params = {token,orderNo,goodsId,score,content,photo1,photo2,photo3,anonymityFlag}
-        console.log(params)
         return postData(url,params)
     }
 
@@ -275,7 +271,6 @@ export default {
         let url,params;
         url = '/api/pri/membercollect/collect.json'
         params = {token,collectType,collectId}
-        console.log(params)
         return postData(url,params)
 
     }
@@ -371,11 +366,10 @@ export default {
      * 扫码支付
      * @params  token,start,rows
      */
-    ,confirmScanbill({token=store.getters.getToken,merchantId="8",campaignId="42",orderAmount=10,paidAmount=10,disconuntAmount=10,noDisAmount=10,disAmount=10}={}){
+    ,confirmScanbill({token=store.getters.getToken,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}={}){
         let url,params
         url = '/api/pri/scancode/creatOrder.json'
         params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
-        console.log(params)
         return postData(url,params)
     }
     ,scanBill({merchantId}={}){
@@ -395,7 +389,6 @@ export default {
         let url,params;
         url = '/api/pri/member/bind_card.json'
         params = {token,"newCId":blockNum,"aCode":authCode}
-        console.log(params)
         return postData(url,params)
     }
     //绑定认证
@@ -410,7 +403,6 @@ export default {
         let url,params
         url = '/api/pri/member/modify_msg.json'
         params = {token,areaCode,email}
-        console.log(params)
         return postData(url,params)
     }
     /*

@@ -182,7 +182,6 @@
                     anonymityFlag:self.isAnonymity ? 1 : 0
                 },self.$route.query)
                 self.photos.map((item,index) => {
-                    console.log(index)
                     option['photo'+(index+1)] = item.split(",")[1]
                 })
                 member.getEvaluate(option).then(() => {

@@ -132,122 +132,148 @@ const loginRedirect = (to, from, next) => {
     }
 }
 //
+// 已登入重定向
+const indexRedirect = () => {
+    let search = window.location.search,
+        reg_state = /^state=(.+)/
+    let qs = search.length > 0 ? search.substring(1) : "",
+        state = qs.split("&").filter(item => reg_state.test(item))
+    if(state && state.length > 0){
+        let stateVal = state[0].split("=")[1]
+        let shopId = stateVal.match(/\d+/)[0],
+            name = stateVal.match(/[a-zA-Z]+/)[0]
+        return {name,query:{shopId}}
+    }
+    return '/nearbyHot'
+}
 const scrollTop = (to, from, next) => {
     document.body.scrollTop = 0
     next()
 }
-
+const setDocumentTitle = (title="积分宝",next) => {
+    document.title = title;
+    if (/ip(hone|od|ad)/i.test(navigator.userAgent)) {
+        var i = document.createElement('iframe');
+        i.src = '/favicon.ico';
+        i.style.display = 'none';
+        i.onload = function() {
+            setTimeout(function(){
+                i.remove();
+            }, 9)
+        }
+        document.body.appendChild(i);
+    }
+    next()
+}
 export const routes = [
     {
         path: '/login',name: 'login',component:login,
         children:[
-            //手机验证码登入
-            { path: 'mobile', name:'loadMobile', component: loadMobile},
-
-            //帐号密码登入
-            { path: 'user', name:'loadUser', component: loadUser }
+            { path: 'mobile', name:'loadMobile', component: loadMobile,beforeEnter:(to,from,next) => setDocumentTitle("手机验证码登入",next)},
+            { path: 'user', name:'loadUser', component: loadUser,beforeEnter:(to,from,next) => setDocumentTitle("帐号密码登入",next) }
         ]
     }
-    ,{ path: '/user/findPassword' , name: 'findPassword' , component: findPassword }
-    ,{ path: '/user/setPassword' , name: 'setPassword' , component: setPassword }
-
+    ,{ path: '/user/findPassword' , name: 'findPassword' , component: findPassword,beforeEnter:(to,from,next) => setDocumentTitle("找回密码",next) }
+    ,{ path: '/user/setPassword' , name: 'setPassword' , component: setPassword ,beforeEnter:(to,from,next) => setDocumentTitle("设置密码",next)}
+    // ,{ path: '*', component: footerView,beforeEnter:scrollTop}
     ,{
-        path: '/',name: 'footerView', component: footerView,redirect: '/nearbyHot',beforeEnter:scrollTop,
+        path: '/',name: 'footerView', component: footerView,redirect: indexRedirect,
         children:[
-            // 会员中心
-            { path: '/user', name: 'user', component: user}
-            // 附近商家
-            ,{ path: '/shopList' , name: 'shopList' , component: shopList }
-            // 特价商品列表
-            ,{ path: '/nearbyHot/specialGoods' , name: 'specialGoods' , component: specialGoods }
-            ,{ path: '/nearbyHot/search' , name: 'search' , component: search }
+            //
+            { path: '/user', name: 'user', component: user,beforeEnter:(to,from,next) => setDocumentTitle("会员中心",next)}
+            //
+            ,{ path: '/shopList' , name: 'shopList' , component: shopList,beforeEnter:(to,from,next) => setDocumentTitle("附近商家",next) }
+            //
+            ,{ path: '/nearbyHot/specialGoods' , name: 'specialGoods' , component: specialGoods,beforeEnter:(to,from,next) => setDocumentTitle("特卖商品",next) }
+
+            ,{ path: '/nearbyHot/search' , name: 'search' , component: search,beforeEnter:(to,from,next) => setDocumentTitle("搜索",next) }
             //商家详情
-            ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails }
+            ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails,beforeEnter:(to,from,next) => setDocumentTitle("商家详情",next) }
             //特卖专区
-            ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot }
+            ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot,beforeEnter:(to,from,next) => setDocumentTitle("积分宝",next) }
             // 消息模块
-            ,{ path: '/messageList', name: 'messageList', component: messageList }
-            ,{ path: '/messageList/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage }
+            ,{ path: '/messageList', name: 'messageList', component: messageList,beforeEnter:(to,from,next) => setDocumentTitle("我的消息",next) }
+            ,{ path: '/messageList/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage,beforeEnter:(to,from,next) => setDocumentTitle("消息列表",next) }
 
         ]
     }
-    ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails }
+    ,{ path: '/messageDetails', name: 'messageDetails', component: messageDetails,beforeEnter:(to,from,next) => setDocumentTitle("消息详情",next) }
     // 我的收藏
     ,{
         path: '/user/enshrine',name: 'enshrine',component: enshrine,
         children:[
             // 商品&店铺
-            {path: 'list/:type',name: 'enshrineList',component: enshrineList}
+            {path: 'list/:type',name: 'enshrineList',component: enshrineList,beforeEnter:(to,from,next) => setDocumentTitle("我的收藏",next)}
         ]
     }
 
     // 商品详情模块
-    ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails }
-    ,{ path: '/goodsDesc' , name: 'goodsDesc' , component: goodsDesc }
+    ,{ path: '/goodDetails' , name: 'goodDetails' , component: goodDetails,beforeEnter:(to,from,next) => setDocumentTitle("商品详情",next) }
+    ,{ path: '/goodsDesc' , name: 'goodsDesc' , component: goodsDesc,beforeEnter:(to,from,next) => setDocumentTitle("图文详情",next) }
 
     // 商家&商品评论详情模块
     ,{ path: '/evaluate', name: 'evaluate', component: evaluateNav,
         children:[
             //
-            {path: 'list/:mode', name: 'evaluateList', component: evaluateList}
+            {path: 'list/:mode', name: 'evaluateList', component: evaluateList,beforeEnter:(to,from,next) => setDocumentTitle("评价列表",next)}
         ]
     }
     // 全部订单
     ,{ path: '/user/orders', name: 'ordersNav', component: ordersNav,
         children:[
             // 订单类型
-            {path: 'list/:type', name: 'orders', component: orders}
+            {path: 'list/:type', name: 'orders', component: orders,beforeEnter:(to,from,next) => setDocumentTitle("我的订单",next)}
         ]
     }
     // 我的优惠券
-    ,{ path: '/user/coupon', name: 'coupon', component: coupon }
-    ,{ path: '/user/getCoupon', name: 'getCoupon', component: getCoupon }
+    ,{ path: '/user/coupon', name: 'coupon', component: coupon,beforeEnter:(to,from,next) => setDocumentTitle("我的优惠券",next) }
+    ,{ path: '/user/getCoupon', name: 'getCoupon', component: getCoupon,beforeEnter:(to,from,next) => setDocumentTitle("领取优惠券",next) }
 
     // 我的订单详情 ----代金券&扫码
-    ,{ path: '/user/details/chit', name: 'orderChitDetails', component: orderChitDetails }
-    ,{ path: '/user/details/scan', name: 'orderScanDetails', component: orderScanDetails }
+    ,{ path: '/user/details/chit', name: 'orderChitDetails', component: orderChitDetails,beforeEnter:(to,from,next) => setDocumentTitle("代金券-订单详情",next) }
+    ,{ path: '/user/details/scan', name: 'orderScanDetails', component: orderScanDetails,beforeEnter:(to,from,next) => setDocumentTitle("优惠买单详情",next) }
 
     // 创建订单
-    ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder }
-    ,{ path: '/user/useCoupon', name: 'useCoupon', component: useCoupon }
+    ,{ path: '/user/createOrder', name: 'createOrder', component: createOrder,beforeEnter:(to,from,next) => setDocumentTitle("提交订单",next) }
+    ,{ path: '/user/useCoupon', name: 'useCoupon', component: useCoupon,beforeEnter:(to,from,next) => setDocumentTitle("选择可用优惠券",next) }
 
     // 扫码买单
-    ,{ path: '/user/scanBillPay', name: 'scanBillPay', component: scanBillPay }
-    ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill }
+    ,{ path: '/user/scanBillPay', name: 'scanBillPay', component: scanBillPay ,beforeEnter:(to,from,next) => setDocumentTitle("优惠买单",next)}
+    ,{ path: '/user/scanBill', name: 'scanBill', component: scanBill ,beforeEnter:(to,from,next) => setDocumentTitle("确认支付",next)}
 
     // 普通支付模块
-    ,{ path: '/success', name: 'success', component: success }
-    ,{ path: '/verifyPay', name: 'verifyPay', component: verifyPay }
+    ,{ path: '/success', name: 'success', component: success ,beforeEnter:(to,from,next) => setDocumentTitle("支付成功",next)}
+    ,{ path: '/verifyPay', name: 'verifyPay', component: verifyPay ,beforeEnter:(to,from,next) => setDocumentTitle("确认支付",next)}
 
     //去评论
-    ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate }
+    ,{ path: '/user/goEvaluate' , name: 'goEvaluate' , component: goEvaluate ,beforeEnter:(to,from,next) => setDocumentTitle("我要评价",next)}
 
     // 退款模块
-    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund }
-    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail }
+    ,{ path: '/user/applyRefund' , name: 'applyRefund' , component: applyRefund ,beforeEnter:(to,from,next) => setDocumentTitle("申请退款",next)}
+    ,{ path: '/user/refundDetail', name: 'refundDetail', component: refundDetail ,beforeEnter:(to,from,next) => setDocumentTitle("退款详情",next)}
 
     // 我的代金券模块
-    ,{ path: '/user/chitList' , name: 'chitList' , component: chitList }
-    ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails }
+    ,{ path: '/user/chitList' , name: 'chitList' , component: chitList ,beforeEnter:(to,from,next) => setDocumentTitle("我的代金券",next)}
+    ,{ path: '/user/chitDetails' , name: 'chitDetails' , component: chitDetails ,beforeEnter:(to,from,next) => setDocumentTitle("代金券详情",next)}
 
     // 个人信息模块
-    ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation }
-    ,{ path: '/user/password' , name: 'password' , component: password }
-    ,{ path: '/user/bound' , name: 'bound' , component: bound }
-    ,{ path: '/user/activation' , name: 'activation' , component: activation }
-    ,{ path: '/user/telBound' , name: 'telBound' , component: telBound }
+    ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation ,beforeEnter:(to,from,next) => setDocumentTitle("个人中心",next)}
+    ,{ path: '/user/password' , name: 'password' , component: password ,beforeEnter:(to,from,next) => setDocumentTitle("修改密码",next)}
+    ,{ path: '/user/bound' , name: 'bound' , component: bound ,beforeEnter:(to,from,next) => setDocumentTitle("积分宝卡绑定",next)}
+    ,{ path: '/user/activation' , name: 'activation' , component: activation ,beforeEnter:(to,from,next) => setDocumentTitle("实名认证",next)}
+    ,{ path: '/user/telBound' , name: 'telBound' , component: telBound ,beforeEnter:(to,from,next) => setDocumentTitle("手机绑定",next)}
 
     // 相关协议模块
-    ,{ path: '/agreement', name: 'agreement', component: agreement }
-    ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails }
+    ,{ path: '/agreement', name: 'agreement', component: agreement ,beforeEnter:(to,from,next) => setDocumentTitle("相关协议",next)}
+    ,{ path: '/agreementDetails', name: 'agreementDetails', component: agreementDetails ,beforeEnter:(to,from,next) => setDocumentTitle("协议详情",next)}
 
     // 我的钱包模块
-    ,{ path: '/user/mineWallet',  name: 'mineWallet', component: mineWallet }
-    ,{ path: '/user/walletSet' , name: 'walletSet' , component: walletSet }
-    ,{ path: '/user/redMoney' , name: 'redMoney' , component: redMoney }
-    ,{ path: '/user/income' , name: 'income' , component: income }
-    ,{ path: '/user/recharge' , name: 'recharge' , component: recharge }
+    ,{ path: '/user/mineWallet',  name: 'mineWallet', component: mineWallet ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包",next)}
+    ,{ path: '/user/walletSet' , name: 'walletSet' , component: walletSet ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包--帮助",next)}
+    ,{ path: '/user/redMoney' , name: 'redMoney' , component: redMoney ,beforeEnter:(to,from,next) => setDocumentTitle("我的红包明细",next)}
+    ,{ path: '/user/income' , name: 'income' , component: income ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包--收支明细",next)}
+    ,{ path: '/user/recharge' , name: 'recharge' , component: recharge ,beforeEnter:(to,from,next) => setDocumentTitle("钱包充值",next)}
 
     // 我的养老金模块
-    ,{ path: '/user/annuityList',  name: 'annuityList', component: annuityList }
+    ,{ path: '/user/annuityList',  name: 'annuityList', component: annuityList ,beforeEnter:(to,from,next) => setDocumentTitle("我的养老金",next)}
 ]

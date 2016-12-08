@@ -26,6 +26,9 @@
                         </div>
                         <div v-else>
                             <p>商家暂无优惠买单活动</p>
+                            <div class="logout" v-if="!token">
+                                <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
+                            </div>
                         </div>
                     </div>
                     <div class="gold-wrap">
@@ -78,11 +81,10 @@
 //                realPayValue:10000,
                 shouldGetValue:0,
                 campaignId:"",//活动ID
-                orderAmount:"100",//订单总金额
-                paidAmount:"100",//实付总金额
-                disconuntAmount:"0",//折扣扣除金额
-                noDisAmount:"100",//不参加折扣的金额
-                disAmount:"0", //参加折扣的金额
+//                orderAmount:"0",//订单总金额
+//                paidAmount:"0",//实付总金额
+//                noDisAmount:"0",//不参加折扣的金额
+//                disAmount:"0", //参加折扣的金额
 
                 /*
                  * 活动对象数据
@@ -111,7 +113,7 @@
                 return max
             },
             realPayValue() { // 实际付款金额
-                return (this.shouldGetValue - this.disconuntAmount).toFixed(2)
+                return parseFloat((this.shouldGetValue - this.disconuntAmount).toFixed(2))
             },
             annuity() {
                 return (this.realPayValue*this.fraction*.5).toFixed(2)
@@ -119,7 +121,7 @@
         },
         beforeRouteEnter(to,from,next) {
             let shopId = to.query.shopId
-            if(to.query.source == 1){
+            if(to.query.source != 1){
                 store.dispatch('fetchShopDetails',shopId).then(() => {
                     next()
                 })
@@ -154,7 +156,7 @@
                     "paidAmount":self.realPayValue,
                     "disconuntAmount":self.disconuntAmount,
                     "noDisAmount":self.noFavourable,
-                    "disAmount":(this.shouldGetValue - self.noFavourable).toFixed(2)
+                    "disAmount":parseFloat((this.shouldGetValue - self.noFavourable).toFixed(2))
                 }
                 member.confirmScanbill(params).then(val => {
                     let notifyUrl=domain+'/wechatpay/wechat_scancodenotify_h5.htm',
@@ -178,10 +180,7 @@
                             }
                         })
                     })
-//                    this.$router.push({name:'scanBillPay',query:params})
-                }).catch(res => {
-                        console.log("failed")
-                })
+                }).catch(() => {})
             }
             /*
             *  弹框显示 输入不享受优惠金额

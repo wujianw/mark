@@ -169,7 +169,6 @@
             }
         }
         ,mounted() {
-            document.title = "附近商家"
             let self = this
             self.more(true)
             if(!this.shopMenu || this.shopMenu.length == 0){

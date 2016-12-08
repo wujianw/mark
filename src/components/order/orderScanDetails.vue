@@ -136,7 +136,6 @@
         }
         ,beforeRouteEnter(to,from,next){
             member.postScanOrderDetails({cashOrderId:to.query.orderId}).then(data => {
-                console.log(JSON.stringify(data))
                 next(vm => {
                     vm.initialize(data)
                 })

@@ -92,7 +92,6 @@ export default {
         let url,params;
         url = '/api/open/goods/special.json'
         params = { cityId,areaId,type,lon,lat,start,rows,goodsName }
-        console.log(params)
         return postData(url,params)
     },
     // pri/campaign/useablePacketRed      pri/campaign/sendPacketRed
@@ -100,7 +99,6 @@ export default {
         let url,params;
         url = '/api/pri/campaign/useablePacketRed'
         params = {token, goodsId, number}
-        console.log(params)
         return postData(url,params)
     },
     sendPacketRed({token=store.getters.getToken,goodsId,number}={}){
@@ -113,7 +111,6 @@ export default {
         let url,params
         url = '/api/benefit/benefitmember/benefitMemberBest.json'
         params = {token, shopId, campaginAmount}
-        console.log(params)
         return postData(url,params)
     }
 }

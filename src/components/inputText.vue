@@ -68,7 +68,6 @@
         }
         ,methods: {
             emptyText() {
-                console.log(1)
                 this.$emit('input', "")
             }
             ,onInput(event) {

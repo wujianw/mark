@@ -46,7 +46,6 @@
             }
         },
         created() {
-            window.document.title = "实名认证"
             let reg = /^9[1,9]/g
             if(!reg.test(this.getMember.mIdentityId)) {
                 this.mAuth_flag = true

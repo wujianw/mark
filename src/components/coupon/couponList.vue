@@ -31,9 +31,6 @@
                 details:[]
             }
         }
-        ,created() {
-            document.title = "我的优惠券"
-        }
         ,methods:{
             more(rows=10) {
                 this.busy = true

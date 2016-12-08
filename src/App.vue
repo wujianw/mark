@@ -39,7 +39,6 @@
                 })
             })
             window.localStorage.openId = document.getElementById("open").value
-            console.log(window.localStorage.openId)
             let appVersion = window.navigator.appVersion.toLowerCase(),  //客户端信息
                 isSystem = appVersion.indexOf("micromessenger")>-1
             if(process.env.NODE_ENV != 'production' && !isSystem){

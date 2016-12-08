@@ -32,9 +32,6 @@
                 banner:'specialBanner'
             })
         },
-        created() {
-            console.log(this.$el)
-        },
         watch: {
             banner() {
                 this.fetchData()

@@ -53,7 +53,6 @@
         }
         ,beforeRouteEnter(to,from,next){
             if(!store.getters.markScanOrderSubmit) {
-                console.log({token:to.query.token,cashOrderId:to.query.orderId})
                 member.scanDetails({token:to.query.token,cashOrderId:to.query.orderId}).then(data => {
                     let notifyUrl=domain+'/wechatpay/wechat_scancodenotify_h5.htm',
                         option = {

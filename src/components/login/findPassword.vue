@@ -157,7 +157,6 @@
                 this.actionCode = true
             }
             ,verify(){
-                console.log(this.mobile+','+this.vcode)
                 this.$http.get('/api/open/member/find_pwd2.json',{params:{"mobile":this.mobile,"vcode":this.vcode}})
                     .then(res => {
                         let data = JSON.parse(res.data)

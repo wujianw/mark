@@ -129,10 +129,6 @@
                     })
                 }
                 member.getEvaluateList({goodsId,merchantId,mode,rows}).then(val => {
-                    val.map(item =>{
-                    console.log(item.anonymityFlag == 1)
-                })
-
                     self.details = val
                     self.start = rows
                     self.busy = val.length < rows

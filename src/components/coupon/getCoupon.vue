@@ -33,9 +33,6 @@
                 details:[]
             }
         },
-        created() {
-            document.title = "优惠券"
-        },
         beforeRouteEnter (to, from, next) {
             next(vm => {
                 member.getAllCoupon().then(val => {

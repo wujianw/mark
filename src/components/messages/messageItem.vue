@@ -7,9 +7,9 @@
             <div class="msg-title">{{msgTitle}}</div>
             <div>
                 <div class="msg-content"
-                     :class="obj.msgType == 1 ? 'msg-plc-text' : 'msg-pic'"
-                     :data-content="msgDesc">
+                     :class="obj.msgType == 1 ? 'msg-plc-text' : 'msg-pic'">
                     <img v-if="obj.coverImg && obj.msgType != 2" :src="obj.coverImg" alt="">
+                    <span>{{msgDesc}}</span>
                 </div>
             </div>
         </div>
@@ -39,10 +39,13 @@
             background: #fff;
             /* 摘要 */
             color:#afafaf;
-            .msg-content:after{
-                content:attr(data-content);
+            span{
                 font:24px/32px sans-serif;
             }
+            /*.msg-content:after{
+                content:attr(data-content);
+                font:24px/32px sans-serif;
+            }*/
         }
         .msg-plc-text{
             /* 图文详情 */

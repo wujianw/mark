@@ -113,7 +113,6 @@
                 let self = this
                 let params = {gcjLon:longitude, gcjLat:latitude}
                 shop.getLonLat(params).then(data => {
-                    console.log(JSON.stringify(data))
                     let latitude = data.bdlat,
                         longitude = data.bdlon
                     window.localStorage.lon = longitude // 经度
@@ -126,7 +125,6 @@
             },
             more(){
                 this.busy = true
-                console.log(this.params)
                 this.$store.dispatch("specialData",{params:this.params}).then(more => {
                     this.busy = !more
                 })

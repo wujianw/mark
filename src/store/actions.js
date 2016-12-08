@@ -159,7 +159,6 @@ export const markScanOrder = ({commit},{option,information}) => {
 export const specialData = ({commit,state},{params,first}) => {
     params.start = first ? 0 : state.shop.start
     return shop.getSpecialGoods(params).then(data => {
-        console.log(data)
         let more = data.goods.length
         commit(types.SPECIAL_GOODS,{data:data.goods,first,rows:params.rows})
         if(!state.shop.banner){

@@ -61,19 +61,19 @@
                     reg_block = /^[\d]{16}$/,
                     reg_auth = /^[\d]{6}$/
                 if(!reg_block.test(self.blockNum)){
-                    MessageBox.alert("输入18位有效数字").then(() => {
+                    MessageBox.alert("请输入正确的卡号").then(() => {
                         self.$refs.blockNumRef.$refs.refFn.focus()
                     })
                     return false
                 }
                 if(!reg_auth.test(self.authCode)){
-                    MessageBox.alert("正确6位数字验证码").then(() => {
+                    MessageBox.alert("请输入正确的验证码").then(() => {
                         self.$refs.authCodeRef.$refs.refFn.focus()
                     })
                     return false
                 }
                 member.changeCard({"blockNum":self.blockNum,"authCode":self.authCode}).then(() => {
-                    MessageBox.alert("帮卡成功").then(() => {
+                    MessageBox.alert("绑卡成功").then(() => {
                         this.$route.back()
                     })
                 }).catch(res => {

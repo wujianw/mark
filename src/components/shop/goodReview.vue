@@ -62,9 +62,6 @@
         components:{
             star
         }
-        ,created() {
-            console.log(this.reviews)
-        }
         ,props:{
             reviews:{
                 type:Array

@@ -47,7 +47,6 @@ export default {
                 longitude = data.bdlon
             window.localStorage.lon = longitude // 经度
             window.localStorage.lat = latitude // 纬度
-            console.log("getGeography")
             return store.dispatch('fetchGeography',{latitude,longitude})
         })
     },
@@ -58,7 +57,6 @@ export default {
         })
         geocoder.getAddress(lngLatXY, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
-                console.log(result.regeocode.addressComponent.city)
                 let cityName = result.regeocode.addressComponent.city
                 store.dispatch('cityName',cityName)
             }
