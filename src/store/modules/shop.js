@@ -90,7 +90,8 @@ const mutations = {
 
     // 获取商家分类菜单
     [types.FETCH_SHOP_MENU] (state,menu) {
-        state.menu = menu
+        state.menu.push({menu_code:"",menu_subtitle:"所有分类"})
+        state.menu.push(...menu)
     },
     // 获取全部城市，全部省，全部区县列表
     [types.FETCH_ALL_AREA] (state,{provinceList,cityAllList,areaAllList}) {

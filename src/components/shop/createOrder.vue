@@ -234,6 +234,8 @@
                                 }
                             })
                     }
+                }).catch(() => {
+                    this.$router.push({name:'loadMobile'})
                 })
             },
             /*
@@ -265,10 +267,12 @@
                             buyerAmount:data.buyerAmount,
                             buyNumber:self.num
                         }
-                    self.$store.dispatch('markOrder',{option,information}).then(() => { // vuex 存储
+                    return self.$store.dispatch('markOrder',{option,information}).then(() => { // vuex 存储
                         self.$router.replace({name:'verifyPay',query:{orderNum:data.orderNum}})
                     })
-                }).catch(() => {})
+                }).catch(() => {
+                    this.$router.push({name:'loadMobile'})
+                })
             }
         },
         components:{ goodItem,linkList,numberKey }

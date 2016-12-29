@@ -31,10 +31,12 @@
         }
         ,computed:{
             ...mapGetters({
-                geography:'geography'
+                geography:'geography',
+                area:'getLocation',
             }),
             params() {
                 return {
+                    cityId:this.area.cityCode,
                     type:this.$route.query.type,
                     lon:this.geography.longitude || window.localStorage.lon || '',
                     lat:this.geography.latitude || window.localStorage.lat || '',

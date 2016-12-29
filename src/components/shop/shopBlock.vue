@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="integral-distance">
-                <div class="distance">{{obj.distance | distance}}km</div>
+                <div class="distance" v-if="obj.distance">{{obj.distance | distance}}km</div>
                 <message-mark class="integral"><span>赠{{obj.fraction | percentage}}养老金</span></message-mark>
             </div>
         </router-link>
@@ -96,6 +96,14 @@
             }
         }
         ,created() {
+            let self = this
+            let img = new Image()
+            img.src = this.obj.background+'@226_146h'
+            img.onload = function () {
+                self.imgUrl = self.obj.background+'@226_146h'
+            }
+        }
+        ,updated() {
             let self = this
             let img = new Image()
             img.src = this.obj.background+'@226_146h'

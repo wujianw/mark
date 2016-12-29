@@ -1,6 +1,6 @@
 <template>
     <div>
-        <link-list :title="pwoSet.title" :to="pwoSet.to" ></link-list>
+        <link-list :title="pwoSet.title" :to="pwoSet.to"></link-list>
         <a class="flex-space link-li" href="tel:400-699-9226">
             <div class="title-name flex-space" data-text="联系客服"></div>
             <div class="link-details">
@@ -20,7 +20,7 @@
             return {
                 pwoSet:{
                     title:"支付密码",
-                    to:{name:"walletPassword"}
+                    to:{name:"keyboard",params:{type:'oldPassword'}}
                 },
                 about:{
                     title:"关于我的钱包",

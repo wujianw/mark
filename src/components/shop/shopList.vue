@@ -16,7 +16,7 @@
                 </nav>
                 <ul class="menu-ul" @click="toggleList">
                     <li v-for="item in list"
-                        :data-type="item.currentCode ? 'provinceCode' : item.menu_code ? 'consumePtype' : 'sortrule'"
+                        :data-type="item.currentCode ? 'provinceCode' : item.menu_subtitle ? 'consumePtype' : 'sortrule'"
                         :data-code="item.currentCode || item.menu_code || item.sortrule"
                         :data-text="item.currentName || item.menu_subtitle || item.name">
                     </li>
@@ -283,6 +283,6 @@
                 })
             }
         }
-        ,components:{shopBlock}
+        ,components:{ shopBlock }
     }
 </script>

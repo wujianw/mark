@@ -151,7 +151,7 @@
                 }
                 let params = {
                     "merchantId":self.campaign.merchantId,
-                    "campaignId":self.campaign.id,
+                    "campaignId":self.campaign.id || '',
                     "orderAmount":self.shouldGetValue,
                     "paidAmount":self.realPayValue,
                     "disconuntAmount":self.disconuntAmount,

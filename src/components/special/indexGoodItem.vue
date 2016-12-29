@@ -8,7 +8,7 @@
                 <p class="gold">{{good.salesPrice}}<span>{{good.marketPrice}}</span></p>
             </div>
         </div>
-        <mark class="position">{{(good.distance/1000).toFixed(2)}}Km</mark>
+        <mark class="position">{{(good.distance/1000).toFixed(2)}}km</mark>
     </router-link>
 </template>
 <script type="text/babel">

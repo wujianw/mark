@@ -59,10 +59,14 @@ export default {
         limit,page=1,sortrule='intelligence',
         local='',cityCode='',areaCode='',consumePtype='',keywords=''}={}) {
         let url,params
-        url = '/api/open/shop/around.json'
-        // url = '/api/open/shop/list.json'
+        if(sortrule != 'distance'){
+            url = '/api/open/shop/list.json'
+            params= {cityCode,areaCode,sortrule,limit,page,consumePtype,keywords}
+        }else {
+            url = '/api/open/shop/around.json'
+            params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
+        }
 
-        params= {lon,lat,local,keywords,cityCode,areaCode,sortrule,limit,page,consumePtype}
         return postData(url,params)
     },
     /*

@@ -84,6 +84,7 @@ const annuityList = resolve => require(['./components/annuity/annuityList'], res
 
 //钱包设置
 const walletSet = resolve => require(['./components/wallet/walletSet'], resolve)
+const keyboard = resolve => require(['./components/keyboard/keyboard'], resolve)
 
 //现金红包
 const redMoney = resolve => require(['./components/wallet/redMoney'], resolve)
@@ -152,6 +153,7 @@ const scrollTop = (to, from, next) => {
 }
 const setDocumentTitle = (title="积分宝",next) => {
     document.title = title;
+    document.body.scrollTop = 0
     if (/ip(hone|od|ad)/i.test(navigator.userAgent)) {
         var i = document.createElement('iframe');
         i.src = '/favicon.ico';
@@ -270,6 +272,7 @@ export const routes = [
     // 我的钱包模块
     ,{ path: '/user/mineWallet',  name: 'mineWallet', component: mineWallet ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包",next)}
     ,{ path: '/user/walletSet' , name: 'walletSet' , component: walletSet ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包--帮助",next)}
+    ,{ path: '/user/keyboard/:type' , name: 'keyboard' , component: keyboard ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包--密码设置",next)}
     ,{ path: '/user/redMoney' , name: 'redMoney' , component: redMoney ,beforeEnter:(to,from,next) => setDocumentTitle("我的红包明细",next)}
     ,{ path: '/user/income' , name: 'income' , component: income ,beforeEnter:(to,from,next) => setDocumentTitle("我的钱包--收支明细",next)}
     ,{ path: '/user/recharge' , name: 'recharge' , component: recharge ,beforeEnter:(to,from,next) => setDocumentTitle("钱包充值",next)}

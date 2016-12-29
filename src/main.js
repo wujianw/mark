@@ -25,13 +25,13 @@ const router = new VueRouter({
     base: __dirname,
     saveScrollPosition: false,
     routes : routes,
-    // scrollBehavior (to, from, savedPosition) {
-    //     if (savedPosition) {
-    //         return savedPosition
-    //     } else {
-    //         return { x: 0, y: 0 }
-    //     }
-    // }
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
 
 

@@ -2,7 +2,7 @@
     <div class="apply-refund-el">
         <section>
             <h3 class="flex-space"><span>订单码券</span><span>已选择{{num}}张</span></h3>
-            <radio v-for="(item, index) in lists" type="checkbox"
+            <radio v-for="(item, index) in lists" type="checkbox" 
                    name="couponIds"
                    :check="!index"
                    @sum="option"
@@ -12,7 +12,7 @@
             </radio>
         </section>
         <section>
-            <h3>退还内容</h3>
+            <h3>退还内容</h3>            
             <p>现金：<span class="gold">{{refCashAmount}}</span></p>
             <p>红包：<span class="gold">{{refRedPacket}}</span></p>
             <input type="hidden" name="refGiveAway" :value="refGiveAway">

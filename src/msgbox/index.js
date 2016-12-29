@@ -44,7 +44,9 @@ var merge = function(target) {
 
   return target;
 };
-
+// var merge = function(target) {
+//     return Object.assign(...arguments)
+// }
 var MessageBoxConstructor = Vue.extend(msgboxVue);
 
 var currentMsg, instance;

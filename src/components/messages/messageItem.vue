@@ -40,6 +40,9 @@
             /* 摘要 */
             color:#afafaf;
             span{
+                display: inline-block;
+                padding-left: 10px;
+                width:460px;
                 font:24px/32px sans-serif;
             }
             /*.msg-content:after{

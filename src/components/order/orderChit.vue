@@ -118,6 +118,15 @@
                 self.imgUrl = url+'@226_146h'
             }
         }
+        ,updated() {
+            let self = this,
+                url = this.orderDetails.goodsImages
+            let img = new Image()
+            img.src = url+'@226_146h'
+            img.onload = function () {
+                self.imgUrl = url+'@226_146h'
+            }
+        }
         ,computed:{
             state() {
                 return this.show(this.obj.state,this.obj.comment)

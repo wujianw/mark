@@ -18,7 +18,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         // filename: utils.assetsPath('js/[name].[chunkhash].js')
         filename: utils.assetsPath('js/[name].JFB_WX_V1.0.B01.js')
         // ,chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
-        ,chunkFilename: utils.assetsPath('js/[id].JFB_WX_V1.0.B01.js')
+        ,chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
     vue: {
         loaders: utils.cssLoaders({

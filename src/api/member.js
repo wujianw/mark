@@ -252,6 +252,18 @@ export default {
     }
     /**
      *
+     * 钱包支付password设置
+     * @params
+     */
+    ,updatePwd({token=store.getters.getToken,password}={}){
+        let url,params;
+        url = '/api/open/wallet/checkpwd.json'
+        params = {token,password}
+        console.log(params)
+        return postData(url,params)
+    }
+    /**
+     *
      * 我的收藏 含店铺收藏列表  商品收藏列表
      * @params
      */
@@ -370,6 +382,7 @@ export default {
         let url,params
         url = '/api/pri/scancode/creatOrder.json'
         params = {token,merchantId,campaignId,orderAmount,paidAmount,disconuntAmount,noDisAmount,disAmount}
+        console.log(params)
         return postData(url,params)
     }
     ,scanBill({merchantId}={}){

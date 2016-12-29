@@ -8,18 +8,18 @@
         </header>
         <slider class="nearby-hot-top"></slider>
         <div class="hot-area flex-right-left" v-if="mode">
-            <router-link tag="div" :to="{name:'specialGoods',query:{type:18}}" class="">
+            <router-link class="half" tag="div" :to="{name:'specialGoods',query:{type:18}}">
                 <img :src="mode[0].imgUrl" alt="">
             </router-link>
-            <div class="">
-                <router-link tag="div" class="hot-area-sm" :to="{name:'specialGoods',query:{type:19}}">
+            <div class="half" v-if="mode[1]">
+                <router-link tag="div" class="hot-area-sm hot-area-wjw" :to="{name:'specialGoods',query:{type:19}}">
                     <img :src="mode[1].imgUrl" alt="">
                 </router-link>
-                <div class="hot-area-sm flex-right-left">
-                    <router-link tag="div" :to="{name:'specialGoods',query:{type:20}}">
+                <div class="hot-area-sm flex-right-left" v-if="mode[2]">
+                    <router-link class="half" tag="div" :to="{name:'specialGoods',query:{type:20}}">
                         <img :src="mode[2].imgUrl" alt="">
                     </router-link>
-                    <router-link tag="div" :to="{name:'specialGoods',query:{type:21}}">
+                    <router-link class="half" v-if="mode[3]" tag="div" :to="{name:'specialGoods',query:{type:21}}">
                         <img :src="mode[3].imgUrl" alt="">
                     </router-link>
                 </div>
@@ -180,6 +180,12 @@
         border-top:12px solid #f2f2f2;
         background:#fff;
         img{width:100%;height:100%;}
+        .hot-area-wjw:last-of-type{
+            height:100%;
+        }
         .hot-area-sm{height:50%;}
+        .half{
+            width:50%;
+        }
     }
 </style>

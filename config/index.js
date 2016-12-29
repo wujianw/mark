@@ -29,11 +29,13 @@ module.exports = {
                 // target: 'http://192.168.8.70:8080/',
                 // target: 'http://192.168.8.123/',
                 // target: 'http://192.168.8.67/',
-                target: 'http://wx.ttj315.com/',
+                // target: 'http://wx.ttj315.com/',
+                target: 'http://shop.jfb315.cn/',
                 changeOrigin: true
             },
             '/wechatpay': {
-                target: 'http://wx.ttj315.com/',
+                // target: 'http://wx.ttj315.com/',
+                target: 'http://shop.jfb315.cn/',
                 // target: 'http://192.168.8.123/',
                 changeOrigin: true
             }
