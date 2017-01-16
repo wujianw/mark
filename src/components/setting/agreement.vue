@@ -34,7 +34,6 @@
 
                 }
 
-//http://shop.jfb315.cn/api/open/apphelp/load.htm?type=0  协议链接  参数 type=rows
             }
         }
         ,components:{

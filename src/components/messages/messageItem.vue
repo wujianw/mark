@@ -17,7 +17,7 @@
             <div @click="remove(obj.id)">
                 <i class="icon icon-delete"></i>
             </div>
-            <router-link :to="{name:'messageDetails',query:{msgId:obj.msgId}}" class="wallet-agreement" tag="div">查看详情&gt;</router-link>
+            <router-link v-if="obj.coverImg && obj.msgType != 3" :to="{name:'messageDetails',query:{msgId:obj.msgId}}" class="wallet-agreement" tag="div">查看详情&gt;</router-link>
         </div>
     </div>
 </template>
@@ -62,7 +62,7 @@
         .msg-pic{
             /* 纯图片或者纯文字 */
             background:#fff;
-            img{width:660px;height:280px;}
+            img{width:660px;}
         }
         .msg-title{
             font: 26px/40px "Microsoft Yahei";

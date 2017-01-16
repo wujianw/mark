@@ -151,7 +151,7 @@ const scrollTop = (to, from, next) => {
     document.body.scrollTop = 0
     next()
 }
-const setDocumentTitle = (title="积分宝",next) => {
+const setDocumentTitle = (title="商桥",next) => {
     document.title = title;
     document.body.scrollTop = 0
     if (/ip(hone|od|ad)/i.test(navigator.userAgent)) {
@@ -192,7 +192,7 @@ export const routes = [
             //商家详情
             ,{ path: '/shopList/shopDetails' , name: 'shopDetails' , component: shopDetails,beforeEnter:(to,from,next) => setDocumentTitle("商家详情",next) }
             //特卖专区
-            ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot,beforeEnter:(to,from,next) => setDocumentTitle("积分宝",next) }
+            ,{ path: '/nearbyHot', name: 'nearbyHot', component: nearbyHot,beforeEnter:(to,from,next) => setDocumentTitle("商桥",next) }
             // 消息模块
             ,{ path: '/messageList', name: 'messageList', component: messageList,beforeEnter:(to,from,next) => setDocumentTitle("我的消息",next) }
             ,{ path: '/messageList/shopAllMessage', name: 'shopAllMessage', component: shopAllMessage,beforeEnter:(to,from,next) => setDocumentTitle("消息列表",next) }
@@ -261,7 +261,7 @@ export const routes = [
     // 个人信息模块
     ,{ path: '/user/userInformation' , name: 'userInformation' , component: userInformation ,beforeEnter:(to,from,next) => setDocumentTitle("个人中心",next)}
     ,{ path: '/user/password' , name: 'password' , component: password ,beforeEnter:(to,from,next) => setDocumentTitle("修改密码",next)}
-    ,{ path: '/user/bound' , name: 'bound' , component: bound ,beforeEnter:(to,from,next) => setDocumentTitle("积分宝卡绑定",next)}
+    ,{ path: '/user/bound' , name: 'bound' , component: bound ,beforeEnter:(to,from,next) => setDocumentTitle("商桥卡绑定",next)}
     ,{ path: '/user/activation' , name: 'activation' , component: activation ,beforeEnter:(to,from,next) => setDocumentTitle("实名认证",next)}
     ,{ path: '/user/telBound' , name: 'telBound' , component: telBound ,beforeEnter:(to,from,next) => setDocumentTitle("手机绑定",next)}
 

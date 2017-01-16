@@ -1,7 +1,7 @@
 <template>
     <div class="bound-wrap">
         <p class="title">温馨提示：您只能绑定未被使用的预读卡，若为付费卡，请联系当地服务中心</p>
-        <input-text v-model="blockNum" maxLength="18" placeholder="请输入您的积分宝卡号" :icon="blockIcon" ref="blockNumRef"></input-text>
+        <input-text v-model="blockNum" maxLength="18" placeholder="请输入您的卡号" :icon="blockIcon" ref="blockNumRef"></input-text>
         <input-text v-model="authCode" maxLength="6" placeholder="卡号验证码（若卡背面有规则必填）" :icon="authIcon" ref="authCodeRef">
             <p class="link-state">什么是卡号验证码？</p>
         </input-text>

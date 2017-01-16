@@ -31,7 +31,7 @@
         <main>
             <section class="lump">
                 <h3>
-                    <p>商品评论({{countreviewLen || 0}})人评价</p>
+                    <p>商品评论({{countreviewLen || 0}})</p>
                 </h3>
                 <div class="lump-content">
                     <good-review :reviews="countreview" :goodsId="goods.id"></good-review>
@@ -81,7 +81,7 @@
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .good-details-el{background:#fff;
-        .gold .rmb{font-size:75%;font-family: "Microsoft YaHei";}
+        .gold .rmb{font-size:75%;font-family: "Microsoft YaHei";padding-right:4px;}
         .hd{position:relative;}
         .hd-pic{width:750px;height:750px;}
         .hd-pic img{width:100%;height:100%;}
@@ -117,7 +117,7 @@
                 height:58px;
                 .pro-pay{
                     color:#e85352;
-                    font-size:28px;
+                    font-size:50px;
                 }
                 .market-pay{
                     color:#807f7f;
@@ -132,8 +132,8 @@
                     color:#fff;
                     font:20px/1.5 "微软雅黑";
                     background:#e8534f;
-                    background:linear-gradient(135deg, transparent 12px, #e8534f 14px) top left,
-                    linear-gradient(45deg, transparent 12px, #e8534f 14px) bottom left,
+                    background:linear-gradient(135deg, transparent 14px, #e8534f 14px) top left,
+                    linear-gradient(45deg, transparent 14px, #e8534f 14px) bottom left,
                     linear-gradient(90deg, transparent 10px, #e8534f 10px) top left,
                     linear-gradient(90deg, transparent 10px, #e8534f 10px) bottom left;
                     background-size:100% 50%;

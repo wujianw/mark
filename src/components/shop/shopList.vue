@@ -53,12 +53,12 @@
         }
         .position-wrap{
             height:72px;
-            background: #fff;
+            background: #f2f2f2;
         }
         .position{
             padding:0 .5em;
             border-radius:18px;
-            background:rgba(95,95,96,.5);
+            background:rgba(93,96,98,.9);
             line-height: 36px;
             font-size:20px;
             color:#fff;

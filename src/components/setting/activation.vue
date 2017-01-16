@@ -10,15 +10,16 @@
             <!--<input-text @click.stop="toggleAddress" v-model="location" placeholder="选择所在区县" :icon="user.locIcon" :show="!!location"></input-text>-->
             <div class="flex-space input-el" @click.stop="toggleAddress">
                 <div class="input flex-space">
-                    <i class="icon" :class="user.locIcon.iconClass"></i>
+                    <i id="address-i" class="icon" :class="user.locIcon.iconClass"></i>
                     <input type="text" v-model="locationName" placeholder="选择所在区县" readonly >
+                    <i style="display: none;"></i>
                 </div>
             </div>
-            <input-text v-model="email" placeholder="电子邮箱" :icon="user.emailIcon" :show="!!email"></input-text>
+            <input-text id="email-el" v-model="email" placeholder="电子邮箱" :icon="user.emailIcon" :show="!!email"></input-text>
 
             <submit class="load-btn" :dis="!1" :value="mAuth_flag ? '修 改' : '认 证'" @commit="activate"></submit>
             <div class="agreement">
-                <i class="icon icon-ok"></i><span>我已阅读《积分宝养老会员电子投保协议》并愿意遵守各项规则</span>
+                <i class="icon icon-ok"></i><span>我已阅读《养老会员电子投保协议》并愿意遵守各项规则</span>
             </div>
         </div>
         <div class="position">
@@ -78,7 +79,7 @@
                         iconClass: 'icon-nickname'
                     },
                     locIcon:{
-                        iconClass: 'icon-place'
+                        iconClass: 'icon-address'
                     },
                     emailIcon:{
                         iconClass: 'icon-email'
@@ -136,6 +137,14 @@
     }
 </script>
 <style lang="scss" rel="stylesheet/scss">
+    #email-el{
+        .input i:first-of-type{
+            font-size:32px;
+        }
+    }
+    #address-i{
+        font-size:38px;
+    }
     .activation-el{
         .activation-input{padding:0 15px;}
         .position{

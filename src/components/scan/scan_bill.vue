@@ -21,13 +21,13 @@
                                 <p>酒水部分不参与优惠，请输入不享受优惠金额</p>
                             </div>
                             <div class="logout" v-else>
-                                <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
+                                <p>您还不是认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
                             </div>
                         </div>
                         <div v-else>
                             <p>商家暂无优惠买单活动</p>
                             <div class="logout" v-if="!token">
-                                <p>您还不是积分宝认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
+                                <p>您还不是认证会员，请先 <span class="btn_login" @click="btn_login">注册或登录</span> 后查看是否有优惠</p>
                             </div>
                         </div>
                     </div>
@@ -73,19 +73,12 @@
     export default {
         data () {
             return {
-                shopName:'积分宝',
+                shopName:'商桥',
                 popupShow:false,         // 切换不享受金额输入框
                 noFavourable:0,       // 不享受金额----输入框确定以后的值
-                noFavourable_edit:0,  // 不享受金额----输入框
-
-//                realPayValue:10000,
-                shouldGetValue:0,
+                noFavourable_edit:"",  // 不享受金额----输入框
+                shouldGetValue:"",
                 campaignId:"",//活动ID
-//                orderAmount:"0",//订单总金额
-//                paidAmount:"0",//实付总金额
-//                noDisAmount:"0",//不参加折扣的金额
-//                disAmount:"0", //参加折扣的金额
-
                 /*
                  * 活动对象数据
                  */

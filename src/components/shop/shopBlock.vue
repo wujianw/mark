@@ -15,6 +15,7 @@
             </div>
             <div class="integral-distance">
                 <div class="distance" v-if="obj.distance">{{obj.distance | distance}}km</div>
+                <div class="distance" v-else></div>
                 <message-mark class="integral"><span>赠{{obj.fraction | percentage}}养老金</span></message-mark>
             </div>
         </router-link>
@@ -27,7 +28,8 @@
 <style lang="scss" rel="stylesheet/scss">
     .shop-block-el{
         background:#fff;
-        border-top:6px solid #f2f2f2;
+        border-top:12px solid #f2f2f2;
+        &:first-of-type{border-top:3px solid #f2f2f2;}
         .pic{
             height:146px;
             width:226px;
@@ -48,7 +50,9 @@
         .integral-distance{
             align-self:flex-start;
             .distance{
-                text-align:center;
+                height: 68px;
+                padding-right: 28px;
+                text-align:right;
                 line-height:68px;
                 font-size:20px;
                 color:#838383;

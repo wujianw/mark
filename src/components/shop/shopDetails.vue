@@ -138,16 +138,16 @@
         .section{
             border-top:16px solid #f2f2f2;
             .title-wrap{
-                height:84px;
+                height:90px;
                 padding:0 22px 0 26px;
                 border-bottom:1px solid #f2f2f2;
                 .title{
                     span{
-                        padding-left:26px;
+                        padding-left:20px;
                         font-size:28px;
                         color:#505050;
                     }
-                    i{font-size:26px;}
+                    i{font-size:36px;margin-top:2px;}
                 }
                 .sweep-pay-link{
                     display: inline-block;

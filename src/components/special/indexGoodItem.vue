@@ -38,20 +38,21 @@
         .good-details{
             padding-left:12px;
             .shop-name{
+                padding-top:12px;
                 font-size:20px;
                 color:#838383;
-                i{font-size:20px;color:#fda524;}
+                i{font-size:20px;color:#fda524;padding-right:14px;}
             }
             .title{
                 line-height:68px;
-                font-size:26px;
+                font-size:30px;
                 color:#505050;
                 white-space:nowrap;
                 text-overflow:ellipsis;
                 overflow:hidden;width:12em;
             }
             .gold{
-                line-height: 46px;
+                padding-bottom: 20px;
                 font-size:32px;
                 color:#e85352;
                 font-family:"Microsoft Yahei";
@@ -61,7 +62,8 @@
                     padding-left:10px;
                     font-size:24px;
                     color:#afafaf;
-                    &:before{content:"￥";font-size:20px;}
+                    text-decoration: line-through;
+                    &:before{content:"￥";font-size:24px;}
                 }
             }
         }
@@ -69,7 +71,7 @@
             align-self: flex-start;
             padding:32px;
             background:transparent;
-            font-size:26px;
+            font-size:20px;
             color:#838383;
         }
     }

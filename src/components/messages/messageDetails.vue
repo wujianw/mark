@@ -30,13 +30,11 @@
         .message-author{
             color: #00ce9a;
         }
-
     }
 
 </style>
 <script type="text/babel">
     import member from "../../api/member"
-    import { mapGetters } from 'vuex'
     export default{
         data(){
             return {
@@ -48,13 +46,6 @@
                 }
             }
         }
-        ,computed: {
-            ...mapGetters({
-                getToken:'getToken'
-            })
-
-
-        }
         ,beforeRouteEnter (to,from,next) {
             let msgId = to.query.msgId
             next(vm => {
@@ -62,11 +53,6 @@
                     vm.details = val
                 })
             })
-
-
-        }
-        , components: {
-
         }
     }
 </script>

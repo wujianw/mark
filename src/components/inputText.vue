@@ -13,14 +13,14 @@
     .input-el{
         flex-grow: 2;
         padding:12px 0;
-        height:74px;
+        height:90px;
         .input{
             flex-grow:3;
             height:100%;
             border-radius:10px;
             background:#fff;
             i:first-of-type{
-                width:60px;
+                width:64px;
                 text-align:center;
                 font-size:40px;
                 color:#afafaf;

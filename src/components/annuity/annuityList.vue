@@ -23,6 +23,7 @@
         flex-direction: column;
         height:264px;
         font-family:"Microsoft YaHei";
+        background:#f7f7f7;
         .gold{
             padding:42px 0 60px;
             font-size:72px;
@@ -55,12 +56,15 @@
         font-size:26px;
         color: #fff;
     }
+    .income-time{
+        color:#505050;
+    }
     .time-selected{
+
+        height: 90px;
+        padding:0 24px;
         font-size:26px;
-        background: white;
-        height: 128px;
-        padding-left: 24px;
-        padding-right: 24px;
+        background: #e0dedf;
     }
 </style>
 <script type="text/babel">
@@ -95,7 +99,8 @@
                         'line-height': '22px',
                         'font-size': '26px',
                         'border': 'none',
-                        'color': '#e85453'
+                        'color': '#e85453',
+                        'backgroundColor' : '#e0dedf'
                     },
                     color: {
                         header: '#ccc',

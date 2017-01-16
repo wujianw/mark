@@ -11,7 +11,7 @@
         <div class="list-link-wallet">
             <link-list :title="setting.title" :icon="setting.icon" :to="setting.to" :details="setting.details"></link-list>
         </div>
-        <div class="wallet-hint">提示:积分宝平台不限制支付金额,如果微信或支付宝提示订单超过单笔限额,请核实您的账户及网银的每日消费限额.</div>
+        <div class="wallet-hint">提示:商桥平台不限制支付金额,如果微信或支付宝提示订单超过单笔限额,请核实您的账户及网银的每日消费限额.</div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss">

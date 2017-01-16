@@ -61,7 +61,7 @@
                         details:this.mActivate ? "去认证" :  "已认证"
                     }
                     ,block:{
-                        title:"积分宝卡",
+                        title:"卡",
                         icon:{
                             iconClass:'icon-block'
                         },
@@ -94,13 +94,13 @@
                         to: {name: 'password'},
                         details:"修改/找回"
                     }
-                    ,agreement:{
-                        title:"相关协议",
-                        icon:{
-                            iconClass:'icon-agreement'
-                        },
-                        to: {name: 'agreement' }
-                    }
+//                    ,agreement:{
+//                        title:"相关协议",
+//                        icon:{
+//                            iconClass:'icon-agreement'
+//                        },
+//                        to: {name: 'agreement' }
+//                    }
                 }
             }
         },

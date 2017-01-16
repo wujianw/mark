@@ -22,7 +22,7 @@
         background: #e85350;
         border-radius: 10px;
         text-align: center;
-        font: 26px/74px "Microsoft Yahei";
+        font: 26px/88px "Microsoft Yahei";
         color: #fff;
         .shade{
             position:absolute;

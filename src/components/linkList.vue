@@ -10,7 +10,7 @@
 </template>
 <style lang="scss" rel="stylesheet/scss">
     .link-li{
-        height:72px;
+        height:89px;
         padding:0 20px;
         border-bottom:1px solid #f2f2f2;
         background:#fff;

@@ -98,7 +98,7 @@ export default {
         params = { cityId,areaId,type,lon,lat,start,rows,goodsName }
         return postData(url,params)
     },
-    // pri/campaign/useablePacketRed      pri/campaign/sendPacketRed
+    
     useAblePacketRed({token=store.getters.getToken,goodsId,number}={}){
         let url,params;
         url = '/api/pri/campaign/useablePacketRed'
